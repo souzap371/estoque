@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Relatório de Produtos</title>
+</head>
+<body>
+
+<h2>Produtos Cadastrados</h2>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Código</th>
+        <th>Nome</th>
+    </tr>
+
+    <tr th:each="p : ${produtos}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.codigo}"></td>
+        <td th:text="${p.nome}"></td>
+    </tr>
+</table>
+
+<br>
+<a href="/relatorios">⬅ Voltar</a>
+
+</body>
+</html>

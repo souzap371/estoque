@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Relatório de Estoque</title>
+</head>
+<body>
+
+<h2>Estoque Atual</h2>
+
+<table border="1">
+    <tr>
+        <th>Produto</th>
+        <th>Quantidade</th>
+    </tr>
+
+    <tr th:each="e : ${estoques}">
+        <td th:text="${e.produto.nome}"></td>
+        <td th:text="${e.quantidadeAtual}"></td>
+    </tr>
+</table>
+
+<br>
+<a href="/relatorios">⬅ Voltar</a>
+
+</body>
+</html>

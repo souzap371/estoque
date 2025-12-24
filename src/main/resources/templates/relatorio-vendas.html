@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Relatório de Vendas</title>
+</head>
+<body>
+
+<h2>Vendas / Pedidos</h2>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Produto</th>
+        <th>Qtd</th>
+        <th>Cliente</th>
+        <th>Estado</th>
+        <th>Data</th>
+        <th>NF</th>
+    </tr>
+
+    <tr th:each="v : ${vendas}">
+        <td th:text="${v.id}"></td>
+        <td th:text="${v.produto.nome}"></td>
+        <td th:text="${v.quantidade}"></td>
+        <td th:text="${v.clienteNome}"></td>
+        <td th:text="${v.clienteEstado}"></td>
+        <td th:text="${v.dataSaida}"></td>
+        <td th:text="${v.comNotaFiscal ? 'Sim' : 'Não'}"></td>
+    </tr>
+</table>
+
+<br>
+<a href="/relatorios">⬅ Voltar</a>
+
+</body>
+</html>

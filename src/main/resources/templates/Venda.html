@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Venda</title>
+</head>
+<body>
+
+<h2>Pedido / Venda</h2>
+
+<form action="/vendas/realizar" method="post">
+
+    Código ou Nome do Produto:<br>
+    <input type="text" name="codigoOuNome" required><br><br>
+
+    Quantidade:<br>
+    <input type="number" name="quantidade" required><br><br>
+
+    Nome do Cliente:<br>
+    <input type="text" name="clienteNome" required><br><br>
+
+    Estado do Cliente:<br>
+    <input type="text" name="clienteEstado" required><br><br>
+
+    Com Nota Fiscal?<br>
+    <select name="comNotaFiscal">
+        <option value="true">Sim</option>
+        <option value="false">Não</option>
+    </select><br><br>
+
+    <button type="submit">💰 Vender</button>
+</form>
+
+<br>
+<a href="/">⬅ Voltar ao Menu</a>
+
+</body>
+</html>

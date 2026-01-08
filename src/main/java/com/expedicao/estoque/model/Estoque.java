@@ -20,16 +20,23 @@ public class Estoque {
     @Column(nullable = false)
     private Integer quantidadeAtual = 0;
 
-    public void setProduto(Produto produto2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setProduto'");
+    public Long getId() {
+        return id;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
     public Integer getQuantidadeAtual() {
-    return quantidadeAtual;
-}
+        return quantidadeAtual;
+    }
 
-public void setQuantidadeAtual(Integer quantidadeAtual) {
-    this.quantidadeAtual = quantidadeAtual;
-}
+    public void setQuantidadeAtual(Integer quantidadeAtual) {
+        this.quantidadeAtual = quantidadeAtual;
+    }
 }

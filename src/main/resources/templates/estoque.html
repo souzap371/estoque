@@ -1,25 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
     <title>Entrada de Estoque</title>
+
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(circle at top, #001a0f, #000);
+            color: #00ff9c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Grid Matrix */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,140,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,140,0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 420px;
+            padding: 40px 35px;
+            border-radius: 14px;
+            background: rgba(0, 20, 10, 0.85);
+            box-shadow:
+                0 0 25px rgba(0, 255, 140, 0.35),
+                inset 0 0 20px rgba(0, 255, 140, 0.15);
+            border: 1px solid rgba(0,255,140,0.4);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 12px rgba(0,255,140,0.8);
+        }
+
+        label {
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 22px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(0,255,140,0.6);
+            border-radius: 8px;
+            color: #00ff9c;
+            font-family: 'Orbitron', sans-serif;
+            outline: none;
+        }
+
+        input:focus {
+            box-shadow: 0 0 12px rgba(0,255,140,0.7);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: #00ff9c;
+            background: transparent;
+            border: 1px solid rgba(0,255,140,0.7);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(0,255,140,0.35),
+                transparent
+            );
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        button:hover::before {
+            transform: translateX(100%);
+        }
+
+        button:hover {
+            background: rgba(0,255,140,0.12);
+            box-shadow: 0 0 18px rgba(0,255,140,0.6);
+            transform: translateY(-2px);
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 28px;
+            font-size: 12px;
+            color: #00ff9c;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .back:hover {
+            opacity: 1;
+            text-shadow: 0 0 8px rgba(0,255,140,0.7);
+        }
+    </style>
 </head>
 <body>
 
-<h2>Entrada de Estoque</h2>
+<div class="container">
+    <h2>ENTRADA DE ESTOQUE</h2>
 
-<form action="/estoque/entrada" method="post">
+    <form action="/estoque/entrada" method="post">
 
-    Código ou Nome do Produto:<br>
-    <input type="text" name="codigoOuNome" required><br><br>
+        <label>CÓDIGO OU NOME DO PRODUTO</label>
+        <input type="text" name="codigoOuNome" required>
 
-    Quantidade de Entrada:<br>
-    <input type="number" name="quantidade" required><br><br>
+        <label>QUANTIDADE DE ENTRADA</label>
+        <input type="number" name="quantidade" required>
 
-    <button type="submit">📥 Registrar Entrada</button>
-</form>
+        <button type="submit">📥 REGISTRAR ENTRADA</button>
+    </form>
 
-<br>
-<a href="/">⬅ Voltar ao Menu</a>
+    <a href="/" class="back">⬅ VOLTAR AO MENU</a>
+</div>
 
 </body>
 </html>

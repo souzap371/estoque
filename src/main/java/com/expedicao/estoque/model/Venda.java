@@ -27,43 +27,57 @@ public class Venda {
 
     private Boolean comNotaFiscal;
 
+    // ===== GETTERS E SETTERS CORRETOS =====
+
+    public Long getId() {
+        return id;
+    }
+
     public Produto getProduto() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProduto'");
+        return produto;
     }
 
-    public int getQuantidade() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getQuantidade'");
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
-    public void setProduto(Produto produto2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setProduto'");
+    public Integer getQuantidade() {
+        return quantidade;
     }
 
-    public void setQuantidade(Integer quantidade2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setQuantidade'");
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 
-    public void setClienteNome(String clienteNome2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setClienteNome'");
+    public String getClienteNome() {
+        return clienteNome;
     }
 
-    public void setClienteEstado(String clienteEstado2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setClienteEstado'");
+    public void setClienteNome(String clienteNome) {
+        this.clienteNome = clienteNome;
     }
 
-    public void setDataSaida(LocalDate now) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDataSaida'");
+    public String getClienteEstado() {
+        return clienteEstado;
     }
 
-    public void setComNotaFiscal(Boolean comNotaFiscal2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setComNotaFiscal'");
+    public void setClienteEstado(String clienteEstado) {
+        this.clienteEstado = clienteEstado;
+    }
+
+    public LocalDate getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(LocalDate dataSaida) {
+        this.dataSaida = dataSaida;
+    }
+
+    public Boolean getComNotaFiscal() {
+        return comNotaFiscal;
+    }
+
+    public void setComNotaFiscal(Boolean comNotaFiscal) {
+        this.comNotaFiscal = comNotaFiscal;
     }
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Relatórios</title>
@@ -15,6 +15,159 @@
 
 <br>
 <a href="/">⬅ Voltar ao Menu</a>
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatórios</title>
+
+    <!-- Fonte futurista -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(circle at top, #001a0f, #000);
+            color: #00ff9c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Grid Matrix */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,140,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,140,0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 420px;
+            padding: 40px 35px;
+            border-radius: 14px;
+            background: rgba(0, 20, 10, 0.85);
+            box-shadow:
+                0 0 25px rgba(0, 255, 140, 0.35),
+                inset 0 0 20px rgba(0, 255, 140, 0.15);
+            border: 1px solid rgba(0,255,140,0.4);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 12px rgba(0,255,140,0.8);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin: 18px 0;
+        }
+
+        a.report-link {
+            display: block;
+            padding: 14px;
+            text-align: center;
+            font-size: 14px;
+            text-decoration: none;
+            color: #00ff9c;
+            border: 1px solid rgba(0,255,140,0.7);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        a.report-link::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(0,255,140,0.35),
+                transparent
+            );
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        a.report-link:hover::before {
+            transform: translateX(100%);
+        }
+
+        a.report-link:hover {
+            background: rgba(0,255,140,0.12);
+            box-shadow: 0 0 18px rgba(0,255,140,0.6);
+            transform: translateY(-2px);
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #00ff9c;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .back:hover {
+            opacity: 1;
+            text-shadow: 0 0 8px rgba(0,255,140,0.7);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>RELATÓRIOS</h2>
+
+    <ul>
+        <li>
+            <a class="report-link" href="/relatorios/produtos">
+                📦 PRODUTOS CADASTRADOS
+            </a>
+        </li>
+        <li>
+            <a class="report-link" href="/relatorios/vendas">
+                🧾 VENDAS / PEDIDOS
+            </a>
+        </li>
+        <li>
+            <a class="report-link" href="/relatorios/estoque">
+                📊 ESTOQUE ATUAL
+            </a>
+        </li>
+    </ul>
+
+    <a href="/" class="back">⬅ VOLTAR AO MENU</a>
+</div>
 
 </body>
 </html>

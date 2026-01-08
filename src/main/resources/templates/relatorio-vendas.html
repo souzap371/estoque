@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Relatório de Vendas</title>
@@ -31,6 +31,158 @@
 
 <br>
 <a href="/relatorios">⬅ Voltar</a>
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Vendas</title>
+
+    <!-- Fonte futurista -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            background: radial-gradient(circle at top, #001a0f, #000);
+            color: #00ff9c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        /* Grid Matrix */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0,255,140,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,140,0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 95%;
+            max-width: 1000px;
+            padding: 35px 30px;
+            border-radius: 14px;
+            background: rgba(0, 20, 10, 0.88);
+            box-shadow:
+                0 0 30px rgba(0, 255, 140, 0.35),
+                inset 0 0 20px rgba(0, 255, 140, 0.15);
+            border: 1px solid rgba(0,255,140,0.4);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 12px rgba(0,255,140,0.9);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 12px;
+        }
+
+        th, td {
+            padding: 12px 10px;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,255,140,0.3);
+        }
+
+        th {
+            background: rgba(0,255,140,0.12);
+            letter-spacing: 1px;
+            text-shadow: 0 0 6px rgba(0,255,140,0.6);
+        }
+
+        tr {
+            transition: background 0.25s ease;
+        }
+
+        tr:hover {
+            background: rgba(0,255,140,0.08);
+        }
+
+        .nf-sim {
+            color: #00ff9c;
+            text-shadow: 0 0 6px rgba(0,255,140,0.7);
+        }
+
+        .nf-nao {
+            color: #ff6b6b;
+            text-shadow: 0 0 6px rgba(255,80,80,0.7);
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #00ff9c;
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .back:hover {
+            opacity: 1;
+            text-shadow: 0 0 8px rgba(0,255,140,0.7);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>VENDAS / PEDIDOS</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>PRODUTO</th>
+                <th>QTD</th>
+                <th>CLIENTE</th>
+                <th>ESTADO</th>
+                <th>DATA</th>
+                <th>NF</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="v : ${vendas}">
+                <td th:text="${v.id}"></td>
+                <td th:text="${v.produto != null ? v.produto.nome : 'SEM PRODUTO'}"></td>
+                <td th:text="${v.quantidade}"></td>
+                <td th:text="${v.clienteNome}"></td>
+                <td th:text="${v.clienteEstado}"></td>
+                <td th:text="${v.dataSaida}"></td>
+                <td th:text="${v.comNotaFiscal ? 'Sim' : 'Não'}"
+                    th:classappend="${v.comNotaFiscal} ? 'nf-sim' : 'nf-nao'">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/relatorios" class="back">⬅ VOLTAR</a>
+</div>
 
 </body>
 </html>

@@ -1,51 +1,11 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Venda</title>
-</head>
-<body>
-
-<h2>Pedido / Venda</h2>
-
-<form action="/vendas/realizar" method="post">
-
-    Código ou Nome do Produto:<br>
-    <input type="text" name="codigoOuNome" required><br><br>
-
-    Quantidade:<br>
-    <input type="number" name="quantidade" required><br><br>
-
-    Nome do Cliente:<br>
-    <input type="text" name="clienteNome" required><br><br>
-
-    Estado do Cliente:<br>
-    <input type="text" name="clienteEstado" required><br><br>
-
-    Com Nota Fiscal?<br>
-    <select name="comNotaFiscal">
-        <option value="true">Sim</option>
-        <option value="false">Não</option>
-    </select><br><br>
-
-    <button type="submit">💰 Vender</button>
-</form>
-
-<br>
-<a href="/">⬅ Voltar ao Menu</a>
-
-</body>
-</html> -->
-
-
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Pedido / Venda</title>
 
-    <!-- Fonte futurista -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Fonte moderna e legível -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -54,161 +14,306 @@
 
         body {
             margin: 0;
-            height: 100vh;
-            font-family: 'Orbitron', sans-serif;
-            background: radial-gradient(circle at top, #001a0f, #000);
-            color: #00ff9c;
+            min-height: 100vh;
+            font-family: 'Inter', system-ui, Arial, sans-serif;
+            background: linear-gradient(135deg, #0d6efd, #1e40af);
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-        }
-
-        /* Grid Matrix */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(0,255,140,0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,255,140,0.06) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: 0;
+            padding: 30px;
         }
 
         .container {
-            position: relative;
-            z-index: 1;
-            width: 460px;
-            padding: 40px 35px;
-            border-radius: 14px;
-            background: rgba(0, 20, 10, 0.85);
-            box-shadow:
-                0 0 25px rgba(0, 255, 140, 0.35),
-                inset 0 0 20px rgba(0, 255, 140, 0.15);
-            border: 1px solid rgba(0,255,140,0.4);
+            width: 100%;
+            max-width: 960px;
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 12px rgba(0,255,140,0.8);
+            margin-bottom: 28px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #0f172a;
         }
 
         label {
-            font-size: 13px;
-            letter-spacing: 1px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+            display: block;
+            margin-bottom: 6px;
         }
 
         input, select {
             width: 100%;
-            padding: 12px;
-            margin: 8px 0 22px;
-            background: rgba(0,0,0,0.6);
-            border: 1px solid rgba(0,255,140,0.6);
-            border-radius: 8px;
-            color: #00ff9c;
-            font-family: 'Orbitron', sans-serif;
+            padding: 10px 12px;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            margin-bottom: 16px;
             outline: none;
         }
 
-        select option {
-            background: #000;
-            color: #00ff9c;
+        input:focus, select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 1px #2563eb;
         }
 
-        input:focus, select:focus {
-            box-shadow: 0 0 12px rgba(0,255,140,0.7);
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .flex {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-top: 6px;
+        }
+
+        .flex label {
+            font-weight: 500;
+            font-size: 14px;
+            color: #0f172a;
+        }
+
+        hr {
+            margin: 20px 0;
+            border: none;
+            border-top: 1px solid #e2e8f0;
         }
 
         button {
-            width: 100%;
-            padding: 14px;
-            margin-top: 10px;
-            font-family: 'Orbitron', sans-serif;
+            padding: 12px 18px;
             font-size: 14px;
-            color: #00ff9c;
-            background: transparent;
-            border: 1px solid rgba(0,255,140,0.7);
-            border-radius: 10px;
+            font-weight: 500;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            border: none;
+            transition: background-color 0.2s ease, transform 0.15s ease;
         }
 
-        button::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(0,255,140,0.35),
-                transparent
-            );
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
+        .btn-add {
+            background-color: #2563eb;
+            color: #ffffff;
+            margin-top: 10px;
         }
 
-        button:hover::before {
-            transform: translateX(100%);
+        .btn-add:hover {
+            background-color: #1d4ed8;
         }
 
-        button:hover {
-            background: rgba(0,255,140,0.12);
-            box-shadow: 0 0 18px rgba(0,255,140,0.6);
-            transform: translateY(-2px);
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 22px;
         }
 
-        .back {
-            display: block;
+        th {
+            background-color: #f1f5f9;
+            font-size: 13px;
+            font-weight: 600;
+            color: #0f172a;
+            padding: 12px;
+            border-bottom: 1px solid #cbd5e1;
+        }
+
+        td {
+            padding: 12px;
+            font-size: 14px;
             text-align: center;
-            margin-top: 28px;
-            font-size: 12px;
-            color: #00ff9c;
-            text-decoration: none;
-            opacity: 0.7;
-            transition: opacity 0.3s;
+            border-bottom: 1px solid #e2e8f0;
+            color: #0f172a;
         }
 
-        .back:hover {
-            opacity: 1;
-            text-shadow: 0 0 8px rgba(0,255,140,0.7);
+        h3 {
+            margin-top: 22px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            text-align: right;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 26px;
+        }
+
+        .btn-back {
+            background-color: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .btn-back:hover {
+            background-color: #cbd5e1;
+        }
+
+        .btn-finish {
+            background-color: #16a34a;
+            color: #ffffff;
+        }
+
+        .btn-finish:hover {
+            background-color: #15803d;
         }
     </style>
 </head>
+
 <body>
 
 <div class="container">
-    <h2>PEDIDO / VENDA</h2>
+    <h2>Pedido / Venda</h2>
 
-    <form action="/vendas/realizar" method="post">
+    <!-- CLIENTE -->
+    <div class="grid">
+        <div>
+            <label>Nome do Cliente</label>
+            <input id="clienteNome">
+        </div>
 
-        <label>CÓDIGO OU NOME DO PRODUTO</label>
-        <input type="text" name="codigoOuNome" required>
+        <div>
+            <label>Estado do Cliente</label>
+            <input id="clienteEstado">
+        </div>
 
-        <label>QUANTIDADE</label>
-        <input type="number" name="quantidade" required>
+        <div>
+            <label>Tipo</label>
+            <div class="flex">
+                <label><input type="radio" name="tipo" value="V" checked> Venda</label>
+                <label><input type="radio" name="tipo" value="T"> Transferência</label>
+            </div>
+        </div>
+    </div>
 
-        <label>NOME DO CLIENTE</label>
-        <input type="text" name="clienteNome" required>
-
-        <label>ESTADO DO CLIENTE</label>
-        <input type="text" name="clienteEstado" required>
-
-        <label>COM NOTA FISCAL?</label>
-        <select name="comNotaFiscal">
-            <option value="true">SIM</option>
-            <option value="false">NÃO</option>
+    <div id="estadoDestinoDiv" style="display:none;">
+        <label>Estado Destino</label>
+        <select id="estadoDestino">
+            <option value="">Selecione</option>
+            <option value="AL">AL</option>
+            <option value="MG">MG</option>
         </select>
+    </div>
 
-        <button type="submit">💰 REALIZAR VENDA</button>
-    </form>
+    <hr>
 
-    <a href="/" class="back">⬅ VOLTAR AO MENU</a>
+    <!-- PRODUTO -->
+    <div class="grid">
+        <div>
+            <label>Código ou Nome do Produto</label>
+            <input id="produto">
+        </div>
+
+        <div>
+            <label>Quantidade</label>
+            <input type="number" id="quantidade" min="1">
+        </div>
+
+        <div>
+            <label>Valor por Caixa</label>
+            <input type="number" step="0.01" id="valor">
+        </div>
+    </div>
+
+    <button class="btn-add" type="button" onclick="adicionarItem()">➕ Adicionar Produto</button>
+
+    <!-- TABELA -->
+    <table>
+        <thead>
+        <tr>
+            <th>Produto</th>
+            <th>Qtd</th>
+            <th>Valor</th>
+            <th>Subtotal</th>
+        </tr>
+        </thead>
+        <tbody id="itens"></tbody>
+    </table>
+
+    <h3 id="total">TOTAL: R$ 0,00</h3>
+
+    <div class="actions">
+        <button class="btn-back" onclick="voltarMenu()">⬅ Voltar</button>
+        <button class="btn-finish" onclick="concluirPedido()">✅ Concluir Pedido</button>
+    </div>
 </div>
+
+<script>
+    let itens = [];
+    let total = 0;
+
+    const moedaBR = valor =>
+        new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(valor);
+
+    document.querySelectorAll("input[name='tipo']").forEach(radio => {
+        radio.addEventListener("change", () => {
+            const tipoSelecionado = document.querySelector("input[name='tipo']:checked").value;
+            document.getElementById("estadoDestinoDiv").style.display =
+                tipoSelecionado === "T" ? "block" : "none";
+        });
+    });
+
+    function adicionarItem() {
+        const produto = document.getElementById("produto").value;
+        const qtd = parseInt(document.getElementById("quantidade").value);
+        const valor = parseFloat(document.getElementById("valor").value);
+
+        if (!produto || !qtd || !valor) {
+            alert("Preencha todos os campos do produto");
+            return;
+        }
+
+        const subtotal = qtd * valor;
+        total += subtotal;
+
+        itens.push({
+            codigoOuNome: produto,
+            quantidade: qtd,
+            valorPorCaixa: valor
+        });
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${produto}</td>
+            <td>${qtd}</td>
+            <td>${moedaBR(valor)}</td>
+            <td>${moedaBR(subtotal)}</td>
+        `;
+        document.getElementById("itens").appendChild(tr);
+
+        document.getElementById("total").innerText = "TOTAL: " + moedaBR(total);
+
+        document.getElementById("produto").value = "";
+        document.getElementById("quantidade").value = "";
+        document.getElementById("valor").value = "";
+    }
+
+    function concluirPedido() {
+        fetch("[[@{/vendas/salvar}]]", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                clienteNome: clienteNome.value,
+                clienteEstado: clienteEstado.value,
+                tipoMovimentacao: document.querySelector("input[name='tipo']:checked").value,
+                estadoDestino: estadoDestino.value,
+                itens: itens
+            })
+        }).then(() => location.reload());
+    }
+
+    function voltarMenu() {
+        window.location.href = "[[@{/}]]";
+    }
+</script>
 
 </body>
 </html>

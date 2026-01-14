@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.expedicao.estoque.repositorie.EstoqueRepository;
 import com.expedicao.estoque.repositorie.ProdutoRepository;
+import com.expedicao.estoque.repositorie.VendaItemRepository;
 import com.expedicao.estoque.repositorie.VendaRepository;
 
 @Controller
@@ -18,7 +19,7 @@ public class RelatorioController {
     private ProdutoRepository produtoRepository;
 
     @Autowired
-    private VendaRepository vendaRepository;
+    private VendaItemRepository vendaItemRepository;
 
     @Autowired
     private EstoqueRepository estoqueRepository;
@@ -37,11 +38,21 @@ public class RelatorioController {
     }
 
     // RELATÓRIO DE VENDAS
+    // @GetMapping("/vendas")
+    // public String relatorioVendas(Model model) {
+    //     model.addAttribute("itens", vendaItemRepository.findAll());
+    //     return "relatorio-vendas";
+    // }
+
     @GetMapping("/vendas")
-    public String relatorioVendas(Model model) {
-        model.addAttribute("vendas", vendaRepository.findAll());
-        return "relatorio-vendas";
-    }
+public String relatorioVendas(Model model) {
+
+    var itens = vendaItemRepository.findAll();
+    System.out.println("TOTAL DE ITENS DE VENDA: " + itens.size());
+
+    model.addAttribute("itens", itens);
+    return "relatorio-vendas";
+}
 
     // RELATÓRIO DE ESTOQUE
     @GetMapping("/estoque")

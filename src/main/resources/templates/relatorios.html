@@ -1,33 +1,11 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Relatórios</title>
-</head>
-<body>
-
-<h2>Relatórios</h2>
-
-<ul>
-    <li><a href="/relatorios/produtos">📦 Produtos Cadastrados</a></li>
-    <li><a href="/relatorios/vendas">🧾 Vendas / Pedidos</a></li>
-    <li><a href="/relatorios/estoque">📊 Estoque Atual</a></li>
-</ul>
-
-<br>
-<a href="/">⬅ Voltar ao Menu</a>
-
-</body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <title>Relatórios</title>
 
-    <!-- Fonte futurista -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Fonte moderna e legível -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -36,46 +14,30 @@
 
         body {
             margin: 0;
-            height: 100vh;
-            font-family: 'Orbitron', sans-serif;
-            background: radial-gradient(circle at top, #001a0f, #000);
-            color: #00ff9c;
+            min-height: 100vh;
+            font-family: 'Inter', system-ui, Arial, sans-serif;
+            background: linear-gradient(135deg, #0d6efd, #1e40af);
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-        }
-
-        /* Grid Matrix */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(0,255,140,0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,255,140,0.06) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: 0;
+            padding: 30px;
         }
 
         .container {
-            position: relative;
-            z-index: 1;
-            width: 420px;
-            padding: 40px 35px;
-            border-radius: 14px;
-            background: rgba(0, 20, 10, 0.85);
-            box-shadow:
-                0 0 25px rgba(0, 255, 140, 0.35),
-                inset 0 0 20px rgba(0, 255, 140, 0.15);
-            border: 1px solid rgba(0,255,140,0.4);
+            width: 100%;
+            max-width: 640px;
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 12px rgba(0,255,140,0.8);
+            margin-bottom: 28px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #0f172a;
         }
 
         ul {
@@ -85,7 +47,7 @@
         }
 
         li {
-            margin: 18px 0;
+            margin-bottom: 16px;
         }
 
         a.report-link {
@@ -93,81 +55,85 @@
             padding: 14px;
             text-align: center;
             font-size: 14px;
+            font-weight: 500;
+            color: #0f172a;
             text-decoration: none;
-            color: #00ff9c;
-            border: 1px solid rgba(0,255,140,0.7);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        a.report-link::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(0,255,140,0.35),
-                transparent
-            );
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-        }
-
-        a.report-link:hover::before {
-            transform: translateX(100%);
+            background-color: #f1f5f9;
+            border-radius: 6px;
+            border: 1px solid #cbd5e1;
+            transition: background-color 0.2s ease, transform 0.15s ease;
         }
 
         a.report-link:hover {
-            background: rgba(0,255,140,0.12);
-            box-shadow: 0 0 18px rgba(0,255,140,0.6);
+            background-color: #e2e8f0;
             transform: translateY(-2px);
         }
 
-        .back {
-            display: block;
-            text-align: center;
-            margin-top: 30px;
-            font-size: 12px;
-            color: #00ff9c;
-            text-decoration: none;
-            opacity: 0.7;
-            transition: opacity 0.3s;
+        hr {
+            margin: 24px 0;
+            border: none;
+            border-top: 1px solid #e2e8f0;
         }
 
-        .back:hover {
-            opacity: 1;
-            text-shadow: 0 0 8px rgba(0,255,140,0.7);
+        .actions {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 20px;
+        }
+
+        .btn-back {
+            padding: 12px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            background-color: #e2e8f0;
+            color: #0f172a;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-back:hover {
+            background-color: #cbd5e1;
         }
     </style>
 </head>
+
 <body>
 
 <div class="container">
-    <h2>RELATÓRIOS</h2>
+    <h2>Relatórios</h2>
 
     <ul>
         <li>
             <a class="report-link" href="/relatorios/produtos">
-                📦 PRODUTOS CADASTRADOS
+                📦 Produtos Cadastrados
             </a>
         </li>
         <li>
             <a class="report-link" href="/relatorios/vendas">
-                🧾 VENDAS / PEDIDOS
+                🧾 Vendas / Pedidos
             </a>
         </li>
         <li>
             <a class="report-link" href="/relatorios/estoque">
-                📊 ESTOQUE ATUAL
+                📊 Estoque Atual
             </a>
         </li>
     </ul>
 
-    <a href="/" class="back">⬅ VOLTAR AO MENU</a>
+    <hr>
+
+    <div class="actions">
+        <button class="btn-back" onclick="voltarMenu()">⬅ Voltar</button>
+    </div>
 </div>
+
+<script>
+    function voltarMenu() {
+        window.location.href = "/";
+    }
+</script>
 
 </body>
 </html>

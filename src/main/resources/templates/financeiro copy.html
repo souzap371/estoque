@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Financeiro</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      color: #1e88e5;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      width: 95%;
+      margin: 30px auto;
+    }
+
+    .filtros {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+    }
+
+    input, select, button {
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      background: #1e88e5;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background: #1565c0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background: #1e88e5;
+      color: #fff;
+    }
+
+    .aberto {
+      color: red;
+      font-weight: bold;
+    }
+
+    .quitado {
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <h1>💰 Financeiro - Contas a Receber</h1>
+
+  <!-- FILTROS -->
+  <div class="filtros">
+    <select id="cliente" onchange="carregarPorCliente()">
+  <option value="TODOS">Todos</option>
+</select>
+
+
+    <button onclick="carregarPorCliente()">Filtrar</button>
+  </div>
+
+  <!-- TABELA -->
+  <table>
+    <thead>
+    <tr>
+      <th>Cliente</th>
+      <th>Total</th>
+      <th>Pago</th>
+      <th>Saldo</th>
+      <th>Status</th>
+      <th>Ação</th>
+    </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+</div>
+<script>
+  function carregarClientes() {
+  fetch('/financeiro/clientes')
+    .then(res => res.json())
+    .then(clientes => {
+      const select = document.getElementById('cliente');
+
+      clientes.forEach(nome => {
+        const opt = document.createElement('option');
+        opt.value = nome;
+        opt.textContent = nome;
+        select.appendChild(opt);
+      });
+
+      // já carrega tudo ao abrir
+      carregarPorCliente();
+    });
+}
+
+  function carregarPorCliente() {
+    const cliente = document.getElementById('cliente').value;
+    if (!cliente) {
+      alert('Selecione um cliente');
+      return;
+    }
+
+    fetch(`/financeiro/cliente/${cliente}`)
+      .then(res => res.json())
+      .then(dados => {
+        const tbody = document.getElementById('tbody');
+        tbody.innerHTML = '';
+
+        dados.forEach(c => {
+          const status = c.saldoDevedor > 0 ? 'ABERTO' : 'QUITADO';
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${c.clienteNome}</td>
+            <td>R$ ${c.valorOriginal.toFixed(2)}</td>
+            <td>R$ ${c.valorPago.toFixed(2)}</td>
+            <td>R$ ${c.saldoDevedor.toFixed(2)}</td>
+            <td class="${status === 'ABERTO' ? 'aberto' : 'quitado'}">${status}</td>
+            <td>
+              ${
+                status === 'ABERTO'
+                  ? `<button onclick="abrirBaixa(${c.id}, ${c.saldoDevedor})">
+                        Dar Baixa
+                     </button>`
+                  : ''
+              }
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      });
+  }
+
+  function abrirBaixa(id, saldo) {
+    const valor = prompt(`Informe o valor da baixa (Saldo atual: R$ ${saldo.toFixed(2)})`);
+    if (valor === null) return;
+
+    const valorNum = parseFloat(valor);
+    if (isNaN(valorNum) || valorNum <= 0 || valorNum > saldo) {
+      alert('Valor inválido');
+      return;
+    }
+
+    const data = prompt('Informe a data do pagamento (YYYY-MM-DD):');
+    if (!data) {
+      alert('Data obrigatória');
+      return;
+    }
+
+    darBaixa(id, valorNum, data);
+  }
+
+  function darBaixa(id, valor, data) {
+    fetch(`/financeiro/baixar/${id}?valor=${valor}&data=${data}`, {
+      method: 'POST'
+    })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error('Erro ao dar baixa');
+      }
+      alert('Baixa registrada com sucesso!');
+      carregarPorCliente();
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Erro ao registrar baixa');
+    });
+  }
+
+  carregarClientes();
+</script>
+
+
+</body>
+</html>

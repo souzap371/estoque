@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Estoque por Filial</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: #0f172a;
+            color: #e5e7eb;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .filtro {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        select {
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: none;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #020617;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: center;
+        }
+
+        th {
+            background: #1e293b;
+        }
+
+        tr:nth-child(even) {
+            background: #020617;
+        }
+
+        tr:nth-child(odd) {
+            background: #020617;
+        }
+
+        .status-ok {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .status-baixo {
+            color: #ef4444;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📦 Estoque por Filial</h1>
+
+<div class="filtro">
+    <label>
+        Filial:
+        <select id="filialSelect" onchange="filtrarFilial()">
+            <option value="MATRIZ">MATRIZ</option>
+            <option value="MG">MG</option>
+            <option value="AL">AL</option>
+        </select>
+    </label>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Código</th>
+        <th>Produto</th>
+        <th>Filial</th>
+        <th>Quantidade</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody id="tabelaEstoque">
+    <tr th:each="estoque : ${estoques}">
+        <td th:text="${estoque.produto.codigo}"></td>
+        <td th:text="${estoque.produto.nome}"></td>
+        <td th:text="${estoque.filial}"></td>
+        <td th:text="${estoque.quantidade}"></td>
+        <td>
+            <span th:if="${estoque.quantidade > 10}" class="status-ok">OK</span>
+            <span th:if="${estoque.quantidade <= 10}" class="status-baixo">BAIXO</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function filtrarFilial() {
+        const filial = document.getElementById("filialSelect").value;
+        window.location.href = `/estoque/filial?filial=${filial}`;
+    }
+</script>
+
+</body>
+</html>

@@ -8,7 +8,6 @@ import com.expedicao.estoque.repositorie.ProdutoRepository;
 import com.expedicao.estoque.repositorie.VendaRepository;
 
 import jakarta.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -36,28 +35,53 @@ public class VendaService {
     }
 
     /**
-     * Registra uma venda, valida estoque e dá baixa automática.
-     * Se faltar estoque, TODA a operação é revertida.
+     * Registra uma VENDA ou TRANSFERÊNCIA.
+     *
+     * Regras:
+     * - SEMPRE baixa estoque da matriz
+     * - Se for TRANSFERÊNCIA, entra estoque na filial (MG ou AL)
+     * - Financeiro SEMPRE é gerado (Conta a Receber)
+     * - Tudo é transacional (rollback automático)
      */
     @Transactional
     public void salvarPedido(VendaDTO dto) {
 
-        // 1️⃣ Criar a venda
+        // ===============================
+        // 1️⃣ Validações básicas
+        // ===============================
+        if (dto.getItens() == null || dto.getItens().isEmpty()) {
+            throw new RuntimeException("Nenhum item informado no pedido");
+        }
+
+        TipoMovimentacao tipoMovimentacao =
+                TipoMovimentacao.valueOf(dto.getTipoMovimentacao());
+
+        if (tipoMovimentacao == TipoMovimentacao.T) {
+            if (dto.getEstadoDestino() == null || dto.getEstadoDestino().isBlank()) {
+                throw new RuntimeException("Estado destino é obrigatório para transferência");
+            }
+        }
+
+        // ===============================
+        // 2️⃣ Criação da Venda
+        // ===============================
         Venda venda = new Venda();
         venda.setClienteNome(dto.getClienteNome());
         venda.setClienteEstado(dto.getClienteEstado());
+        venda.setTipoMovimentacao(tipoMovimentacao);
         venda.setEstadoDestino(dto.getEstadoDestino());
-        venda.setTipoMovimentacao(TipoMovimentacao.valueOf(dto.getTipoMovimentacao()));
         venda.setDataSaida(LocalDate.now());
 
-        List<VendaItem> itens = new ArrayList<>();
-        double total = 0.0;
+        List<VendaItem> itensVenda = new ArrayList<>();
+        double valorTotal = 0.0;
 
-        // 2️⃣ Processar itens
+        // ===============================
+        // 3️⃣ Processamento dos itens
+        // ===============================
         for (VendaItemDTO itemDTO : dto.getItens()) {
 
             if (itemDTO.getCodigoOuNome() == null || itemDTO.getCodigoOuNome().isBlank()) {
-                throw new RuntimeException("Produto não informado no item da venda");
+                throw new RuntimeException("Produto não informado");
             }
 
             if (itemDTO.getQuantidade() <= 0) {
@@ -70,8 +94,21 @@ public class VendaService {
                             new RuntimeException("Produto não encontrado: " + itemDTO.getCodigoOuNome())
                     );
 
-            // 🔥 Baixa automática no estoque
-            estoqueService.baixarEstoque(produto, itemDTO.getQuantidade());
+           // 🔻 SEMPRE baixa estoque da matriz
+estoqueService.baixarEstoque(produto, itemDTO.getQuantidade());
+
+// ➕ Se for TRANSFERÊNCIA, entra no estoque da filial
+if (tipoMovimentacao == TipoMovimentacao.T) {
+
+    Filial filialDestino = Filial.valueOf(dto.getEstadoDestino());
+
+    estoqueService.entradaEstoque(
+            produto,
+            filialDestino,
+            itemDTO.getQuantidade()
+    );
+}
+
 
             VendaItem item = new VendaItem();
             item.setVenda(venda);
@@ -82,23 +119,27 @@ public class VendaService {
             double subtotal = itemDTO.getQuantidade() * itemDTO.getValorPorCaixa();
             item.setSubtotal(subtotal);
 
-            total += subtotal;
-            itens.add(item);
+            valorTotal += subtotal;
+            itensVenda.add(item);
         }
 
-        // 3️⃣ Finaliza venda
-        venda.setItens(itens);
-        venda.setValorTotal(total);
+        // ===============================
+        // 4️⃣ Finaliza e salva a venda
+        // ===============================
+        venda.setItens(itensVenda);
+        venda.setValorTotal(valorTotal);
 
         vendaRepository.save(venda);
 
-        // 4️⃣ Cria Conta a Receber
+        // ===============================
+        // 5️⃣ Geração do Financeiro (SEM ALTERAÇÃO)
+        // ===============================
         ContaReceber conta = new ContaReceber();
         conta.setVenda(venda);
         conta.setClienteNome(venda.getClienteNome());
-        conta.setValorOriginal(venda.getValorTotal());
+        conta.setValorOriginal(valorTotal);
         conta.setValorPago(0.0);
-        conta.setSaldoDevedor(venda.getValorTotal());
+        conta.setSaldoDevedor(valorTotal);
         conta.setDataCriacao(LocalDate.now());
 
         contaReceberRepository.save(conta);

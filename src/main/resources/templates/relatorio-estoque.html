@@ -112,16 +112,30 @@
         <thead>
             <tr>
                 <th>Produto</th>
+                <th>Filial</th>
                 <th>Quantidade</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="e : ${estoques}">
+            <!-- <tr th:each="e : ${estoques}">
                 <td th:text="${e.produto != null ? e.produto.nome : 'SEM PRODUTO'}"
                     th:classappend="${e.produto == null} ? 'empty' : ''">
                 </td>
                 <td th:text="${e.quantidadeAtual}"></td>
-            </tr>
+            </tr> -->
+            <tr th:each="e : ${estoques}">
+    <td th:text="${e.produto != null ? e.produto.nome : 'SEM PRODUTO'}"
+        th:classappend="${e.produto == null} ? 'empty' : ''">
+    </td>
+
+    <td th:switch="${e.filial}">
+    <span th:case="'MATRIZ'">🏢 MATRIZ</span>
+    <span th:case="'MG'">📍 FILIAL MG</span>
+    <span th:case="'AL'">📍 FILIAL AL</span>
+</td>
+
+    <td th:text="${e.quantidadeAtual}"></td>
+</tr>
         </tbody>
     </table>
 

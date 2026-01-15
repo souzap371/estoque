@@ -3,28 +3,28 @@ package com.expedicao.estoque.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(
-    uniqueConstraints = @UniqueConstraint(columnNames = {"produto_id", "filial"})
-)
-public class Estoque {
+@Table(name = "estoque_filial",
+       uniqueConstraints = @UniqueConstraint(columnNames = {"produto_id", "filial"}))
+public class EstoqueFilial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
     private Produto produto;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Filial filial;
 
-    @Column(nullable = false)
-    private Integer quantidadeAtual = 0;
+    private Integer quantidade;
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Produto getProduto() {
@@ -43,11 +43,15 @@ public class Estoque {
         this.filial = filial;
     }
 
-    public Integer getQuantidadeAtual() {
-        return quantidadeAtual;
+    public Integer getQuantidade() {
+        return quantidade;
     }
 
-    public void setQuantidadeAtual(Integer quantidadeAtual) {
-        this.quantidadeAtual = quantidadeAtual;
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
+
+    // getters e setters
+
+    
 }

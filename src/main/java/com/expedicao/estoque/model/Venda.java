@@ -2,6 +2,7 @@ package com.expedicao.estoque.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -100,3 +101,5 @@ private List<VendaItem> itens;
 
     
 }
+
+

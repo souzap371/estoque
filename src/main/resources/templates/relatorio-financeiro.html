@@ -1,150 +1,180 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<title>Relatório Financeiro</title>
+  <meta charset="UTF-8">
+  <title>Relatório Financeiro</title>
 
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f6f9;
-}
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+    }
 
-.container {
-  width: 95%;
-  margin: 30px auto;
-}
+    .container {
+      width: 95%;
+      margin: 30px auto;
+    }
 
-h1 {
-  color: #1e88e5;
-}
+    h1 {
+      color: #1e88e5;
+    }
 
-.filtros {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
+    .filtros {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
 
-select, button {
-  padding: 8px;
-}
+    select,
+    button {
+      padding: 8px;
+    }
 
-button {
-  background: #1e88e5;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
+    button {
+      background: #1e88e5;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
 
-table {
-  width: 100%;
-  background: white;
-  border-collapse: collapse;
-}
+    table {
+      width: 100%;
+      background: white;
+      border-collapse: collapse;
+    }
 
-th, td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  text-align: center;
-}
+    th,
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
 
-th {
-  background: #1e88e5;
-  color: white;
-}
+    th {
+      background: #1e88e5;
+      color: white;
+    }
 
-.aberto { color: red; font-weight: bold; }
-.quitado { color: green; font-weight: bold; }
+    .aberto {
+      color: red;
+      font-weight: bold;
+    }
 
-.pagamentos {
-  background: #f9fafb;
-}
-</style>
+    .quitado {
+      color: green;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
-<div class="container">
+  <div class="container">
 
-<h1>📊 Relatório Financeiro</h1>
+    <h1>📊 Relatório Financeiro</h1>
 
-<div class="filtros">
-  <select id="status">
-    <option value="">Todos</option>
-    <option value="ABERTO">Em Aberto</option>
-    <option value="QUITADO">Quitado</option>
-  </select>
+    <div class="filtros">
+      <select id="status">
+        <option value="">Todos</option>
+        <option value="ABERTO">Em Aberto</option>
+        <option value="QUITADO">Quitado</option>
+      </select>
 
-  <button onclick="carregarRelatorio()">Filtrar</button>
-</div>
+      <button onclick="carregarRelatorio()">Filtrar</button>
+    </div>
 
-<table>
-<thead>
-<tr>
-  <th>Cliente</th>
-  <th>Total</th>
-  <th>Pago</th>
-  <th>Saldo</th>
-  <th>Status</th>
-  <th>Pagamentos</th>
-</tr>
-</thead>
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Total</th>
+          <th>Pago</th>
+          <th>Saldo</th>
+          <th>Status</th>
+          <th>Valor da Baixa</th>
+          <th>Data da Baixa</th>
+          <th>Forma de Pagamento</th>
+        </tr>
+      </thead>
 
-<tbody id="tbody"></tbody>
-</table>
+      <tbody id="tbody"></tbody>
+    </table>
 
-</div>
+  </div>
 
-<script>
-function carregarRelatorio() {
+  <script>
+    function formatarMoeda(valor) {
+      if (valor == null) return '-';
+      return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      }).format(valor);
+    }
 
-  const status = document.getElementById('status').value;
- let url = '/financeiro/api/relatorio';
+    function formatarDataBR(data) {
+      if (!data) return '-';
+      return new Date(data).toLocaleDateString('pt-BR');
+    }
 
-  if (status) {
-    url += '?status=' + status;
-  }
+    function carregarRelatorio() {
 
-  fetch(url)
-    .then(res => res.json())
-    .then(dados => {
-      const tbody = document.getElementById('tbody');
-      tbody.innerHTML = '';
+      const status = document.getElementById('status').value;
+      let url = '/financeiro/api/relatorio';
 
-      dados.forEach(c => {
-        const statusTxt = c.saldoDevedor > 0 ? 'ABERTO' : 'QUITADO';
+      if (status) {
+        url += '?status=' + status;
+      }
 
-        let pagamentosHtml = '';
-        if (c.pagamentos && c.pagamentos.length > 0) {
-          pagamentosHtml = '<ul>';
-          c.pagamentos.forEach(p => {
-            pagamentosHtml += `
-              <li>
-                R$ ${p.valorPago.toFixed(2)} —
-                ${p.dataPagamento}
-              </li>`;
+      fetch(url)
+        .then(res => res.json())
+        .then(dados => {
+          const tbody = document.getElementById('tbody');
+          tbody.innerHTML = '';
+
+          dados.forEach(c => {
+            const statusTxt = c.saldoDevedor > 0 ? 'ABERTO' : 'QUITADO';
+
+            // 🔹 SE TIVER PAGAMENTOS → UMA LINHA POR PAGAMENTO
+            if (c.pagamentos && c.pagamentos.length > 0) {
+
+              c.pagamentos.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                  <td>${c.clienteNome}</td>
+                  <td>${formatarMoeda(c.valorOriginal)}</td>
+                  <td>${formatarMoeda(c.valorPago)}</td>
+                  <td>${formatarMoeda(c.saldoDevedor)}</td>
+                  <td class="${statusTxt === 'ABERTO' ? 'aberto' : 'quitado'}">${statusTxt}</td>
+                  <td>${formatarMoeda(p.valorPago)}</td>
+                  <td>${formatarDataBR(p.dataPagamento)}</td>
+                  <td>${p.formaPagamento || '-'}</td>
+                `;
+                tbody.appendChild(tr);
+              });
+
+            } 
+            // 🔹 SE NÃO TIVER PAGAMENTO → MOSTRA A CONTA
+            else {
+              const tr = document.createElement('tr');
+              tr.innerHTML = `
+                <td>${c.clienteNome}</td>
+                <td>${formatarMoeda(c.valorOriginal)}</td>
+                <td>${formatarMoeda(c.valorPago)}</td>
+                <td>${formatarMoeda(c.saldoDevedor)}</td>
+                <td class="${statusTxt === 'ABERTO' ? 'aberto' : 'quitado'}">${statusTxt}</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+              `;
+              tbody.appendChild(tr);
+            }
           });
-          pagamentosHtml += '</ul>';
-        } else {
-          pagamentosHtml = 'Nenhum pagamento';
-        }
+        });
+    }
 
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${c.clienteNome}</td>
-          <td>R$ ${c.valorOriginal.toFixed(2)}</td>
-          <td>R$ ${c.valorPago.toFixed(2)}</td>
-          <td>R$ ${c.saldoDevedor.toFixed(2)}</td>
-          <td class="${statusTxt === 'ABERTO' ? 'aberto' : 'quitado'}">${statusTxt}</td>
-          <td class="pagamentos">${pagamentosHtml}</td>
-        `;
-
-        tbody.appendChild(tr);
-      });
-    });
-}
-
-carregarRelatorio();
-</script>
+    carregarRelatorio();
+  </script>
 
 </body>
+
 </html>

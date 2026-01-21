@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Pedido / Venda</title>
@@ -29,7 +30,7 @@
             background: #ffffff;
             padding: 32px;
             border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
@@ -48,7 +49,8 @@
             margin-bottom: 6px;
         }
 
-        input, select {
+        input,
+        select {
             width: 100%;
             padding: 10px 12px;
             font-size: 14px;
@@ -58,7 +60,8 @@
             outline: none;
         }
 
-        input:focus, select:focus {
+        input:focus,
+        select:focus {
             border-color: #2563eb;
             box-shadow: 0 0 0 1px #2563eb;
         }
@@ -167,153 +170,178 @@
 
 <body>
 
-<div class="container">
-    <h2>Pedido / Venda</h2>
+    <div class="container">
+        <h2>Pedido / Venda</h2>
 
-    <!-- CLIENTE -->
-    <div class="grid">
-        <div>
-            <label>Nome do Cliente</label>
-            <input id="clienteNome">
-        </div>
+        <!-- CLIENTE -->
+        <div class="grid">
+            <div>
+                <label>Nome do Cliente</label>
+                <input id="clienteNome">
+            </div>
 
-        <div>
-            <label>Estado do Cliente</label>
-            <input id="clienteEstado">
-        </div>
+            <div>
+                <label>Estado do Cliente</label>
+                <input id="clienteEstado">
+            </div>
 
-        <div>
-            <label>Tipo</label>
-            <div class="flex">
-                <label><input type="radio" name="tipo" value="V" checked> Venda</label>
-                <label><input type="radio" name="tipo" value="T"> Transferência</label>
+            <div>
+                <label>Tipo</label>
+                <div class="flex">
+                    <label><input type="radio" name="tipo" value="V" checked> Venda</label>
+                    <label><input type="radio" name="tipo" value="T"> Transferência</label>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="estadoDestinoDiv" style="display:none;">
-        <label>Estado Destino</label>
-        <select id="estadoDestino">
-            <option value="">Selecione</option>
-            <option value="AL">AL</option>
-            <option value="MG">MG</option>
-        </select>
-    </div>
-
-    <hr>
-
-    <!-- PRODUTO -->
-    <div class="grid">
-        <div>
-            <label>Código ou Nome do Produto</label>
-            <input id="produto">
+        <div id="estadoDestinoDiv" style="display:none;">
+            <label>Estado Destino</label>
+            <select id="estadoDestino">
+                <option value="">Selecione</option>
+                <option value="AL">AL</option>
+                <option value="MG">MG</option>
+            </select>
         </div>
 
-        <div>
-            <label>Quantidade</label>
-            <input type="number" id="quantidade" min="1">
+        <hr>
+
+        <!-- PRODUTO -->
+        <div class="grid">
+            <div>
+                <label>Código ou Nome do Produto</label>
+                <input id="produto">
+            </div>
+
+            <div>
+                <label>Quantidade</label>
+                <input type="number" id="quantidade" min="1">
+            </div>
+
+            <div>
+                <label>Valor por Caixa</label>
+                <input type="number" step="0.01" id="valor">
+            </div>
         </div>
 
-        <div>
-            <label>Valor por Caixa</label>
-            <input type="number" step="0.01" id="valor">
+        <button class="btn-add" type="button" onclick="adicionarItem()">➕ Adicionar Produto</button>
+
+        <!-- TABELA -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Qtd</th>
+                    <th>Valor</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody id="itens"></tbody>
+        </table>
+
+        <h3 id="total">TOTAL: R$ 0,00</h3>
+
+        <div class="actions">
+            <button class="btn-back" onclick="voltarMenu()">⬅ Voltar</button>
+            <button class="btn-finish" onclick="concluirPedido()">✅ Concluir Pedido</button>
         </div>
     </div>
 
-    <button class="btn-add" type="button" onclick="adicionarItem()">➕ Adicionar Produto</button>
+    <script>
+        let itens = [];
+        let total = 0;
 
-    <!-- TABELA -->
-    <table>
-        <thead>
-        <tr>
-            <th>Produto</th>
-            <th>Qtd</th>
-            <th>Valor</th>
-            <th>Subtotal</th>
-        </tr>
-        </thead>
-        <tbody id="itens"></tbody>
-    </table>
+        const moedaBR = valor =>
+            new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(valor);
 
-    <h3 id="total">TOTAL: R$ 0,00</h3>
-
-    <div class="actions">
-        <button class="btn-back" onclick="voltarMenu()">⬅ Voltar</button>
-        <button class="btn-finish" onclick="concluirPedido()">✅ Concluir Pedido</button>
-    </div>
-</div>
-
-<script>
-    let itens = [];
-    let total = 0;
-
-    const moedaBR = valor =>
-        new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-        }).format(valor);
-
-    document.querySelectorAll("input[name='tipo']").forEach(radio => {
-        radio.addEventListener("change", () => {
-            const tipoSelecionado = document.querySelector("input[name='tipo']:checked").value;
-            document.getElementById("estadoDestinoDiv").style.display =
-                tipoSelecionado === "T" ? "block" : "none";
-        });
-    });
-
-    function adicionarItem() {
-        const produto = document.getElementById("produto").value;
-        const qtd = parseInt(document.getElementById("quantidade").value);
-        const valor = parseFloat(document.getElementById("valor").value);
-
-        if (!produto || !qtd || !valor) {
-            alert("Preencha todos os campos do produto");
-            return;
-        }
-
-        const subtotal = qtd * valor;
-        total += subtotal;
-
-        itens.push({
-            codigoOuNome: produto,
-            quantidade: qtd,
-            valorPorCaixa: valor
+        document.querySelectorAll("input[name='tipo']").forEach(radio => {
+            radio.addEventListener("change", () => {
+                const tipoSelecionado = document.querySelector("input[name='tipo']:checked").value;
+                document.getElementById("estadoDestinoDiv").style.display =
+                    tipoSelecionado === "T" ? "block" : "none";
+            });
         });
 
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
+        function adicionarItem() {
+            const produto = document.getElementById("produto").value;
+            const qtd = parseInt(document.getElementById("quantidade").value);
+            const valor = parseFloat(document.getElementById("valor").value);
+
+            if (!produto || !qtd || !valor) {
+                alert("Preencha todos os campos do produto");
+                return;
+            }
+
+            const subtotal = qtd * valor;
+            total += subtotal;
+
+            itens.push({
+                codigoOuNome: produto,
+                quantidade: qtd,
+                valorPorCaixa: valor
+            });
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
             <td>${produto}</td>
             <td>${qtd}</td>
             <td>${moedaBR(valor)}</td>
             <td>${moedaBR(subtotal)}</td>
         `;
-        document.getElementById("itens").appendChild(tr);
+            document.getElementById("itens").appendChild(tr);
 
-        document.getElementById("total").innerText = "TOTAL: " + moedaBR(total);
+            document.getElementById("total").innerText = "TOTAL: " + moedaBR(total);
 
-        document.getElementById("produto").value = "";
-        document.getElementById("quantidade").value = "";
-        document.getElementById("valor").value = "";
-    }
+            document.getElementById("produto").value = "";
+            document.getElementById("quantidade").value = "";
+            document.getElementById("valor").value = "";
+        }
 
-    function concluirPedido() {
-        fetch("[[@{/vendas/salvar}]]", {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                clienteNome: clienteNome.value,
-                clienteEstado: clienteEstado.value,
-                tipoMovimentacao: document.querySelector("input[name='tipo']:checked").value,
-                estadoDestino: estadoDestino.value,
-                itens: itens
-            })
-        }).then(() => location.reload());
-    }
+        // function concluirPedido() {
+        //     fetch("[[@{/vendas/salvar}]]", {
+        //         method: "POST",
+        //         headers: {"Content-Type": "application/json"},
+        //         body: JSON.stringify({
+        //             clienteNome: clienteNome.value,
+        //             clienteEstado: clienteEstado.value,
+        //             tipoMovimentacao: document.querySelector("input[name='tipo']:checked").value,
+        //             estadoDestino: estadoDestino.value,
+        //             itens: itens
+        //         })
+        //     }).then(() => location.reload());
+        // }
 
-    function voltarMenu() {
-        window.location.href = "[[@{/}]]";
-    }
-</script>
+        function concluirPedido() {
+
+            const tipo = document.querySelector("input[name='tipo']:checked").value;
+            const estadoDestinoSelect = document.getElementById("estadoDestino");
+
+            if (tipo === "T" && !estadoDestinoSelect.value) {
+                alert("Selecione o estado da filial de destino (MG ou AL).");
+                estadoDestinoSelect.focus();
+                return;
+            }
+
+            fetch("[[@{/vendas/salvar}]]", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    clienteNome: clienteNome.value,
+                    clienteEstado: clienteEstado.value,
+                    tipoMovimentacao: tipo,
+                    estadoDestino: tipo === "T" ? estadoDestinoSelect.value : null,
+                    itens: itens
+                })
+            }).then(() => location.reload());
+        }
+
+        function voltarMenu() {
+            window.location.href = "[[@{/}]]";
+        }
+    </script>
 
 </body>
+
 </html>

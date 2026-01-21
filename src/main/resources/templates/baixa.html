@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dar Baixa</title>
+
+  <style>
+    body { font-family: Arial; background:#f4f6f9; }
+    .container {
+      width: 400px;
+      margin: 50px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 6px;
+    }
+    label { display:block; margin-top:10px; }
+    input, select, button {
+      width:100%;
+      padding:8px;
+      margin-top:5px;
+    }
+    button {
+      background:#1e88e5;
+      color:white;
+      border:none;
+      margin-top:15px;
+      cursor:pointer;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <h2>💰 Dar Baixa</h2>
+
+  <input type="hidden" id="contaId" th:value="${contaId}">
+
+  <label>Valor da Baixa</label>
+  <input type="number" id="valor" step="0.01">
+
+  <label>Data da Baixa</label>
+  <input type="date" id="data">
+
+  <label>Forma de Pagamento</label>
+  <select id="forma">
+  <option value="PIX">PIX</option>
+  <option value="CC">Cartão Crédito</option>
+  <option value="CD">Cartão Débito</option>
+  <option value="DEPOSITO">Depósito</option>
+  <option value="ESPECIE">Espécie</option>
+  <option value="CARRO">Carro</option>
+  <option value="MOTO">Moto</option>
+  <option value="IMOVEL">Imóvel</option>
+</select>
+
+
+  <button onclick="confirmarBaixa()">Confirmar Baixa</button>
+</div>
+
+<script>
+function confirmarBaixa() {
+  const id = document.getElementById('contaId').value;
+  const valor = document.getElementById('valor').value;
+  const data = document.getElementById('data').value;
+  const forma = document.getElementById('forma').value;
+
+  fetch(`/financeiro/api/baixar/${id}?valor=${valor}&data=${data}&formaPagamento=${forma}`, {
+
+    method: 'POST'
+  })
+  .then(res => {
+    if (!res.ok) throw new Error();
+    alert('Baixa registrada com sucesso!');
+    window.location.href = '/financeiro';
+  })
+  .catch(() => alert('Erro ao registrar baixa'));
+}
+</script>
+
+</body>
+</html>

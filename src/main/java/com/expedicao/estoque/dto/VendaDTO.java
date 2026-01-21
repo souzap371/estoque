@@ -2,6 +2,8 @@ package com.expedicao.estoque.dto;
 
 import java.util.List;
 
+import com.expedicao.estoque.model.Filial;
+
 public class VendaDTO {
 
     private String clienteNome;

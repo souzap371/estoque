@@ -1,5 +1,6 @@
 package com.expedicao.estoque.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
@@ -17,9 +18,14 @@ public class Pagamento {
      * Muitos pagamentos para uma conta a receber
      * JsonIgnore evita loop infinito no retorno da API
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "conta_receber_id", nullable = false)
-    @JsonIgnore
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "conta_receber_id", nullable = false)
+    // @JsonIgnore
+    // private ContaReceber contaReceber;
+
+    @ManyToOne
+    @JoinColumn(name = "conta_receber_id")
+    @JsonBackReference
     private ContaReceber contaReceber;
 
     @Column(nullable = false)
@@ -27,6 +33,10 @@ public class Pagamento {
 
     @Column(nullable = false)
     private LocalDate dataPagamento;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private FormaPagamento formaPagamento;
 
     @Column(length = 255)
     private String observacao;
@@ -69,5 +79,13 @@ public class Pagamento {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public FormaPagamento getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
     }
 }

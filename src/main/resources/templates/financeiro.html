@@ -1,138 +1,206 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <title>Financeiro</title>
 
   <style>
-    body { font-family: Arial, sans-serif; background:#f4f6f9; }
-    h1 { color:#1e88e5; }
-    .container { width:95%; margin:30px auto; }
-    .filtros { display:flex; gap:10px; margin-bottom:15px; }
-    select, button { padding:8px; font-size:14px; }
-    button { background:#1e88e5; color:#fff; border:none; cursor:pointer; border-radius:4px; }
-    button:hover { background:#1565c0; }
-    table { width:100%; border-collapse:collapse; background:#fff; }
-    th, td { padding:10px; border-bottom:1px solid #ddd; text-align:center; }
-    th { background:#1e88e5; color:#fff; }
-    .aberto { color:red; font-weight:bold; }
-    .quitado { color:green; font-weight:bold; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+    }
+
+    h1 {
+      color: #1e88e5;
+    }
+
+    .container {
+      width: 95%;
+      margin: 30px auto;
+    }
+
+    .filtros {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    select,
+    button {
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    button {
+      background: #1e88e5;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background: #1565c0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background: #1e88e5;
+      color: #fff;
+    }
+
+    .aberto {
+      color: red;
+      font-weight: bold;
+    }
+
+    .quitado {
+      color: green;
+      font-weight: bold;
+    }
   </style>
 </head>
 
 <body>
-<div class="container">
+  <div class="container">
 
-  <h1>💰 Financeiro - Contas a Receber</h1>
+    <h1>💰 Financeiro - Contas a Receber</h1>
 
-  <div class="filtros">
-    <select id="cliente" onchange="carregarPorCliente()">
-      <option value="TODOS">Todos</option>
-    </select>
+    <div class="filtros">
+      <select id="cliente" onchange="carregarPorCliente()">
+        <option value="TODOS">Todos</option>
+      </select>
 
-    <button onclick="carregarPorCliente()">Filtrar</button>
+      <button onclick="carregarPorCliente()">Filtrar</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Total</th>
+          <th>Pago</th>
+          <th>Saldo</th>
+          <th>Status</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+
   </div>
+  <script>
+    function carregarClientes() {
+      fetch('/financeiro/api/clientes')
+        .then(res => res.json())
+        .then(clientes => {
+          const select = document.getElementById('cliente');
 
-  <table>
-    <thead>
-      <tr>
-        <th>Cliente</th>
-        <th>Total</th>
-        <th>Pago</th>
-        <th>Saldo</th>
-        <th>Status</th>
-        <th>Ação</th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
+          clientes.forEach(nome => {
+            const opt = document.createElement('option');
+            opt.value = nome;
+            opt.textContent = nome;
+            select.appendChild(opt);
+          });
 
-</div>
-<script>
-function carregarClientes() {
-  fetch('/financeiro/api/clientes')
-    .then(res => res.json())
-    .then(clientes => {
-      const select = document.getElementById('cliente');
+          carregarPorCliente();
+        });
+    }
 
-      clientes.forEach(nome => {
-        const opt = document.createElement('option');
-        opt.value = nome;
-        opt.textContent = nome;
-        select.appendChild(opt);
-      });
+    function carregarPorCliente() {
+      const cliente = document.getElementById('cliente').value;
+      let url = '';
 
-      carregarPorCliente();
-    });
-}
+      if (cliente === 'TODOS') {
+        url = '/financeiro/api/todos';
+      } else {
+        url = `/financeiro/api/cliente/${cliente}`;
+      }
 
-function carregarPorCliente() {
-  const cliente = document.getElementById('cliente').value;
-  let url = '';
+      fetch(url)
+        .then(res => res.json())
+        .then(dados => {
+          const tbody = document.getElementById('tbody');
+          tbody.innerHTML = '';
 
-  if (cliente === 'TODOS') {
-    url = '/financeiro/api/todos';
-  } else {
-    url = `/financeiro/api/cliente/${cliente}`;
-  }
+          dados.forEach(c => {
+            const status = c.saldoDevedor > 0 ? 'ABERTO' : 'QUITADO';
 
-  fetch(url)
-    .then(res => res.json())
-    .then(dados => {
-      const tbody = document.getElementById('tbody');
-      tbody.innerHTML = '';
-
-      dados.forEach(c => {
-        const status = c.saldoDevedor > 0 ? 'ABERTO' : 'QUITADO';
-
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
           <td>${c.clienteNome}</td>
-          <td>R$ ${c.valorOriginal.toFixed(2)}</td>
-          <td>R$ ${c.valorPago.toFixed(2)}</td>
-          <td>R$ ${c.saldoDevedor.toFixed(2)}</td>
+          <td>${formatarMoeda(c.valorOriginal)}</td>
+<td>${formatarMoeda(c.valorPago)}</td>
+<td>${formatarMoeda(c.saldoDevedor)}</td>
+
           <td class="${status === 'ABERTO' ? 'aberto' : 'quitado'}">${status}</td>
           <td>
             ${status === 'ABERTO'
-              ? `<button onclick="abrirBaixa(${c.id}, ${c.saldoDevedor})">Dar Baixa</button>`
-              : ''}
+                ? `<button onclick="window.location.href='/financeiro/baixar/${c.id}'">
+  Dar Baixa
+</button>`
+                : ''}
           </td>
         `;
-        tbody.appendChild(tr);
+            tbody.appendChild(tr);
+          });
+        });
+    }
+
+    function formatarMoeda(valor) {
+      return valor.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
       });
-    });
-}
+    }
 
-function abrirBaixa(id, saldo) {
-  const valor = prompt(`Valor da baixa (Saldo: R$ ${saldo.toFixed(2)})`);
-  if (valor === null) return;
 
-  const valorNum = parseFloat(valor);
-  if (isNaN(valorNum) || valorNum <= 0 || valorNum > saldo) {
-    alert('Valor inválido');
-    return;
-  }
 
-  const data = prompt('Data do pagamento (YYYY-MM-DD)');
-  if (!data) {
-    alert('Data obrigatória');
-    return;
-  }
+    // function abrirBaixa(id, saldo) {
+    //   const valor = prompt(`Valor da baixa (Saldo: ${formatarMoeda(saldo)})`);
 
-  fetch(`/financeiro/api/baixar/${id}?valor=${valorNum}&data=${data}`, {
-    method: 'POST'
-  })
-  .then(res => {
-    if (!res.ok) throw new Error();
-    alert('Baixa registrada com sucesso!');
-    carregarPorCliente();
-  })
-  .catch(() => alert('Erro ao registrar baixa'));
-}
+    //   if (valor === null) return;
 
-carregarClientes();
-</script>
+    //   const valorNum = parseFloat(valor);
+    //   if (isNaN(valorNum) || valorNum <= 0 || valorNum > saldo) {
+    //     alert('Valor inválido');
+    //     return;
+    //   }
+
+    //   const data = prompt('Data do pagamento (YYYY-MM-DD)');
+    //   if (!data) {
+    //     alert('Data obrigatória');
+    //     return;
+    //   }
+
+    //   fetch(`/financeiro/api/baixar/${id}?valor=${valorNum}&data=${data}`, {
+    //     method: 'POST'
+    //   })
+    //     .then(res => {
+    //       if (!res.ok) throw new Error();
+    //       alert('Baixa registrada com sucesso!');
+    //       carregarPorCliente();
+    //     })
+    //     .catch(() => alert('Erro ao registrar baixa'));
+    // }
+
+    carregarClientes();
+  </script>
 
 
 </body>
+
 </html>

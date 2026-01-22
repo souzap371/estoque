@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Relatório de Produtos</title>
@@ -29,7 +30,7 @@
             background: #ffffff;
             padding: 32px;
             border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
@@ -105,38 +106,40 @@
 
 <body>
 
-<div class="container">
-    <h2>Produtos Cadastrados</h2>
+    <div class="container">
+        <h2>Produtos Cadastrados</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Código</th>
-                <th>Nome</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="p : ${produtos}">
-                <td th:text="${p.id}"></td>
-                <td class="codigo" th:text="${p.codigo}"></td>
-                <td th:text="${p.nome}"></td>
-            </tr>
-        </tbody>
-    </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Nome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${produtos}">
+                    <td th:text="${p.id}"></td>
+                    <td class="codigo" th:text="${p.codigo}"></td>
+                    <td th:text="${p.nome}"></td>
+                </tr>
+            </tbody>
+        </table>
 
-    <hr>
+        <hr>
 
-    <div class="actions">
-        <button class="btn-back" onclick="voltarRelatorios()">⬅ Voltar</button>
+        <div class="actions">
+            <!-- <button class="btn-back" onclick="voltarRelatorios()">⬅ Voltar</button> -->
+             <a href="/dashboard">⬅ Voltar ao Dashboard</a>
+        </div>
     </div>
-</div>
 
-<script>
-    function voltarRelatorios() {
-        window.location.href = "/relatorios";
-    }
-</script>
+    <!-- <script>
+        function voltarRelatorios() {
+            window.location.href = "/relatorios";
+        }
+    </script> -->
 
 </body>
+
 </html>

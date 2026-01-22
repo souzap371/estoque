@@ -1,0 +1,125 @@
+<!-- <form method="post" action="/login">
+    <h2>LOGIN</h2>
+    <input name="username" placeholder="Usuário">
+    <input type="password" name="password" placeholder="Senha">
+    <button type="submit">Entrar</button>
+</form> -->
+
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Sistema</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            width: 380px;
+            background: #ffffff;
+            padding: 30px 28px;
+            border-radius: 6px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e88e5;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1e88e5;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+            background: #1e88e5;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #1565c0;
+        }
+
+        .erro {
+            background: #ffebee;
+            color: #c62828;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <h1>🔐 Acesso ao Sistema</h1>
+
+        <!-- Mensagem de erro do Spring Security -->
+        <div th:if="${param.error}" class="erro">
+            Usuário ou senha inválidos
+        </div>
+
+        <form method="post" action="/login">
+            <label>Usuário</label>
+            <input type="text" name="username" placeholder="Digite seu usuário" required>
+
+            <label>Senha</label>
+            <input type="password" name="password" placeholder="Digite sua senha" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+
+        <div class="footer">
+            Anonymous
+        </div>
+
+    </div>
+
+</body>
+</html>

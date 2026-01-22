@@ -37,22 +37,15 @@ public class RelatorioController {
         return "relatorio-produtos";
     }
 
-    // RELATÓRIO DE VENDAS
-    // @GetMapping("/vendas")
-    // public String relatorioVendas(Model model) {
-    //     model.addAttribute("itens", vendaItemRepository.findAll());
-    //     return "relatorio-vendas";
-    // }
-
     @GetMapping("/vendas")
-public String relatorioVendas(Model model) {
+    public String relatorioVendas(Model model) {
 
-    var itens = vendaItemRepository.findAll();
-    System.out.println("TOTAL DE ITENS DE VENDA: " + itens.size());
+        var itens = vendaItemRepository.findAll();
+        System.out.println("TOTAL DE ITENS DE VENDA: " + itens.size());
 
-    model.addAttribute("itens", itens);
-    return "relatorio-vendas";
-}
+        model.addAttribute("itens", itens);
+        return "relatorio-vendas";
+    }
 
     // RELATÓRIO DE ESTOQUE
     @GetMapping("/estoque")

@@ -2,7 +2,6 @@ package com.expedicao.estoque.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,15 +22,8 @@ public class Venda {
     private LocalDate dataSaida;
 
     private Double valorTotal;
-
-    // @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL)
-    // private List<VendaItem> itens;
-    @OneToMany(
-    mappedBy = "venda",
-    cascade = CascadeType.ALL,
-    orphanRemoval = true
-)
-private List<VendaItem> itens;
+    @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<VendaItem> itens;
 
     public Long getId() {
         return id;
@@ -99,7 +91,4 @@ private List<VendaItem> itens;
 
     // getters e setters
 
-    
 }
-
-

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Entrada de Estoque</title>
@@ -29,7 +30,7 @@
             background: #ffffff;
             padding: 32px;
             border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
@@ -113,38 +114,40 @@
 
 <body>
 
-<div class="container">
-    <h2>Entrada de Estoque</h2>
+    <div class="container">
+        <h2>Entrada de Estoque</h2>
 
-    <form action="/estoque/entrada" method="post">
+        <form action="/estoque/entrada" method="post">
 
-        <div class="grid">
-            <div>
-                <label>Código ou Nome do Produto</label>
-                <input type="text" name="codigoOuNome" required>
+            <div class="grid">
+                <div>
+                    <label>Código ou Nome do Produto</label>
+                    <input type="text" name="codigoOuNome" required>
+                </div>
+
+                <div>
+                    <label>Quantidade de Entrada</label>
+                    <input type="number" name="quantidade" min="1" required>
+                </div>
             </div>
 
-            <div>
-                <label>Quantidade de Entrada</label>
-                <input type="number" name="quantidade" min="1" required>
+            <hr>
+
+            <div class="actions">
+                <!-- <button type="button" class="btn-back" onclick="voltarMenu()">⬅ Voltar</button> -->
+                 <a href="/dashboard">⬅ Voltar ao Dashboard</a>
+                <button type="submit" class="btn-save">📥 Registrar Entrada</button>
             </div>
-        </div>
 
-        <hr>
+        </form>
+    </div>
 
-        <div class="actions">
-            <button type="button" class="btn-back" onclick="voltarMenu()">⬅ Voltar</button>
-            <button type="submit" class="btn-save">📥 Registrar Entrada</button>
-        </div>
-
-    </form>
-</div>
-
-<script>
-    function voltarMenu() {
-        window.location.href = "/";
-    }
-</script>
+    <script>
+        function voltarMenu() {
+            window.location.href = "/";
+        }
+    </script>
 
 </body>
+
 </html>

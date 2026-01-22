@@ -1,0 +1,199 @@
+<!-- <!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Usuários</title>
+</head>
+
+<body>
+
+<h2>Gestão de Usuários</h2>
+
+<div sec:authorize="hasRole('MASTER')">
+    <a href="/usuarios/novo">➕ Novo Usuário</a>
+</div>
+
+<br><br>
+
+<table border="1" cellpadding="8">
+    <thead>
+        <tr>
+            <th>Usuário</th>
+            <th>Perfis</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="u : ${usuarios}">
+            <td th:text="${u.username}"></td>
+            <td>
+                <span th:each="p : ${u.perfis}"
+                      th:text="${p.nome} + ' '"></span>
+            </td>
+            <td th:text="${u.ativo ? 'Ativo' : 'Inativo'}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<a href="/dashboard">⬅ Voltar</a>
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Usuários</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 6px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            color: #1e88e5;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .actions a {
+            background: #1e88e5;
+            color: #ffffff;
+            padding: 10px 14px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .actions a:hover {
+            background: #1565c0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+        }
+
+        th {
+            background: #1e88e5;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .ativo {
+            color: green;
+            font-weight: bold;
+        }
+
+        .inativo {
+            color: red;
+            font-weight: bold;
+        }
+
+        .footer-actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .footer-actions a {
+            font-size: 14px;
+            color: #1e88e5;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer-actions a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>👥 Gestão de Usuários</h1>
+
+    <div class="actions">
+        <div></div>
+
+        <div sec:authorize="hasRole('MASTER')">
+            <a href="/usuarios/novo">➕ Novo Usuário</a>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Usuário</th>
+                <th>Perfis</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="u : ${usuarios}">
+                <td th:text="${u.username}"></td>
+
+                <td>
+                    <span th:each="p : ${u.perfis}"
+                          th:text="${p.nome}"
+                          style="margin-right: 6px;">
+                    </span>
+                </td>
+
+                <td th:class="${u.ativo} ? 'ativo' : 'inativo'"
+                    th:text="${u.ativo ? 'Ativo' : 'Inativo'}">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="footer-actions">
+        <a href="/dashboard">⬅ Voltar ao Dashboard</a>
+    </div>
+
+</div>
+
+</body>
+</html>
+

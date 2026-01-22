@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Relatório de Vendas</title>
@@ -29,7 +30,7 @@
             background: #ffffff;
             padding: 32px;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
         h2 {
@@ -90,47 +91,51 @@
                 font-size: 12px;
             }
 
-            th, td {
+            th,
+            td {
                 padding: 10px;
             }
         }
     </style>
 </head>
+
 <body>
 
-<div class="container">
-    <h2>Relatório de Vendas / Pedidos</h2>
+    <div class="container">
+        <h2>Relatório de Vendas / Pedidos</h2>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Pedido</th>
-            <th>Produto</th>
-            <th>Qtd</th>
-            <th>Cliente</th>
-            <th>Estado</th>
-            <th>Data</th>
-            <th>Tipo</th>
-        </tr>
-        </thead>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pedido</th>
+                    <th>Produto</th>
+                    <th>Qtd</th>
+                    <th>Cliente</th>
+                    <th>Estado</th>
+                    <th>Data</th>
+                    <th>Tipo</th>
+                </tr>
+            </thead>
 
-        <tbody>
-        <tr th:each="item : ${itens}">
-            <td th:text="${item.venda.id}"></td>
-            <td th:text="${item.produto.nome}"></td>
-            <td th:text="${item.quantidade}"></td>
-            <td th:text="${item.venda.clienteNome}"></td>
-            <td th:text="${item.venda.clienteEstado}"></td>
-            <td th:text="${#temporals.format(item.venda.dataSaida, 'dd/MM/yyyy')}"></td>
-            <td th:text="${item.venda.tipoMovimentacao}"></td>
-        </tr>
-        </tbody>
-    </table>
+            <tbody>
+                <tr th:each="item : ${itens}">
+                    <td th:text="${item.venda.id}"></td>
+                    <td th:text="${item.produto.nome}"></td>
+                    <td th:text="${item.quantidade}"></td>
+                    <td th:text="${item.venda.clienteNome}"></td>
+                    <td th:text="${item.venda.clienteEstado}"></td>
+                    <td th:text="${#temporals.format(item.venda.dataSaida, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${item.venda.tipoMovimentacao}"></td>
+                </tr>
+            </tbody>
+        </table>
 
-    <div style="text-align: center;">
-        <a href="/relatorios" class="back">⬅ Voltar</a>
+        <div style="text-align: center;">
+            <!-- <a href="/relatorios" class="back">⬅ Voltar</a> -->
+             <a href="/dashboard">⬅ Voltar ao Dashboard</a>
+        </div>
     </div>
-</div>
 
 </body>
+
 </html>

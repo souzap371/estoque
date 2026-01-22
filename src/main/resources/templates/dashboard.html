@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 95%;
+            margin: 30px auto;
+        }
+
+        h1 {
+            color: #1e88e5;
+            margin-bottom: 25px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 6px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card h2 {
+            color: #1e88e5;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .card p {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .card a {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #1e88e5;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .card a:hover {
+            background: #1565c0;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="container">
+
+        <h1>📊 Dashboard</h1>
+        <div class="top-bar">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn-logout">🚪 Sair</button>
+            </form>
+        </div>
+
+        <div class="cards">
+
+            <div class="card" sec:authorize="hasRole('MASTER')">
+                <h2>👤 Usuários</h2>
+                <p>Gerenciamento de usuários e permissões do sistema</p>
+
+                <div class="card-actions">
+                    <a href="/usuarios">Cadastro</a>
+                </div>
+            </div>
+
+            <div class="card" sec:authorize="hasAnyRole('PRODUTO','MASTER')">
+                <h2>🚬 Produto</h2>
+                <p>Cadastro de produtos</p>
+
+                <div class="card-actions">
+                    <a href="/produtos">Cadastro</a>
+                    <a href="/relatorios/produtos" class="secondary">Relatórios</a>
+                </div>
+            </div>
+
+            <div class="card" sec:authorize="hasAnyRole('ESTOQUE','MASTER')">
+                <h2>📦 Estoque</h2>
+                <p>Controle de entrada, saída e produtos em estoque</p>
+
+                <div class="card-actions">
+                    <a href="/estoque">Cadastro</a>
+                    <a href="/relatorios/estoque" class="secondary">Relatórios</a>
+                </div>
+            </div>
+
+            <div class="card" sec:authorize="hasAnyRole('VENDAS','MASTER')">
+                <h2>💵 Vendas</h2>
+                <p>Criação de pedido/venda</p>
+
+                <div class="card-actions">
+                    <a href="/vendas">Cadastro</a>
+                    <a href="/relatorios/vendas" class="secondary">Relatórios</a>
+                </div>
+            </div>
+
+            <div class="card" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                <h2>💰 Financeiro</h2>
+                <p>Contas a receber, pagamentos e situação financeira</p>
+
+                <div class="card-actions">
+                    <a href="/financeiro">Cadastro</a>
+                    <a href="/financeiro/relatorio" class="secondary">Relatórios</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            Anonymous
+        </div>
+
+    </div>
+
+
+
+
+</body>
+
+</html>

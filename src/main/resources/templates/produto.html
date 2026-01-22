@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Cadastro de Produto</title>
@@ -29,7 +30,7 @@
             background: #ffffff;
             padding: 32px;
             border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
@@ -113,38 +114,44 @@
 
 <body>
 
-<div class="container">
-    <h2>Cadastro de Produto</h2>
+    <div class="container">
+        <h2>Cadastro de Produto</h2>
 
-    <form action="/produtos/salvar" method="post">
+        <form action="/produtos/salvar" method="post">
 
-        <div class="grid">
-            <div>
-                <label>Código do Produto</label>
-                <input type="text" name="codigo" required>
+            <div class="grid">
+                <div>
+                    <label>Código do Produto</label>
+                    <input type="text" name="codigo" required>
+                </div>
+
+                <div>
+                    <label>Nome do Produto</label>
+                    <input type="text" name="nome" required>
+                </div>
             </div>
 
-            <div>
-                <label>Nome do Produto</label>
-                <input type="text" name="nome" required>
+            <hr>
+
+            <div class="actions">
+                <!-- <button type="button" class="btn-back" onclick="voltarMenu()">⬅ Voltar</button> -->
+                 <a href="/dashboard">⬅ Voltar ao Dashboard</a>
+                <button type="submit" class="btn-save">💾 Salvar Produto</button>
             </div>
-        </div>
 
-        <hr>
+            <!-- <div class="footer-actions">
+                <a href="/dashboard">⬅ Voltar ao Dashboard</a>
+            </div> -->
 
-        <div class="actions">
-            <button type="button" class="btn-back" onclick="voltarMenu()">⬅ Voltar</button>
-            <button type="submit" class="btn-save">💾 Salvar Produto</button>
-        </div>
+        </form>
+    </div>
 
-    </form>
-</div>
-
-<script>
-    function voltarMenu() {
-        window.location.href = "/";
-    }
-</script>
+    <!-- <script>
+        function voltarMenu() {
+            window.location.href = "/";
+        }
+    </script> -->
 
 </body>
+
 </html>

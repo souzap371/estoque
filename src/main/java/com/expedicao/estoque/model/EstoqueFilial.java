@@ -3,8 +3,7 @@ package com.expedicao.estoque.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "estoque_filial",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"produto_id", "filial"}))
+@Table(name = "estoque_filial", uniqueConstraints = @UniqueConstraint(columnNames = { "produto_id", "filial" }))
 public class EstoqueFilial {
 
     @Id
@@ -53,5 +52,4 @@ public class EstoqueFilial {
 
     // getters e setters
 
-    
 }

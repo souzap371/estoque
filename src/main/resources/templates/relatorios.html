@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Relatórios</title>
@@ -29,7 +30,7 @@
             background: #ffffff;
             padding: 32px;
             border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
@@ -101,44 +102,48 @@
 
 <body>
 
-<div class="container">
-    <h2>Relatórios</h2>
+    <div class="container">
+        <h2>Relatórios</h2>
 
-    <ul>
-        <li>
-            <a class="report-link" href="/relatorios/produtos">
-                📦 Produtos Cadastrados
-            </a>
-        </li>
-        <li>
-            <a class="report-link" href="/relatorios/vendas">
-                🧾 Vendas / Pedidos
-            </a>
-        </li>
-        <li>
-            <a class="report-link" href="/relatorios/estoque">
-                📊 Estoque Atual
-            </a>
-        </li>
-        <li>
-    <a class="report-link" href="/financeiro/relatorio">
-    💰 Relatório Financeiro
-</a>
-</li>
-    </ul>
+        <ul>
+            <li>
+                <a class="report-link" href="/relatorios/produtos">
+                    📦 Produtos Cadastrados
+                </a>
+            </li>
 
-    <hr>
+            <li>
+                <a class="report-link" href="/relatorios/estoque">
+                    📊 Estoque Atual
+                </a>
+            </li>
 
-    <div class="actions">
-        <button class="btn-back" onclick="voltarMenu()">⬅ Voltar</button>
+            <li>
+                <a class="report-link" href="/relatorios/vendas">
+                    🧾 Vendas / Pedidos
+                </a>
+            </li>
+
+            <li>
+                <a class="report-link" href="/financeiro/relatorio">
+                    💰 Relatório Financeiro
+                </a>
+            </li>
+        </ul>
+
+        <hr>
+
+        <div class="actions">
+            <button class="btn-back" onclick="voltarMenu()">⬅ Voltar</button>
+        </div>
     </div>
-</div>
 
-<script>
-    function voltarMenu() {
-        window.location.href = "/";
-    }
-</script>
+    <script>
+        function voltarMenu() {
+            window.location.href = "/";
+        }
+    </script>
 
 </body>
+
 </html>

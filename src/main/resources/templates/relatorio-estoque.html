@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Relatório de Estoque</title>
@@ -29,7 +30,7 @@
             background: #ffffff;
             padding: 32px;
             border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         h2 {
@@ -105,52 +106,48 @@
 
 <body>
 
-<div class="container">
-    <h2>Estoque Atual</h2>
+    <div class="container">
+        <h2>Estoque Atual</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Produto</th>
-                <th>Filial</th>
-                <th>Quantidade</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- <tr th:each="e : ${estoques}">
-                <td th:text="${e.produto != null ? e.produto.nome : 'SEM PRODUTO'}"
-                    th:classappend="${e.produto == null} ? 'empty' : ''">
-                </td>
-                <td th:text="${e.quantidadeAtual}"></td>
-            </tr> -->
-            <tr th:each="e : ${estoques}">
-    <td th:text="${e.produto != null ? e.produto.nome : 'SEM PRODUTO'}"
-        th:classappend="${e.produto == null} ? 'empty' : ''">
-    </td>
+        <table>
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Filial</th>
+                    <th>Quantidade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="e : ${estoques}">
+                    <td th:text="${e.produto != null ? e.produto.nome : 'SEM PRODUTO'}"
+                        th:classappend="${e.produto == null} ? 'empty' : ''">
+                    </td>
 
-    <td th:switch="${e.filial}">
-    <span th:case="'MATRIZ'">🏢 MATRIZ</span>
-    <span th:case="'MG'">📍 FILIAL MG</span>
-    <span th:case="'AL'">📍 FILIAL AL</span>
-</td>
+                    <td th:switch="${e.filial}">
+                        <span th:case="'MATRIZ'">🏢 MATRIZ</span>
+                        <span th:case="'MG'">📍 FILIAL MG</span>
+                        <span th:case="'AL'">📍 FILIAL AL</span>
+                    </td>
 
-    <td th:text="${e.quantidadeAtual}"></td>
-</tr>
-        </tbody>
-    </table>
+                    <td th:text="${e.quantidadeAtual}"></td>
+                </tr>
+            </tbody>
+        </table>
 
-    <hr>
+        <hr>
 
-    <div class="actions">
-        <button class="btn-back" onclick="voltarRelatorios()">⬅ Voltar</button>
+        <div class="actions">
+            <!-- <button class="btn-back" onclick="voltarRelatorios()">⬅ Voltar</button> -->
+             <a href="/dashboard">⬅ Voltar ao Dashboard</a>
+        </div>
     </div>
-</div>
 
-<script>
-    function voltarRelatorios() {
-        window.location.href = "/relatorios";
-    }
-</script>
+    <!-- <script>
+        function voltarRelatorios() {
+            window.location.href = "/relatorios";
+        }
+    </script> -->
 
 </body>
+
 </html>

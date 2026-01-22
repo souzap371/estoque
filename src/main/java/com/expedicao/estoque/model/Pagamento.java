@@ -1,7 +1,6 @@
 package com.expedicao.estoque.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -14,15 +13,6 @@ public class Pagamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * Muitos pagamentos para uma conta a receber
-     * JsonIgnore evita loop infinito no retorno da API
-     */
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "conta_receber_id", nullable = false)
-    // @JsonIgnore
-    // private ContaReceber contaReceber;
-
     @ManyToOne
     @JoinColumn(name = "conta_receber_id")
     @JsonBackReference
@@ -33,6 +23,15 @@ public class Pagamento {
 
     @Column(nullable = false)
     private LocalDate dataPagamento;
+
+    @Column(name = "anexo_nome")
+    private String anexoNome;
+
+    @Column(name = "anexo_tipo")
+    private String anexoTipo;
+
+    @Column(name = "anexo_path")
+    private String anexoPath;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -79,6 +78,30 @@ public class Pagamento {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public String getAnexoNome() {
+        return anexoNome;
+    }
+
+    public void setAnexoNome(String anexoNome) {
+        this.anexoNome = anexoNome;
+    }
+
+    public String getAnexoTipo() {
+        return anexoTipo;
+    }
+
+    public void setAnexoTipo(String anexoTipo) {
+        this.anexoTipo = anexoTipo;
+    }
+
+    public String getAnexoPath() {
+        return anexoPath;
+    }
+
+    public void setAnexoPath(String anexoPath) {
+        this.anexoPath = anexoPath;
     }
 
     public FormaPagamento getFormaPagamento() {

@@ -241,7 +241,8 @@
         <h3 id="total">TOTAL: R$ 0,00</h3>
 
         <div class="actions">
-            <button class="btn-back" onclick="voltarMenu()">⬅ Voltar</button>
+            <!-- <button class="btn-back" onclick="voltarMenu()">⬅ Voltar</button> -->
+             <a href="/dashboard">⬅ Voltar ao Dashboard</a>
             <button class="btn-finish" onclick="concluirPedido()">✅ Concluir Pedido</button>
         </div>
     </div>
@@ -299,20 +300,6 @@
             document.getElementById("valor").value = "";
         }
 
-        // function concluirPedido() {
-        //     fetch("[[@{/vendas/salvar}]]", {
-        //         method: "POST",
-        //         headers: {"Content-Type": "application/json"},
-        //         body: JSON.stringify({
-        //             clienteNome: clienteNome.value,
-        //             clienteEstado: clienteEstado.value,
-        //             tipoMovimentacao: document.querySelector("input[name='tipo']:checked").value,
-        //             estadoDestino: estadoDestino.value,
-        //             itens: itens
-        //         })
-        //     }).then(() => location.reload());
-        // }
-
         function concluirPedido() {
 
             const tipo = document.querySelector("input[name='tipo']:checked").value;
@@ -337,9 +324,9 @@
             }).then(() => location.reload());
         }
 
-        function voltarMenu() {
-            window.location.href = "[[@{/}]]";
-        }
+        // function voltarMenu() {
+        //     window.location.href = "[[@{/}]]";
+        // }
     </script>
 
 </body>

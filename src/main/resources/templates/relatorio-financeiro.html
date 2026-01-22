@@ -94,6 +94,7 @@
           <th>Valor da Baixa</th>
           <th>Data da Baixa</th>
           <th>Forma de Pagamento</th>
+          <th>Anexo</th>
         </tr>
       </thead>
 
@@ -148,11 +149,17 @@
                   <td>${formatarMoeda(p.valorPago)}</td>
                   <td>${formatarDataBR(p.dataPagamento)}</td>
                   <td>${p.formaPagamento || '-'}</td>
+                  <td>
+  ${p.anexoPath
+                    ? `<a href="/financeiro/api/pagamento/anexo/${p.id}" target="_blank">📎 Baixar</a>`
+                    : '-'}
+</td>
+
                 `;
                 tbody.appendChild(tr);
               });
 
-            } 
+            }
             // 🔹 SE NÃO TIVER PAGAMENTO → MOSTRA A CONTA
             else {
               const tr = document.createElement('tr');
@@ -173,8 +180,16 @@
     }
 
     carregarRelatorio();
+
+    // function voltarRelatorios() {
+    //   window.location.href = "/relatorios";
+    // }
   </script>
 
+  <div class="actions">
+    <!-- <button class="btn-back" onclick="voltarRelatorios()">⬅ Voltar</button> -->
+     <a href="/dashboard">⬅ Voltar ao Dashboard</a>
+  </div>
 </body>
 
 </html>

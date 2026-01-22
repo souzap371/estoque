@@ -101,6 +101,11 @@
       <tbody id="tbody"></tbody>
     </table>
 
+    <div class="actions">
+      <!-- <button class="btn-back" onclick="voltarMenu()">⬅ Voltar</button> -->
+       <a href="/dashboard">⬅ Voltar ao Dashboard</a>
+    </div>
+
   </div>
   <script>
     function carregarClientes() {
@@ -166,38 +171,12 @@
         currency: 'BRL'
       });
     }
-
-
-
-    // function abrirBaixa(id, saldo) {
-    //   const valor = prompt(`Valor da baixa (Saldo: ${formatarMoeda(saldo)})`);
-
-    //   if (valor === null) return;
-
-    //   const valorNum = parseFloat(valor);
-    //   if (isNaN(valorNum) || valorNum <= 0 || valorNum > saldo) {
-    //     alert('Valor inválido');
-    //     return;
-    //   }
-
-    //   const data = prompt('Data do pagamento (YYYY-MM-DD)');
-    //   if (!data) {
-    //     alert('Data obrigatória');
-    //     return;
-    //   }
-
-    //   fetch(`/financeiro/api/baixar/${id}?valor=${valorNum}&data=${data}`, {
-    //     method: 'POST'
-    //   })
-    //     .then(res => {
-    //       if (!res.ok) throw new Error();
-    //       alert('Baixa registrada com sucesso!');
-    //       carregarPorCliente();
-    //     })
-    //     .catch(() => alert('Erro ao registrar baixa'));
-    // }
-
     carregarClientes();
+
+
+    // function voltarMenu() {
+    //   window.location.href = "/";
+    // }
   </script>
 
 

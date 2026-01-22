@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
-    <title th:text="${titulo}">Sistema de Controle</title>
+    <title>Sistema de Controle</title>
 
+    <!-- Fonte moderna e muito legível -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
@@ -23,39 +24,25 @@
         }
 
         .container {
-            width: 420px;
+            width: 380px;
             padding: 36px 32px;
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
-        }
-
-        h2 {
-            margin-bottom: 28px;
-            font-size: 20px;
-            font-weight: 600;
-            color: #0f172a;
             text-align: center;
         }
 
-        label {
-            font-size: 14px;
-            font-weight: 500;
-            color: #334155;
+        h2 {
+            margin-bottom: 30px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #0f172a;
         }
 
-        input {
+        .menu-button {
             width: 100%;
-            padding: 12px 14px;
-            margin: 8px 0 20px;
-            font-size: 14px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-        }
-
-        button {
-            width: 100%;
-            padding: 14px;
+            padding: 14px 16px;
+            margin-bottom: 14px;
             font-size: 15px;
             font-weight: 500;
             font-family: inherit;
@@ -65,30 +52,20 @@
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.2s ease, transform 0.15s ease;
+            text-align: left;
         }
 
-        button:hover {
+        .menu-button:hover {
             background-color: #1d4ed8;
             transform: translateY(-1px);
         }
 
-        .back {
-            display: block;
-            margin-top: 22px;
-            text-align: center;
-            font-size: 13px;
-            font-weight: 500;
-            color: #2563eb;
-            text-decoration: none;
-        }
-
-        .back:hover {
-            text-decoration: underline;
+        .menu-button:active {
+            transform: translateY(0);
         }
 
         .footer {
-            margin-top: 28px;
-            text-align: center;
+            margin-top: 26px;
             font-size: 12px;
             font-weight: 500;
             color: #475569;
@@ -97,13 +74,19 @@
 </head>
 
 <body>
+
     <div class="container">
-        <div th:replace="~{::conteudo}"></div>
+        <h2>Sistema de Controle</h2>
+
+        <button class="menu-button" onclick="location.href='/produtos'">
+            📝 Cadastro de Produto
+        </button>
 
         <div class="footer">
-            TS Tecnologia
+            ------------
         </div>
     </div>
+
 </body>
 
 </html>

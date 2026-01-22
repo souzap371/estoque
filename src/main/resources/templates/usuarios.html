@@ -1,0 +1,11 @@
+<form method="post" th:object="${usuario}">
+    <input th:field="*{username}" placeholder="Usuário">
+    <input type="password" th:field="*{password}" placeholder="Senha">
+
+    <div th:each="p : ${perfis}">
+        <input type="checkbox" th:value="${p}" th:field="*{perfis}">
+        <span th:text="${p.nome}"></span>
+    </div>
+
+    <button type="submit">Salvar</button>
+</form>

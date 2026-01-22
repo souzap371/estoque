@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${titulo}">Sistema</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, Arial, sans-serif;
+            background: #f1f5f9;
+            display: flex;
+            height: 100vh;
+        }
+
+        /* SIDEBAR */
+        aside {
+            width: 240px;
+            background: #0f172a;
+            color: #fff;
+            padding: 24px 18px;
+        }
+
+        aside h3 {
+            margin-bottom: 24px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        aside a {
+            display: block;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            color: #e5e7eb;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        aside a:hover {
+            background: #1e293b;
+        }
+
+        /* CONTEÚDO */
+        main {
+            flex: 1;
+            padding: 32px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        header span {
+            font-size: 14px;
+            color: #334155;
+        }
+
+        header a {
+            font-size: 14px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- MENU -->
+<aside>
+    <h3>Anonymous</h3>
+
+    <a href="/dashboard">🏠 Dashboard</a>
+
+    <div sec:authorize="hasAnyAuthority('ROLE_PRODUTO','ROLE_MASTER')">
+        <a href="/produto">💰 Produto</a>
+    </div>
+
+    <div sec:authorize="hasAnyAuthority('ROLE_ESTOQUE','ROLE_MASTER')">
+        <a href="/estoque">📦 Estoque</a>
+    </div>
+
+    <div sec:authorize="hasAnyAuthority('ROLE_VENDAS','ROLE_MASTER')">
+        <a href="/vendas">💰 Venda</a>
+    </div>
+
+    <div sec:authorize="hasAnyAuthority('ROLE_FINANCEIRO','ROLE_MASTER')">
+        <a href="/financeiro">💰 Financeiro</a>
+    </div>
+
+    <div sec:authorize="hasAuthority('ROLE_MASTER')">
+        <a href="/usuarios">👤 Usuários</a>
+    </div>
+</aside>
+
+<!-- CONTEÚDO -->
+<main>
+
+    <header>
+        <span>
+            Usuário: <b sec:authentication="name"></b>
+        </span>
+
+        <a href="/logout">Sair</a>
+    </header>
+
+    <div th:replace="~{::conteudo}"></div>
+
+</main>
+
+</body>
+</html>

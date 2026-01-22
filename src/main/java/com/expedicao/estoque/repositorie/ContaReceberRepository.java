@@ -12,9 +12,9 @@ public interface ContaReceberRepository extends JpaRepository<ContaReceber, Long
     List<ContaReceber> findBySaldoDevedorGreaterThan(Double valor);
 
     @Query("""
-        SELECT DISTINCT c.clienteNome
-        FROM ContaReceber c
-        ORDER BY c.clienteNome
-    """)
+                SELECT DISTINCT c.clienteNome
+                FROM ContaReceber c
+                ORDER BY c.clienteNome
+            """)
     List<String> listarClientes();
 }

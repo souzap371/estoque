@@ -1,0 +1,164 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Novo Usuário</title>
+</head>
+<body>
+
+<h2>Cadastrar Usuário</h2>
+
+<form th:action="@{/usuarios/salvar}" method="post">
+
+    <label>Usuário</label>
+    <input type="text" name="username" required>
+
+    <label>Senha</label>
+    <input type="password" name="password" required>
+
+    <label>Perfis</label><br>
+    <div th:each="perfil : ${perfis}">
+        <input type="checkbox"
+               th:value="${perfil.id}"
+               name="perfis">
+        <span th:text="${perfil.nome}"></span>
+    </div>
+
+    <br>
+    <button type="submit">Salvar</button>
+
+</form>
+
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Novo Usuário</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 420px;
+            margin: 60px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 6px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1e88e5;
+            margin-bottom: 25px;
+            font-size: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 18px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .perfis {
+            margin-bottom: 20px;
+        }
+
+        .perfil-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #1e88e5;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1565c0;
+        }
+
+        .actions {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .actions a {
+            font-size: 13px;
+            color: #1e88e5;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>👤 Novo Usuário</h1>
+
+    <form method="post" th:action="@{/usuarios/salvar}" th:object="${usuario}">
+
+        <label>Usuário</label>
+        <input type="text" th:field="*{username}" placeholder="Digite o usuário" required>
+
+        <label>Senha</label>
+        <input type="password" th:field="*{password}" placeholder="Digite a senha" required>
+
+        <label>Perfis</label>
+        <div class="perfis">
+            <div class="perfil-item" th:each="p : ${perfis}">
+                <input type="checkbox"
+                       th:value="${p.id}"
+                       name="perfis">
+                <span th:text="${p.nome}"></span>
+            </div>
+        </div>
+
+        <button type="submit">Salvar Usuário</button>
+
+    </form>
+
+    <div class="actions">
+        <a href="/usuarios">⬅ Voltar</a>
+    </div>
+
+</div>
+
+</body>
+</html>

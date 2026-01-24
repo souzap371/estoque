@@ -13,7 +13,9 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
+            .headers(headers -> headers.frameOptions(frame -> frame.disable()))
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/login", "/h2-console/**").permitAll()
                 .requestMatchers("/login").permitAll()
                 .requestMatchers("/usuarios/**").hasRole("MASTER")
                 .requestMatchers("/produtos/**").hasAnyRole("PRODUTOS", "MASTER")

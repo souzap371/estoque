@@ -1,37 +1,3 @@
-<!-- <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Novo Usuário</title>
-</head>
-<body>
-
-<h2>Cadastrar Usuário</h2>
-
-<form th:action="@{/usuarios/salvar}" method="post">
-
-    <label>Usuário</label>
-    <input type="text" name="username" required>
-
-    <label>Senha</label>
-    <input type="password" name="password" required>
-
-    <label>Perfis</label><br>
-    <div th:each="perfil : ${perfis}">
-        <input type="checkbox"
-               th:value="${perfil.id}"
-               name="perfis">
-        <span th:text="${perfil.nome}"></span>
-    </div>
-
-    <br>
-    <button type="submit">Salvar</button>
-
-</form>
-
-</body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html lang="pt-BR"
       xmlns:th="http://www.thymeleaf.org">

@@ -26,8 +26,7 @@ public class VendaService {
             VendaRepository vendaRepository,
             ProdutoRepository produtoRepository,
             EstoqueService estoqueService,
-            ContaReceberRepository contaReceberRepository
-    ) {
+            ContaReceberRepository contaReceberRepository) {
         this.vendaRepository = vendaRepository;
         this.produtoRepository = produtoRepository;
         this.estoqueService = estoqueService;
@@ -53,8 +52,7 @@ public class VendaService {
             throw new RuntimeException("Nenhum item informado no pedido");
         }
 
-        TipoMovimentacao tipoMovimentacao =
-                TipoMovimentacao.valueOf(dto.getTipoMovimentacao());
+        TipoMovimentacao tipoMovimentacao = TipoMovimentacao.valueOf(dto.getTipoMovimentacao());
 
         if (tipoMovimentacao == TipoMovimentacao.T) {
             if (dto.getEstadoDestino() == null || dto.getEstadoDestino().isBlank()) {
@@ -65,11 +63,25 @@ public class VendaService {
         // ===============================
         // 2️⃣ Criação da Venda
         // ===============================
+        // Venda venda = new Venda();
+        // venda.setClienteNome(dto.getClienteNome());
+        // venda.setClienteEstado(dto.getClienteEstado());
+        // venda.setTipoMovimentacao(tipoMovimentacao);
+        // venda.setEstadoDestino(dto.getEstadoDestino());
+        // venda.setDataSaida(LocalDate.now());
+
         Venda venda = new Venda();
         venda.setClienteNome(dto.getClienteNome());
         venda.setClienteEstado(dto.getClienteEstado());
         venda.setTipoMovimentacao(tipoMovimentacao);
-        venda.setEstadoDestino(dto.getEstadoDestino());
+
+        // 🔐 REGRA DE NEGÓCIO CLARA
+        if (tipoMovimentacao == TipoMovimentacao.V) {
+            venda.setEstadoDestino("VENDA");
+        } else {
+            venda.setEstadoDestino(dto.getEstadoDestino());
+        }
+
         venda.setDataSaida(LocalDate.now());
 
         List<VendaItem> itensVenda = new ArrayList<>();
@@ -90,25 +102,21 @@ public class VendaService {
 
             Produto produto = produtoRepository
                     .findByCodigoOuNome(itemDTO.getCodigoOuNome())
-                    .orElseThrow(() ->
-                            new RuntimeException("Produto não encontrado: " + itemDTO.getCodigoOuNome())
-                    );
+                    .orElseThrow(() -> new RuntimeException("Produto não encontrado: " + itemDTO.getCodigoOuNome()));
 
-           // 🔻 SEMPRE baixa estoque da matriz
-estoqueService.baixarEstoque(produto, itemDTO.getQuantidade());
+            // 🔻 SEMPRE baixa estoque da matriz
+            estoqueService.baixarEstoque(produto, itemDTO.getQuantidade());
 
-// ➕ Se for TRANSFERÊNCIA, entra no estoque da filial
-if (tipoMovimentacao == TipoMovimentacao.T) {
+            // ➕ Se for TRANSFERÊNCIA, entra no estoque da filial
+            if (tipoMovimentacao == TipoMovimentacao.T) {
 
-    Filial filialDestino = Filial.valueOf(dto.getEstadoDestino());
+                Filial filialDestino = Filial.valueOf(dto.getEstadoDestino());
 
-    estoqueService.entradaEstoque(
-            produto,
-            filialDestino,
-            itemDTO.getQuantidade()
-    );
-}
-
+                estoqueService.entradaEstoque(
+                        produto,
+                        filialDestino,
+                        itemDTO.getQuantidade());
+            }
 
             VendaItem item = new VendaItem();
             item.setVenda(venda);

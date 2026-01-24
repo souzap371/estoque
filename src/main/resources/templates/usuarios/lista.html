@@ -1,54 +1,5 @@
-<!-- <!DOCTYPE html>
-<html lang="pt-BR"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Usuários</title>
-</head>
-
-<body>
-
-<h2>Gestão de Usuários</h2>
-
-<div sec:authorize="hasRole('MASTER')">
-    <a href="/usuarios/novo">➕ Novo Usuário</a>
-</div>
-
-<br><br>
-
-<table border="1" cellpadding="8">
-    <thead>
-        <tr>
-            <th>Usuário</th>
-            <th>Perfis</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="u : ${usuarios}">
-            <td th:text="${u.username}"></td>
-            <td>
-                <span th:each="p : ${u.perfis}"
-                      th:text="${p.nome} + ' '"></span>
-            </td>
-            <td th:text="${u.ativo ? 'Ativo' : 'Inativo'}"></td>
-        </tr>
-    </tbody>
-</table>
-
-<br>
-<a href="/dashboard">⬅ Voltar</a>
-
-</body>
-</html> -->
-
-
 <!DOCTYPE html>
-<html lang="pt-BR"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -150,50 +101,47 @@
 
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>👥 Gestão de Usuários</h1>
+        <h1>👥 Gestão de Usuários</h1>
 
-    <div class="actions">
-        <div></div>
+        <div class="actions">
+            <div></div>
 
-        <div sec:authorize="hasRole('MASTER')">
-            <a href="/usuarios/novo">➕ Novo Usuário</a>
+            <div sec:authorize="hasRole('MASTER')">
+                <a href="/usuarios/novo">➕ Novo Usuário</a>
+            </div>
         </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Usuário</th>
+                    <th>Perfis</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="u : ${usuarios}">
+                    <td th:text="${u.username}"></td>
+
+                    <td>
+                        <span th:each="p : ${u.perfis}" th:text="${p.nome}" style="margin-right: 6px;">
+                        </span>
+                    </td>
+
+                    <td th:class="${u.ativo} ? 'ativo' : 'inativo'" th:text="${u.ativo ? 'Ativo' : 'Inativo'}">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="footer-actions">
+            <button onclick="window.location.href='/dashboard'">Voltar </button>
+        </div>
+
     </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Usuário</th>
-                <th>Perfis</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="u : ${usuarios}">
-                <td th:text="${u.username}"></td>
-
-                <td>
-                    <span th:each="p : ${u.perfis}"
-                          th:text="${p.nome}"
-                          style="margin-right: 6px;">
-                    </span>
-                </td>
-
-                <td th:class="${u.ativo} ? 'ativo' : 'inativo'"
-                    th:text="${u.ativo ? 'Ativo' : 'Inativo'}">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="footer-actions">
-        <a href="/dashboard">⬅ Voltar ao Dashboard</a>
-    </div>
-
-</div>
 
 </body>
-</html>
 
+</html>

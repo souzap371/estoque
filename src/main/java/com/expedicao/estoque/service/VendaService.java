@@ -14,6 +14,148 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+// @Service
+// public class VendaService {
+
+//     private final VendaRepository vendaRepository;
+//     private final ProdutoRepository produtoRepository;
+//     private final EstoqueService estoqueService;
+//     private final ContaReceberRepository contaReceberRepository;
+
+//     public VendaService(
+//             VendaRepository vendaRepository,
+//             ProdutoRepository produtoRepository,
+//             EstoqueService estoqueService,
+//             ContaReceberRepository contaReceberRepository) {
+//         this.vendaRepository = vendaRepository;
+//         this.produtoRepository = produtoRepository;
+//         this.estoqueService = estoqueService;
+//         this.contaReceberRepository = contaReceberRepository;
+//     }
+
+//     /**
+//      * Registra uma VENDA ou TRANSFERÊNCIA.
+//      *
+//      * Regras:
+//      * - SEMPRE baixa estoque da matriz
+//      * - Se for TRANSFERÊNCIA, entra estoque na filial (MG ou AL)
+//      * - Financeiro SEMPRE é gerado (Conta a Receber)
+//      * - Tudo é transacional (rollback automático)
+//      */
+//     @Transactional
+//     public void salvarPedido(VendaDTO dto) {
+
+//         // ===============================
+//         // 1️⃣ Validações básicas
+//         // ===============================
+//         if (dto.getItens() == null || dto.getItens().isEmpty()) {
+//             throw new RuntimeException("Nenhum item informado no pedido");
+//         }
+
+//         TipoMovimentacao tipoMovimentacao = TipoMovimentacao.valueOf(dto.getTipoMovimentacao());
+
+//         if (tipoMovimentacao == TipoMovimentacao.T) {
+//             if (dto.getEstadoDestino() == null || dto.getEstadoDestino().isBlank()) {
+//                 throw new RuntimeException("Estado destino é obrigatório para transferência");
+//             }
+//         }
+
+//         // ===============================
+//         // 2️⃣ Criação da Venda
+//         // ===============================
+//         // Venda venda = new Venda();
+//         // venda.setClienteNome(dto.getClienteNome());
+//         // venda.setClienteEstado(dto.getClienteEstado());
+//         // venda.setTipoMovimentacao(tipoMovimentacao);
+//         // venda.setEstadoDestino(dto.getEstadoDestino());
+//         // venda.setDataSaida(LocalDate.now());
+
+//         Venda venda = new Venda();
+//         venda.setClienteNome(dto.getClienteNome());
+//         venda.setClienteEstado(dto.getClienteEstado());
+//         venda.setTipoMovimentacao(tipoMovimentacao);
+
+//         // 🔐 REGRA DE NEGÓCIO CLARA
+//         if (tipoMovimentacao == TipoMovimentacao.V) {
+//             venda.setEstadoDestino("VENDA");
+//         } else {
+//             venda.setEstadoDestino(dto.getEstadoDestino());
+//         }
+
+//         venda.setDataSaida(LocalDate.now());
+
+//         List<VendaItem> itensVenda = new ArrayList<>();
+//         double valorTotal = 0.0;
+
+//         // ===============================
+//         // 3️⃣ Processamento dos itens
+//         // ===============================
+//         for (VendaItemDTO itemDTO : dto.getItens()) {
+
+//             if (itemDTO.getCodigoOuNome() == null || itemDTO.getCodigoOuNome().isBlank()) {
+//                 throw new RuntimeException("Produto não informado");
+//             }
+
+//             if (itemDTO.getQuantidade() <= 0) {
+//                 throw new RuntimeException("Quantidade inválida para o produto: " + itemDTO.getCodigoOuNome());
+//             }
+
+//             Produto produto = produtoRepository
+//                     .findByCodigoOuNome(itemDTO.getCodigoOuNome())
+//                     .orElseThrow(() -> new RuntimeException("Produto não encontrado: " + itemDTO.getCodigoOuNome()));
+
+//             // 🔻 SEMPRE baixa estoque da matriz
+//             estoqueService.baixarEstoque(produto, itemDTO.getQuantidade());
+
+//             // ➕ Se for TRANSFERÊNCIA, entra no estoque da filial
+//             if (tipoMovimentacao == TipoMovimentacao.T) {
+
+//                 Filial filialDestino = Filial.valueOf(dto.getEstadoDestino());
+
+//                 estoqueService.entradaEstoque(
+//                         produto,
+//                         filialDestino,
+//                         itemDTO.getQuantidade());
+//             }
+
+//             VendaItem item = new VendaItem();
+//             item.setVenda(venda);
+//             item.setProduto(produto);
+//             item.setQuantidade(itemDTO.getQuantidade());
+//             item.setValorPorCaixa(itemDTO.getValorPorCaixa());
+
+//             double subtotal = itemDTO.getQuantidade() * itemDTO.getValorPorCaixa();
+//             item.setSubtotal(subtotal);
+
+//             valorTotal += subtotal;
+//             itensVenda.add(item);
+//         }
+
+//         // ===============================
+//         // 4️⃣ Finaliza e salva a venda
+//         // ===============================
+//         venda.setItens(itensVenda);
+//         venda.setValorTotal(valorTotal);
+
+//         vendaRepository.save(venda);
+
+//         // ===============================
+//         // 5️⃣ Geração do Financeiro (SEM ALTERAÇÃO)
+//         // ===============================
+//         ContaReceber conta = new ContaReceber();
+//         conta.setVenda(venda);
+//         conta.setClienteNome(venda.getClienteNome());
+//         conta.setValorOriginal(valorTotal);
+//         conta.setValorPago(0.0);
+//         conta.setSaldoDevedor(valorTotal);
+//         conta.setDataCriacao(LocalDate.now());
+
+//         contaReceberRepository.save(conta);
+//     }
+// }
+
+
+
 @Service
 public class VendaService {
 
@@ -33,62 +175,29 @@ public class VendaService {
         this.contaReceberRepository = contaReceberRepository;
     }
 
-    /**
-     * Registra uma VENDA ou TRANSFERÊNCIA.
-     *
-     * Regras:
-     * - SEMPRE baixa estoque da matriz
-     * - Se for TRANSFERÊNCIA, entra estoque na filial (MG ou AL)
-     * - Financeiro SEMPRE é gerado (Conta a Receber)
-     * - Tudo é transacional (rollback automático)
-     */
     @Transactional
     public void salvarPedido(VendaDTO dto) {
 
         // ===============================
-        // 1️⃣ Validações básicas
+        // 1️⃣ Validação inicial
         // ===============================
         if (dto.getItens() == null || dto.getItens().isEmpty()) {
             throw new RuntimeException("Nenhum item informado no pedido");
         }
 
-        TipoMovimentacao tipoMovimentacao = TipoMovimentacao.valueOf(dto.getTipoMovimentacao());
-
-        if (tipoMovimentacao == TipoMovimentacao.T) {
-            if (dto.getEstadoDestino() == null || dto.getEstadoDestino().isBlank()) {
-                throw new RuntimeException("Estado destino é obrigatório para transferência");
-            }
-        }
-
         // ===============================
-        // 2️⃣ Criação da Venda
+        // 2️⃣ Criação da VENDA (CABEÇALHO)
         // ===============================
-        // Venda venda = new Venda();
-        // venda.setClienteNome(dto.getClienteNome());
-        // venda.setClienteEstado(dto.getClienteEstado());
-        // venda.setTipoMovimentacao(tipoMovimentacao);
-        // venda.setEstadoDestino(dto.getEstadoDestino());
-        // venda.setDataSaida(LocalDate.now());
-
         Venda venda = new Venda();
         venda.setClienteNome(dto.getClienteNome());
         venda.setClienteEstado(dto.getClienteEstado());
-        venda.setTipoMovimentacao(tipoMovimentacao);
-
-        // 🔐 REGRA DE NEGÓCIO CLARA
-        if (tipoMovimentacao == TipoMovimentacao.V) {
-            venda.setEstadoDestino("VENDA");
-        } else {
-            venda.setEstadoDestino(dto.getEstadoDestino());
-        }
-
         venda.setDataSaida(LocalDate.now());
 
         List<VendaItem> itensVenda = new ArrayList<>();
         double valorTotal = 0.0;
 
         // ===============================
-        // 3️⃣ Processamento dos itens
+        // 3️⃣ Processamento item a item
         // ===============================
         for (VendaItemDTO itemDTO : dto.getItens()) {
 
@@ -96,43 +205,58 @@ public class VendaService {
                 throw new RuntimeException("Produto não informado");
             }
 
-            if (itemDTO.getQuantidade() <= 0) {
+            if (itemDTO.getQuantidade() == null || itemDTO.getQuantidade() <= 0) {
                 throw new RuntimeException("Quantidade inválida para o produto: " + itemDTO.getCodigoOuNome());
             }
+
+            if (itemDTO.getTipoMovimentacao() == null) {
+                throw new RuntimeException("Tipo de movimentação não informado para o item: " + itemDTO.getCodigoOuNome());
+            }
+
+            TipoMovimentacao tipoItem = TipoMovimentacao.valueOf(itemDTO.getTipoMovimentacao());
 
             Produto produto = produtoRepository
                     .findByCodigoOuNome(itemDTO.getCodigoOuNome())
                     .orElseThrow(() -> new RuntimeException("Produto não encontrado: " + itemDTO.getCodigoOuNome()));
 
-            // 🔻 SEMPRE baixa estoque da matriz
+            // 🔻 SEMPRE baixa da matriz
             estoqueService.baixarEstoque(produto, itemDTO.getQuantidade());
 
-            // ➕ Se for TRANSFERÊNCIA, entra no estoque da filial
-            if (tipoMovimentacao == TipoMovimentacao.T) {
+            String estadoDestinoItem = null;
 
-                Filial filialDestino = Filial.valueOf(dto.getEstadoDestino());
+            // ➕ Se for TRANSFERÊNCIA, entra estoque na filial
+            if (tipoItem == TipoMovimentacao.T) {
 
-                estoqueService.entradaEstoque(
-                        produto,
-                        filialDestino,
-                        itemDTO.getQuantidade());
+                if (itemDTO.getEstadoDestino() == null || itemDTO.getEstadoDestino().isBlank()) {
+                    throw new RuntimeException("Estado destino obrigatório para transferência do item: " + produto.getNome());
+                }
+
+                Filial filialDestino = Filial.valueOf(itemDTO.getEstadoDestino());
+
+                estoqueService.entradaEstoque(produto, filialDestino, itemDTO.getQuantidade());
+
+                estadoDestinoItem = itemDTO.getEstadoDestino();
             }
 
+            // 💰 Cálculo financeiro
+            double subtotal = itemDTO.getQuantidade() * itemDTO.getValorPorCaixa();
+            valorTotal += subtotal;
+
+            // 📦 Criação do item da venda
             VendaItem item = new VendaItem();
             item.setVenda(venda);
             item.setProduto(produto);
             item.setQuantidade(itemDTO.getQuantidade());
             item.setValorPorCaixa(itemDTO.getValorPorCaixa());
-
-            double subtotal = itemDTO.getQuantidade() * itemDTO.getValorPorCaixa();
             item.setSubtotal(subtotal);
+            item.setTipoMovimentacao(tipoItem);
+            item.setEstadoDestino(estadoDestinoItem);
 
-            valorTotal += subtotal;
             itensVenda.add(item);
         }
 
         // ===============================
-        // 4️⃣ Finaliza e salva a venda
+        // 4️⃣ Finaliza a venda
         // ===============================
         venda.setItens(itensVenda);
         venda.setValorTotal(valorTotal);
@@ -140,7 +264,7 @@ public class VendaService {
         vendaRepository.save(venda);
 
         // ===============================
-        // 5️⃣ Geração do Financeiro (SEM ALTERAÇÃO)
+        // 5️⃣ Geração do financeiro
         // ===============================
         ContaReceber conta = new ContaReceber();
         conta.setVenda(venda);

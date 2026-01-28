@@ -23,18 +23,37 @@ public class EstoqueController {
     }
 
     // 🔹 Tela principal
+    // @GetMapping
+    // public String telaEstoque() {
+    // return "estoque";
+    // }
     @GetMapping
-    public String telaEstoque() {
+    public String telaEstoque(Model model) {
+
+        model.addAttribute("produtos", produtoService.listarTodos());
+
         return "estoque";
     }
 
     // 🔹 Entrada de estoque (MATRIZ)
+    // @PostMapping("/entrada")
+    // public String entradaEstoque(
+    // @RequestParam String codigoOuNome,
+    // @RequestParam Integer quantidade) {
+
+    // Produto produto = produtoService.buscarPorCodigoOuNome(codigoOuNome);
+
+    // estoqueService.entradaEstoque(produto, Filial.MATRIZ, quantidade);
+
+    // return "redirect:/estoque";
+    // }
+
     @PostMapping("/entrada")
     public String entradaEstoque(
-            @RequestParam String codigoOuNome,
+            @RequestParam Long produtoId,
             @RequestParam Integer quantidade) {
 
-        Produto produto = produtoService.buscarPorCodigoOuNome(codigoOuNome);
+        Produto produto = produtoService.buscarPorId(produtoId);
 
         estoqueService.entradaEstoque(produto, Filial.MATRIZ, quantidade);
 

@@ -125,7 +125,9 @@
                     <td th:text="${item.venda.clienteNome}"></td>
                     <td th:text="${item.venda.clienteEstado}"></td>
                     <td th:text="${#temporals.format(item.venda.dataSaida, 'dd/MM/yyyy')}"></td>
-                    <td th:text="${item.venda.tipoMovimentacao}"></td>
+                    <!-- <td th:text="${item.venda.tipoMovimentacao}"></td> -->
+                    <td th:text="${item.tipoMovimentacao}"></td>
+
                 </tr>
             </tbody>
         </table>

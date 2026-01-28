@@ -122,7 +122,15 @@
             <div class="grid">
                 <div>
                     <label>Código ou Nome do Produto</label>
-                    <input type="text" name="codigoOuNome" required>
+                    <!-- <input type="text" name="codigoOuNome" required> -->
+
+                    <select name="produtoId" required>
+                        <option value="">Selecione um produto</option>
+                        <option th:each="produto : ${produtos}" th:value="${produto.id}"
+                            th:text="${produto.codigo} + ' - ' + ${produto.nome}">
+                        </option>
+                    </select>
+
                 </div>
 
                 <div>
@@ -135,7 +143,7 @@
 
             <div class="actions">
                 <!-- <button type="button" class="btn-back" onclick="voltarMenu()">⬅ Voltar</button> -->
-                 <button onclick="window.location.href='/dashboard'">Voltar </button>
+                <button onclick="window.location.href='/dashboard'">Voltar </button>
                 <button type="submit" class="btn-save">📥 Registrar Entrada</button>
             </div>
 

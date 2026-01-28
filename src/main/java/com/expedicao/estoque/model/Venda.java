@@ -14,10 +14,10 @@ public class Venda {
     private String clienteNome;
     private String clienteEstado;
 
-    @Enumerated(EnumType.STRING)
-    private TipoMovimentacao tipoMovimentacao;
+    // @Enumerated(EnumType.STRING)
+    // private TipoMovimentacao tipoMovimentacao;
 
-    private String estadoDestino;
+    // private String estadoDestino;
 
     private LocalDate dataSaida;
 
@@ -49,21 +49,21 @@ public class Venda {
         this.clienteEstado = clienteEstado;
     }
 
-    public TipoMovimentacao getTipoMovimentacao() {
-        return tipoMovimentacao;
-    }
+    // public TipoMovimentacao getTipoMovimentacao() {
+    // return tipoMovimentacao;
+    // }
 
-    public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
-        this.tipoMovimentacao = tipoMovimentacao;
-    }
+    // public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
+    // this.tipoMovimentacao = tipoMovimentacao;
+    // }
 
-    public String getEstadoDestino() {
-        return estadoDestino;
-    }
+    // public String getEstadoDestino() {
+    //     return estadoDestino;
+    // }
 
-    public void setEstadoDestino(String estadoDestino) {
-        this.estadoDestino = estadoDestino;
-    }
+    // public void setEstadoDestino(String estadoDestino) {
+    //     this.estadoDestino = estadoDestino;
+    // }
 
     public LocalDate getDataSaida() {
         return dataSaida;

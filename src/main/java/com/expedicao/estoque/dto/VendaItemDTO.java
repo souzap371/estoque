@@ -5,6 +5,8 @@ public class VendaItemDTO {
     private String codigoOuNome;
     private Integer quantidade;
     private Double valorPorCaixa;
+    private String tipoMovimentacao;
+    private String estadoDestino;
 
     public String getCodigoOuNome() {
         return codigoOuNome;
@@ -30,6 +32,20 @@ public class VendaItemDTO {
         this.valorPorCaixa = valorPorCaixa;
     }
 
-    // getters e setters
+    public String getTipoMovimentacao() {
+        return tipoMovimentacao;
+    }
+
+    public void setTipoMovimentacao(String tipoMovimentacao) {
+        this.tipoMovimentacao = tipoMovimentacao;
+    }
+
+    public String getEstadoDestino() {
+        return estadoDestino;
+    }
+
+    public void setEstadoDestino(String estadoDestino) {
+        this.estadoDestino = estadoDestino;
+    }
 
 }

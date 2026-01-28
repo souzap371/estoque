@@ -4,6 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Pedido / Venda</title>
+
+    <!-- Fonte moderna e legível -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
@@ -25,7 +27,7 @@
         .container {
             width: 100%;
             max-width: 960px;
-            background: #fff;
+            background: #ffffff;
             padding: 32px;
             border-radius: 8px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
@@ -36,22 +38,32 @@
             margin-bottom: 28px;
             font-size: 20px;
             font-weight: 600;
+            color: #0f172a;
         }
 
         label {
             font-size: 12px;
             font-weight: 600;
-            margin-bottom: 6px;
+            color: #334155;
             display: block;
+            margin-bottom: 6px;
         }
 
         input,
         select {
             width: 100%;
-            padding: 10px;
+            padding: 10px 12px;
+            font-size: 14px;
             border: 1px solid #cbd5e1;
             border-radius: 6px;
             margin-bottom: 16px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 1px #2563eb;
         }
 
         .grid {
@@ -64,6 +76,13 @@
             display: flex;
             gap: 20px;
             align-items: center;
+            margin-top: 6px;
+        }
+
+        .flex label {
+            font-weight: 500;
+            font-size: 14px;
+            color: #0f172a;
         }
 
         hr {
@@ -74,36 +93,53 @@
 
         button {
             padding: 12px 18px;
-            border: none;
+            font-size: 14px;
+            font-weight: 500;
             border-radius: 6px;
             cursor: pointer;
+            border: none;
+            transition: background-color 0.2s ease, transform 0.15s ease;
         }
 
         .btn-add {
-            background: #2563eb;
-            color: #fff;
+            background-color: #2563eb;
+            color: #ffffff;
+            margin-top: 10px;
         }
 
-        .btn-finish {
-            background: #16a34a;
-            color: #fff;
+        .btn-add:hover {
+            background-color: #1d4ed8;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th,
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #e2e8f0;
-            text-align: center;
+            margin-top: 22px;
         }
 
         th {
-            background: #f1f5f9;
+            background-color: #f1f5f9;
+            font-size: 13px;
+            font-weight: 600;
+            color: #0f172a;
+            padding: 12px;
+            border-bottom: 1px solid #cbd5e1;
+        }
+
+        td {
+            padding: 12px;
+            font-size: 14px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            color: #0f172a;
+        }
+
+        h3 {
+            margin-top: 22px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            text-align: right;
         }
 
         .actions {
@@ -111,10 +147,29 @@
             justify-content: space-between;
             margin-top: 26px;
         }
+
+        .btn-back {
+            background-color: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .btn-back:hover {
+            background-color: #cbd5e1;
+        }
+
+        .btn-finish {
+            background-color: #16a34a;
+            color: #ffffff;
+        }
+
+        .btn-finish:hover {
+            background-color: #15803d;
+        }
     </style>
 </head>
 
 <body>
+
     <div class="container">
         <h2>Pedido / Venda</h2>
 
@@ -126,14 +181,9 @@
             </div>
 
             <!-- <div>
-            <label>Estado do Cliente</label>
-            <select id="clienteEstado">
-                <option value="">Selecione</option>
-                <option value="PE">PE</option>
-                <option value="MG">MG</option>
-                <option value="SP">SP</option>
-            </select>
-        </div> -->
+                <label>Estado do Cliente</label>
+                <input id="clienteEstado">
+            </div> -->
             <div>
                 <label>Estado do Cliente</label>
                 <select id="clienteEstado">
@@ -167,65 +217,55 @@
                     <option value="TO">TO</option>
                 </select>
             </div>
+
+
+            <div>
+                <label>Tipo</label>
+                <div class="flex">
+                    <label><input type="radio" name="tipo" value="V" checked> Venda</label>
+                    <label><input type="radio" name="tipo" value="T"> Transferência</label>
+                </div>
+            </div>
+        </div>
+
+        <div id="estadoDestinoDiv" style="display:none;">
+            <label>Estado Destino</label>
+            <select id="estadoDestino">
+                <option value="">Selecione</option>
+                <option value="AL">AL</option>
+                <option value="MG">MG</option>
+            </select>
         </div>
 
         <hr>
 
         <!-- PRODUTO -->
         <div class="grid">
-            <!-- <div>
-                <label>Produto</label>
-                <input id="produto">
-            </div> -->
-
             <div>
-                <label>Produto</label>
-                <select id="produto">
-                    <option value="">Selecione um produto</option>
-                    <option th:each="p : ${produtos}" th:value="${p.codigo}" th:text="${p.nome}">
-                    </option>
-                </select>
+                <label>Código ou Nome do Produto</label>
+                <input id="produto">
             </div>
+
             <div>
                 <label>Quantidade</label>
                 <input type="number" id="quantidade" min="1">
             </div>
+
             <div>
                 <label>Valor por Caixa</label>
                 <input type="number" step="0.01" id="valor">
             </div>
         </div>
 
-        <!-- TIPO POR ITEM -->
-        <div class="grid">
-            <div>
-                <label>Tipo do Item</label>
-                <div class="flex">
-                    <label><input type="radio" name="tipoItem" value="V" checked> Venda</label>
-                    <label><input type="radio" name="tipoItem" value="T"> Transferência</label>
-                </div>
-            </div>
-
-            <div id="estadoDestinoDiv" style="display:none;">
-                <label>Estado Destino</label>
-                <select id="estadoDestino">
-                    <option value="">Selecione</option>
-                    <option value="MG">MG</option>
-                    <option value="AL">AL</option>
-                </select>
-            </div>
-        </div>
-
         <button class="btn-add" type="button" onclick="adicionarItem()">➕ Adicionar Produto</button>
 
+        <!-- TABELA -->
         <table>
             <thead>
                 <tr>
                     <th>Produto</th>
                     <th>Qtd</th>
                     <th>Valor</th>
-                    <th>Tipo</th>
-                    <th>Destino</th>
                     <th>Subtotal</th>
                 </tr>
             </thead>
@@ -235,7 +275,7 @@
         <h3 id="total">TOTAL: R$ 0,00</h3>
 
         <div class="actions">
-            <button onclick="window.location.href='/dashboard'">Voltar</button>
+            <button onclick="window.location.href='/dashboard'">Voltar </button>
             <button class="btn-finish" onclick="concluirPedido()">✅ Concluir Pedido</button>
         </div>
     </div>
@@ -244,26 +284,29 @@
         let itens = [];
         let total = 0;
 
-        const moedaBR = v => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v);
+        const moedaBR = valor =>
+            new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            }).format(valor);
 
-        document.querySelectorAll("input[name='tipoItem']").forEach(radio => {
+        document.querySelectorAll("input[name='tipo']").forEach(radio => {
             radio.addEventListener("change", () => {
-                const tipo = document.querySelector("input[name='tipoItem']:checked").value;
-                document.getElementById("estadoDestinoDiv").style.display = tipo === "T" ? "block" : "none";
+                const tipoSelecionado = document.querySelector("input[name='tipo']:checked").value;
+                document.getElementById("estadoDestinoDiv").style.display =
+                    tipoSelecionado === "T" ? "block" : "none";
             });
         });
 
         function adicionarItem() {
-            const produto = produtoInput.value;
-            const qtd = parseInt(quantidade.value);
-            const valor = parseFloat(valorInput.value);
-            const tipo = document.querySelector("input[name='tipoItem']:checked").value;
-            const estadoDestino = estadoDestinoSelect.value;
+            const produto = document.getElementById("produto").value;
+            const qtd = parseInt(document.getElementById("quantidade").value);
+            const valor = parseFloat(document.getElementById("valor").value);
 
-            if (!produto || !qtd || !valor) return alert("Preencha os dados do produto");
-
-            if (tipo === "T" && !estadoDestino)
-                return alert("Informe o estado de destino para transferência");
+            if (!produto || !qtd || !valor) {
+                alert("Preencha todos os campos do produto");
+                return;
+            }
 
             const subtotal = qtd * valor;
             total += subtotal;
@@ -271,9 +314,7 @@
             itens.push({
                 codigoOuNome: produto,
                 quantidade: qtd,
-                valorPorCaixa: valor,
-                tipoMovimentacao: tipo,
-                estadoDestino: tipo === "T" ? estadoDestino : null
+                valorPorCaixa: valor
             });
 
             const tr = document.createElement("tr");
@@ -281,34 +322,43 @@
             <td>${produto}</td>
             <td>${qtd}</td>
             <td>${moedaBR(valor)}</td>
-            <td>${tipo}</td>
-            <td>${tipo === "T" ? estadoDestino : "-"}</td>
             <td>${moedaBR(subtotal)}</td>
         `;
             document.getElementById("itens").appendChild(tr);
 
-            totalLabel.innerText = "TOTAL: " + moedaBR(total);
-            produtoInput.value = quantidade.value = valorInput.value = "";
+            document.getElementById("total").innerText = "TOTAL: " + moedaBR(total);
+
+            document.getElementById("produto").value = "";
+            document.getElementById("quantidade").value = "";
+            document.getElementById("valor").value = "";
         }
 
         function concluirPedido() {
+
+            const tipo = document.querySelector("input[name='tipo']:checked").value;
+            const estadoDestinoSelect = document.getElementById("estadoDestino");
+
+            if (tipo === "T" && !estadoDestinoSelect.value) {
+                alert("Selecione o estado da filial de destino (MG ou AL).");
+                estadoDestinoSelect.focus();
+                return;
+            }
+
             fetch("[[@{/vendas/salvar}]]", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     clienteNome: clienteNome.value,
                     clienteEstado: clienteEstado.value,
+                    tipoMovimentacao: tipo,
+                    estadoDestino: tipo === "T" ? estadoDestinoSelect.value : null,
                     itens: itens
                 })
             }).then(() => location.reload());
         }
 
-        const produtoInput = document.getElementById("produto");
-        const quantidade = document.getElementById("quantidade");
-        const valorInput = document.getElementById("valor");
-        const estadoDestinoSelect = document.getElementById("estadoDestino");
-        const totalLabel = document.getElementById("total");
     </script>
+
 </body>
 
 </html>

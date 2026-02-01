@@ -47,5 +47,4 @@ public class VendaItemDTO {
     public void setEstadoDestino(String estadoDestino) {
         this.estadoDestino = estadoDestino;
     }
-
 }

@@ -1,100 +1,102 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <title>Relatório de Vendas</title>
-
-    <!-- Fonte padrão do sistema -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: 'Inter', sans-serif;
+            font-family: Inter;
             background: #f4f6f8;
-            color: #1f2937;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin: 0;
+            padding: 30px
         }
 
         .container {
-            width: 95%;
-            max-width: 1200px;
-            background: #ffffff;
-            padding: 32px;
+            max-width: 1300px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08)
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 30px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            color: #111827;
+            margin-bottom: 20px
+        }
+
+        .filtros {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px
+        }
+
+        select,
+        input {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 13px
+        }
+
+        button {
+            padding: 9px;
+            border-radius: 6px;
+            border: none;
+            background: #2563eb;
+            color: #fff;
+            cursor: pointer
+        }
+
+        .totais {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            font-weight: 600
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
+            border-collapse: collapse
         }
 
-        thead {
-            background: #f1f5f9;
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #eee
         }
 
         th {
-            padding: 14px;
-            text-align: center;
-            font-weight: 600;
-            color: #374151;
-            border-bottom: 2px solid #e5e7eb;
+            background: #f1f5f9
         }
 
-        td {
-            padding: 12px;
-            text-align: center;
-            border-bottom: 1px solid #e5e7eb;
-            color: #4b5563;
-        }
-
-        tbody tr:hover {
-            background: #f9fafb;
-        }
-
-        .back {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 10px 18px;
-            background: #2563eb;
-            color: #ffffff;
+        .acoes a {
+            margin: 0 5px;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: background 0.2s ease;
+            font-weight: 600;
         }
 
-        .back:hover {
-            background: #1e40af;
+        .editar {
+            color: #2563eb;
         }
 
-        @media (max-width: 768px) {
-            table {
-                font-size: 12px;
-            }
+        .excluir {
+            color: #dc2626;
+        }
 
-            th,
-            td {
-                padding: 10px;
-            }
+        .paginacao {
+            margin-top: 20px;
+            text-align: center
+        }
+
+        .paginacao a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #2563eb
         }
     </style>
 </head>
@@ -102,7 +104,55 @@
 <body>
 
     <div class="container">
-        <h2>Relatório de Vendas / Pedidos</h2>
+        <h2>📊 Relatório de Vendas / Pedidos</h2>
+
+        <form method="get" th:action="@{/relatorios/vendas}">
+            <div class="filtros">
+
+                <select name="pedido">
+                    <option value="">Todos Pedidos</option>
+                    <option th:each="p : ${listaPedidos}" th:value="${p}" th:text="${p}"
+                        th:selected="${param.pedido == p}"></option>
+                </select>
+
+                <select name="produto">
+                    <option value="">Todos Produtos</option>
+                    <option th:each="p : ${listaProdutos}" th:value="${p}" th:text="${p}"
+                        th:selected="${param.produto == p}"></option>
+                </select>
+
+                <select name="cliente">
+                    <option value="">Todos Clientes</option>
+                    <option th:each="c : ${listaClientes}" th:value="${c}" th:text="${c}"
+                        th:selected="${param.cliente == c}"></option>
+                </select>
+
+                <select name="estado">
+                    <option value="">Todos Estados</option>
+                    <option th:each="e : ${listaEstados}" th:value="${e}" th:text="${e}"
+                        th:selected="${param.estado == e}"></option>
+                </select>
+
+                <select name="tipo">
+                    <option value="">Todos Tipos</option>
+                    <option th:each="t : ${listaTipos}" th:value="${t.name()}"
+                        th:text="${t.name() == 'V' ? 'Venda' : 'Transferência'}"
+                        th:selected="${param.tipo == t.name()}">
+                    </option>
+                </select>
+
+                <input type="date" name="dataInicio" th:value="${param.dataInicio}">
+                <input type="date" name="dataFim" th:value="${param.dataFim}">
+
+                <button type="submit">Filtrar</button>
+            </div>
+        </form>
+
+        <div class="totais">
+            <div>🧾 Pedidos: <span th:text="${totalPedidos}"></span></div>
+            <div>📦 Itens: <span th:text="${totalItens}"></span></div>
+            <div>🔢 Qtd Total: <span th:text="${totalQuantidade}"></span></div>
+        </div>
 
         <table>
             <thead>
@@ -114,9 +164,9 @@
                     <th>Estado</th>
                     <th>Data</th>
                     <th>Tipo</th>
+                    <th>Ações</th> <!-- NOVA COLUNA -->
                 </tr>
             </thead>
-
             <tbody>
                 <tr th:each="item : ${itens}">
                     <td th:text="${item.venda.id}"></td>
@@ -125,18 +175,47 @@
                     <td th:text="${item.venda.clienteNome}"></td>
                     <td th:text="${item.venda.clienteEstado}"></td>
                     <td th:text="${#temporals.format(item.venda.dataSaida, 'dd/MM/yyyy')}"></td>
-                    <!-- <td th:text="${item.venda.tipoMovimentacao}"></td> -->
                     <td th:text="${item.tipoMovimentacao}"></td>
+                    <td class="acoes">
+                        <!-- <a class="editar" th:href="@{/vendas/editar/{id}(id=${item.venda.id})}">✏ Editar</a> -->
 
+                        <a class="excluir" th:href="@{/vendas/excluir/{id}(id=${item.venda.id})}"
+                            onclick="return confirm('Tem certeza que deseja excluir esta venda?');">
+                            🗑 Excluir
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>
 
-        <div style="text-align: center;">
-            <button onclick="window.location.href='/dashboard'">Voltar </button>
-        </div>
-    </div>
+        <div class="paginacao">
+            <a th:if="${pagina.hasPrevious()}" th:href="@{/relatorios/vendas(page=${pagina.number-1},
+            pedido=${param.pedido},
+            produto=${param.produto},
+            cliente=${param.cliente},
+            estado=${param.estado},
+            tipo=${param.tipo},
+            dataInicio=${param.dataInicio},
+            dataFim=${param.dataFim})}">⬅ Anterior</a>
 
+            <span>Página <span th:text="${pagina.number+1}"></span> de <span
+                    th:text="${pagina.totalPages}"></span></span>
+
+            <a th:if="${pagina.hasNext()}" th:href="@{/relatorios/vendas(page=${pagina.number+1},
+            pedido=${param.pedido},
+            produto=${param.produto},
+            cliente=${param.cliente},
+            estado=${param.estado},
+            tipo=${param.tipo},
+            dataInicio=${param.dataInicio},
+            dataFim=${param.dataFim})}">Próxima ➡</a>
+        </div>
+
+        <div style="text-align:center;margin-top:20px">
+            <button onclick="window.location.href='/dashboard'">Voltar</button>
+        </div>
+
+    </div>
 </body>
 
 </html>

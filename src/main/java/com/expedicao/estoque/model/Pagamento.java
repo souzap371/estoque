@@ -3,6 +3,8 @@ package com.expedicao.estoque.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -18,8 +20,8 @@ public class Pagamento {
     @JsonBackReference
     private ContaReceber contaReceber;
 
-    @Column(nullable = false)
-    private Double valorPago;
+    @Column(nullable = false, precision = 15, scale = 2)
+    private BigDecimal valorPago;
 
     @Column(nullable = false)
     private LocalDate dataPagamento;
@@ -56,11 +58,11 @@ public class Pagamento {
         this.contaReceber = contaReceber;
     }
 
-    public Double getValorPago() {
+    public BigDecimal getValorPago() {
         return valorPago;
     }
 
-    public void setValorPago(Double valorPago) {
+    public void setValorPago(BigDecimal valorPago) {
         this.valorPago = valorPago;
     }
 

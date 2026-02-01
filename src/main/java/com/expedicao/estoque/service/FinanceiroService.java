@@ -1,22 +1,19 @@
 package com.expedicao.estoque.service;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.math.BigDecimal;
+import java.nio.file.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.expedicao.estoque.model.ContaReceber;
-import com.expedicao.estoque.model.FormaPagamento;
-import com.expedicao.estoque.model.Pagamento;
+import com.expedicao.estoque.dto.ContaReceberDTO;
+import com.expedicao.estoque.model.*;
 import com.expedicao.estoque.repositorie.ContaReceberRepository;
 import com.expedicao.estoque.repositorie.PagamentoRepository;
 
@@ -28,31 +25,39 @@ public class FinanceiroService {
     private static final String DIRETORIO_UPLOAD = "uploads/financeiro";
     private static final Set<String> EXTENSOES_PERMITIDAS = Set.of(".pdf", ".jpg", ".jpeg", ".png");
 
-    @Autowired
-    private ContaReceberRepository contaReceberRepository;
+    private final ContaReceberRepository contaReceberRepository;
+    private final PagamentoRepository pagamentoRepository;
 
-    @Autowired
-    private PagamentoRepository pagamentoRepository;
+    public FinanceiroService(ContaReceberRepository contaReceberRepository,
+            PagamentoRepository pagamentoRepository) {
+        this.contaReceberRepository = contaReceberRepository;
+        this.pagamentoRepository = pagamentoRepository;
+    }
 
-    /*
-     * =========================
-     * CONSULTAS
-     * ==========================
-     */
-
+    // =========================
+    // CONSULTAS
+    // =========================
     public List<String> listarClientes() {
         return contaReceberRepository.listarClientes();
     }
 
-    public List<ContaReceber> buscarTodas() {
-        return contaReceberRepository.findAll();
-    }
-
-    public List<ContaReceber> buscarPorCliente(String cliente) {
+    @Transactional
+    public List<ContaReceberDTO> buscarTodas() {
         return contaReceberRepository.findAll()
                 .stream()
-                .filter(c -> c.getClienteNome().equalsIgnoreCase(cliente))
-                .toList();
+                .map(ContaReceberDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<ContaReceberDTO> buscarPorCliente(String cliente) {
+        if ("TODOS".equalsIgnoreCase(cliente)) {
+            return buscarTodas();
+        }
+
+        return contaReceberRepository.findByClienteNomeIgnoreCase(cliente)
+                .stream()
+                .map(ContaReceberDTO::new)
+                .collect(Collectors.toList());
     }
 
     public Pagamento buscarPagamento(Long id) {
@@ -60,40 +65,54 @@ public class FinanceiroService {
                 .orElseThrow(() -> new RuntimeException("Pagamento não encontrado"));
     }
 
-    public List<ContaReceber> relatorioFinanceiro(String status) {
+    @Transactional
+    public List<ContaReceberDTO> filtrar(String cliente, String status) {
 
-        List<ContaReceber> contas = contaReceberRepository.findAll();
+        List<ContaReceber> contas = contaReceberRepository.buscarComFiltro(cliente);
 
-        if (status == null || status.isBlank()) {
-            return contas;
+        // Filtrar status manualmente
+        if (status != null && !status.equals("TODOS")) {
+
+            if (status.equals("ABERTO")) {
+                contas = contas.stream()
+                        .filter(c -> c.getSaldoDevedor().compareTo(BigDecimal.ZERO) > 0)
+                        .toList();
+            }
+
+            if (status.equals("QUITADO")) {
+                contas = contas.stream()
+                        .filter(c -> c.getSaldoDevedor().compareTo(BigDecimal.ZERO) == 0)
+                        .toList();
+            }
         }
 
         return contas.stream()
-                .filter(c -> {
-                    if ("ABERTO".equalsIgnoreCase(status)) {
-                        return c.getSaldoDevedor() > 0;
-                    }
-                    if ("QUITADO".equalsIgnoreCase(status)) {
-                        return c.getSaldoDevedor() == 0;
-                    }
-                    return true;
-                })
+                .map(ContaReceberDTO::new)
                 .toList();
     }
 
-    /*
-     * =========================
-     * BAIXA FINANCEIRA
-     * ==========================
-     */
+    public List<ContaReceberDTO> relatorioFinanceiro(String status) {
 
+        return contaReceberRepository.buscarRelatorioCompleto()
+                .stream()
+                .filter(c -> {
+                    if (status == null || status.isBlank())
+                        return true;
+                    if ("ABERTO".equalsIgnoreCase(status))
+                        return c.getSaldoDevedor().compareTo(BigDecimal.ZERO) > 0;
+                    if ("QUITADO".equalsIgnoreCase(status))
+                        return c.getSaldoDevedor().compareTo(BigDecimal.ZERO) == 0;
+                    return true;
+                })
+                .map(ContaReceberDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    // =========================
+    // BAIXA FINANCEIRA
+    // =========================
     @Transactional
-    public void darBaixa(
-            Long id,
-            Double valor,
-            String data,
-            FormaPagamento formaPagamento,
-            MultipartFile anexo) {
+    public void darBaixa(Long id, BigDecimal valor, String data, FormaPagamento formaPagamento, MultipartFile anexo) {
 
         ContaReceber conta = contaReceberRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
@@ -111,56 +130,49 @@ public class FinanceiroService {
         }
 
         conta.getPagamentos().add(pagamento);
-        conta.setValorPago(conta.getValorPago() + valor);
-        conta.setSaldoDevedor(conta.getSaldoDevedor() - valor);
+
+        // Atualiza saldo corretamente
+        conta.setValorPago(conta.getValorPago().add(valor));
+        conta.setSaldoDevedor(conta.getValorOriginal().subtract(conta.getValorPago()));
+        if (conta.getSaldoDevedor().compareTo(BigDecimal.ZERO) < 0) {
+            conta.setSaldoDevedor(BigDecimal.ZERO);
+        }
 
         contaReceberRepository.save(conta);
     }
 
-    /*
-     * =========================
-     * MÉTODOS AUXILIARES
-     * ==========================
-     */
-
-    private void validarValor(Double valor, ContaReceber conta) {
-        if (valor == null || valor <= 0) {
+    private void validarValor(BigDecimal valor, ContaReceber conta) {
+        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
             throw new RuntimeException("Valor inválido");
         }
-        if (valor > conta.getSaldoDevedor()) {
+        if (valor.compareTo(conta.getSaldoDevedor()) > 0) {
             throw new RuntimeException("Valor maior que o saldo devedor");
         }
     }
 
+    // =========================
+    // MÉTODOS AUXILIARES
+    // =========================
     private void processarAnexo(MultipartFile anexo, Pagamento pagamento) {
 
         String nomeOriginal = anexo.getOriginalFilename();
-        if (nomeOriginal == null) {
+        if (nomeOriginal == null)
             throw new RuntimeException("Arquivo inválido");
-        }
 
         String nomeLower = nomeOriginal.toLowerCase();
-        boolean permitido = EXTENSOES_PERMITIDAS.stream()
-                .anyMatch(nomeLower::endsWith);
-
-        if (!permitido) {
+        boolean permitido = EXTENSOES_PERMITIDAS.stream().anyMatch(nomeLower::endsWith);
+        if (!permitido)
             throw new RuntimeException("Tipo de arquivo não permitido");
-        }
 
         try {
             Path pasta = Paths.get(DIRETORIO_UPLOAD);
-
-            if (!Files.exists(pasta)) {
+            if (!Files.exists(pasta))
                 Files.createDirectories(pasta);
-            }
 
             String nomeArquivo = UUID.randomUUID() + "_" + nomeOriginal;
             Path destino = pasta.resolve(nomeArquivo);
 
-            Files.copy(
-                    anexo.getInputStream(),
-                    destino,
-                    StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(anexo.getInputStream(), destino, StandardCopyOption.REPLACE_EXISTING);
 
             pagamento.setAnexoNome(nomeOriginal);
             pagamento.setAnexoTipo(anexo.getContentType());

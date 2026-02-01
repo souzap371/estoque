@@ -2,15 +2,21 @@ package com.expedicao.estoque.dto;
 
 import java.util.List;
 
-import com.expedicao.estoque.model.Filial;
-
 public class VendaDTO {
+
+    private Long id; // 🆕 usado para edição
 
     private String clienteNome;
     private String clienteEstado;
-    private String tipoMovimentacao;
-    private String estadoDestino;
     private List<VendaItemDTO> itens;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getClienteNome() {
         return clienteNome;
@@ -28,22 +34,6 @@ public class VendaDTO {
         this.clienteEstado = clienteEstado;
     }
 
-    public String getTipoMovimentacao() {
-        return tipoMovimentacao;
-    }
-
-    public void setTipoMovimentacao(String tipoMovimentacao) {
-        this.tipoMovimentacao = tipoMovimentacao;
-    }
-
-    public String getEstadoDestino() {
-        return estadoDestino;
-    }
-
-    public void setEstadoDestino(String estadoDestino) {
-        this.estadoDestino = estadoDestino;
-    }
-
     public List<VendaItemDTO> getItens() {
         return itens;
     }
@@ -51,5 +41,4 @@ public class VendaDTO {
     public void setItens(List<VendaItemDTO> itens) {
         this.itens = itens;
     }
-
 }

@@ -1,21 +1,18 @@
 package com.expedicao.estoque.controller;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.List;
 
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.Resource;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.expedicao.estoque.model.ContaReceber;
+import com.expedicao.estoque.dto.ContaReceberDTO;
 import com.expedicao.estoque.model.FormaPagamento;
 import com.expedicao.estoque.model.Pagamento;
 import com.expedicao.estoque.service.FinanceiroService;
@@ -24,60 +21,49 @@ import com.expedicao.estoque.service.FinanceiroService;
 @RequestMapping("/financeiro")
 public class FinanceiroController {
 
-    @Autowired
-    private FinanceiroService financeiroService;
+    private final FinanceiroService financeiroService;
 
-    // ======================================================
-    // 🖥 TELAS (HTML)
-    // ======================================================
+    public FinanceiroController(FinanceiroService financeiroService) {
+        this.financeiroService = financeiroService;
+    }
 
-    // Tela principal do financeiro
+    // =========================
+    // TELAS
+    // =========================
     @GetMapping
     public String financeiro() {
         return "financeiro";
     }
 
-    // Tela do relatório financeiro
     @GetMapping("/relatorio")
     public String relatorioFinanceiroTela() {
         return "relatorio-financeiro";
     }
 
-    // 🔹 TELA DE DAR BAIXA (⬅️ CORREÇÃO AQUI)
     @GetMapping("/baixar/{id}")
     public String telaDarBaixa(@PathVariable Long id, Model model) {
         model.addAttribute("contaId", id);
         return "baixa";
     }
 
-    // ======================================================
-    // 🔌 API (JSON)
-    // ======================================================
-
-    // 🔹 Lista clientes (dropdown)
+    // =========================
+    // API JSON
+    // =========================
     @GetMapping("/api/clientes")
     @ResponseBody
     public List<String> listarClientes() {
         return financeiroService.listarClientes();
     }
 
-    // 🔹 Contas por cliente
-    // OBS: trata a opção "TODOS"
     @GetMapping("/api/cliente/{nome}")
     @ResponseBody
-    public List<ContaReceber> buscarPorCliente(@PathVariable String nome) {
-
-        if ("TODOS".equalsIgnoreCase(nome)) {
-            return financeiroService.buscarTodas();
-        }
-
+    public List<ContaReceberDTO> buscarPorCliente(@PathVariable String nome) {
         return financeiroService.buscarPorCliente(nome);
     }
 
-    // 🔹 Todas as contas
     @GetMapping("/api/todos")
     @ResponseBody
-    public List<ContaReceber> listarTodas() {
+    public List<ContaReceberDTO> listarTodas() {
         return financeiroService.buscarTodas();
     }
 
@@ -85,7 +71,7 @@ public class FinanceiroController {
     @ResponseBody
     public ResponseEntity<?> darBaixa(
             @PathVariable Long id,
-            @RequestParam Double valor,
+            @RequestParam BigDecimal valor,
             @RequestParam String data,
             @RequestParam FormaPagamento formaPagamento,
             @RequestParam(required = false) MultipartFile anexo) {
@@ -94,29 +80,32 @@ public class FinanceiroController {
         return ResponseEntity.ok().build();
     }
 
-    // 🔹 Relatório financeiro (JSON)
     @GetMapping("/api/relatorio")
     @ResponseBody
-    public List<ContaReceber> relatorioFinanceiro(
-            @RequestParam(required = false) String status) {
-
+    public List<ContaReceberDTO> relatorioFinanceiro(@RequestParam(required = false) String status) {
         return financeiroService.relatorioFinanceiro(status);
     }
 
     @GetMapping("/api/pagamento/anexo/{id}")
     public ResponseEntity<Resource> baixarAnexo(@PathVariable Long id) {
-
         Pagamento pagamento = financeiroService.buscarPagamento(id);
-
         File file = new File(pagamento.getAnexoPath());
         Resource resource = new FileSystemResource(file);
 
         return ResponseEntity.ok()
-                .header(
-                        HttpHeaders.CONTENT_DISPOSITION,
+                .header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment; filename=\"" + pagamento.getAnexoNome() + "\"")
                 .contentType(MediaType.parseMediaType(pagamento.getAnexoTipo()))
                 .body(resource);
+    }
+
+    @GetMapping("/api/filtrar")
+    @ResponseBody
+    public List<ContaReceberDTO> filtrar(
+            @RequestParam(required = false) String cliente,
+            @RequestParam(required = false) String status) {
+
+        return financeiroService.filtrar(cliente, status);
     }
 
 }

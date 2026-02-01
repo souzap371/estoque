@@ -23,10 +23,6 @@ public class EstoqueController {
     }
 
     // 🔹 Tela principal
-    // @GetMapping
-    // public String telaEstoque() {
-    // return "estoque";
-    // }
     @GetMapping
     public String telaEstoque(Model model) {
 
@@ -34,19 +30,6 @@ public class EstoqueController {
 
         return "estoque";
     }
-
-    // 🔹 Entrada de estoque (MATRIZ)
-    // @PostMapping("/entrada")
-    // public String entradaEstoque(
-    // @RequestParam String codigoOuNome,
-    // @RequestParam Integer quantidade) {
-
-    // Produto produto = produtoService.buscarPorCodigoOuNome(codigoOuNome);
-
-    // estoqueService.entradaEstoque(produto, Filial.MATRIZ, quantidade);
-
-    // return "redirect:/estoque";
-    // }
 
     @PostMapping("/entrada")
     public String entradaEstoque(

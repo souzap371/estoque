@@ -1,14 +1,17 @@
 package com.expedicao.estoque.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "conta_receber")
 public class ContaReceber {
 
     @Id
@@ -16,27 +19,49 @@ public class ContaReceber {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "venda_id", nullable = false)
-    @JsonIgnore // ✔ OK ignorar venda no JSON
+    @JoinColumn(name = "venda_id", nullable = false, unique = true)
+    @JsonIgnore
     private Venda venda;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 150)
     private String clienteNome;
 
-    @Column(nullable = false)
-    private Double valorOriginal;
+    @Column(nullable = false, precision = 15, scale = 2)
+    private BigDecimal valorOriginal = BigDecimal.ZERO;
+
+    @Column(nullable = false, precision = 15, scale = 2)
+    private BigDecimal valorPago = BigDecimal.ZERO;
+
+    @Column(nullable = false, precision = 15, scale = 2)
+    private BigDecimal saldoDevedor = BigDecimal.ZERO;
 
     @Column(nullable = false)
-    private Double valorPago;
+    private LocalDate dataCriacao = LocalDate.now();
 
-    @Column(nullable = false)
-    private Double saldoDevedor;
-
-    private LocalDate dataCriacao;
-
-    @OneToMany(mappedBy = "contaReceber", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // @OneToMany(mappedBy = "contaReceber", cascade = CascadeType.ALL,
+    // orphanRemoval = true)
+    // @JsonManagedReference
+    // private List<Pagamento> pagamentos;
+    @OneToMany(mappedBy = "contaReceber", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Pagamento> pagamentos;
+    private List<Pagamento> pagamentos = new ArrayList<>();
+
+    // =========================
+    // REGRAS DE NEGÓCIO
+    // =========================
+
+    public void registrarPagamento(BigDecimal valor) {
+        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Valor do pagamento deve ser maior que zero");
+        }
+
+        this.valorPago = this.valorPago.add(valor);
+        this.saldoDevedor = this.valorOriginal.subtract(this.valorPago);
+
+        if (this.saldoDevedor.compareTo(BigDecimal.ZERO) < 0) {
+            this.saldoDevedor = BigDecimal.ZERO;
+        }
+    }
 
     // =========================
     // GETTERS E SETTERS
@@ -62,36 +87,30 @@ public class ContaReceber {
         this.clienteNome = clienteNome;
     }
 
-    public Double getValorOriginal() {
+    public BigDecimal getValorOriginal() {
         return valorOriginal;
     }
 
-    public void setValorOriginal(Double valorOriginal) {
+    public void setValorOriginal(BigDecimal valorOriginal) {
         this.valorOriginal = valorOriginal;
+        atualizarSaldo();
     }
 
-    public Double getValorPago() {
+    public BigDecimal getValorPago() {
         return valorPago;
     }
 
-    public void setValorPago(Double valorPago) {
+    public void setValorPago(BigDecimal valorPago) {
         this.valorPago = valorPago;
+        atualizarSaldo();
     }
 
-    public Double getSaldoDevedor() {
+    public BigDecimal getSaldoDevedor() {
         return saldoDevedor;
-    }
-
-    public void setSaldoDevedor(Double saldoDevedor) {
-        this.saldoDevedor = saldoDevedor;
     }
 
     public LocalDate getDataCriacao() {
         return dataCriacao;
-    }
-
-    public void setDataCriacao(LocalDate dataCriacao) {
-        this.dataCriacao = dataCriacao;
     }
 
     public List<Pagamento> getPagamentos() {
@@ -100,5 +119,26 @@ public class ContaReceber {
 
     public void setPagamentos(List<Pagamento> pagamentos) {
         this.pagamentos = pagamentos;
+    }
+
+    private void atualizarSaldo() {
+        if (valorOriginal != null && valorPago != null) {
+            this.saldoDevedor = valorOriginal.subtract(valorPago);
+            if (this.saldoDevedor.compareTo(BigDecimal.ZERO) < 0) {
+                this.saldoDevedor = BigDecimal.ZERO;
+            }
+        }
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setSaldoDevedor(BigDecimal saldoDevedor) {
+        this.saldoDevedor = saldoDevedor;
+    }
+
+    public void setDataCriacao(LocalDate dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 }

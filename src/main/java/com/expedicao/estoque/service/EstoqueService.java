@@ -16,9 +16,9 @@ public class EstoqueService {
         this.estoqueRepository = estoqueRepository;
     }
 
-    /**
-     * 🔽 Baixa de estoque SEMPRE da MATRIZ
-     */
+    // =========================================================
+    // 🔽 BAIXA DE ESTOQUE DA MATRIZ (VENDA NORMAL)
+    // =========================================================
     @Transactional
     public void baixarEstoque(Produto produto, int quantidade) {
 
@@ -37,9 +37,9 @@ public class EstoqueService {
         estoqueRepository.save(estoque);
     }
 
-    /**
-     * 🔼 Entrada ou transferência de estoque
-     */
+    // =========================================================
+    // 🔼 ENTRADA DE ESTOQUE (COMPRA OU TRANSFERÊNCIA RECEBIDA)
+    // =========================================================
     @Transactional
     public void entradaEstoque(Produto produto, Filial filial, int quantidade) {
 
@@ -59,13 +59,54 @@ public class EstoqueService {
         estoqueRepository.save(estoque);
     }
 
-    /**
-     * 📦 Consulta estoque por filial
-     */
+    // =========================================================
+    // 🔁 DEVOLVER ESTOQUE PARA MATRIZ (AO CANCELAR VENDA)
+    // =========================================================
+    @Transactional
+    public void devolverEstoque(Produto produto, int quantidade) {
+
+        validarProdutoEQuantidade(produto, quantidade);
+
+        Estoque estoque = estoqueRepository
+                .findByProdutoAndFilial(produto, Filial.MATRIZ)
+                .orElseThrow(() -> new RuntimeException(
+                        "Estoque não encontrado na MATRIZ para o produto: " + produto.getNome()));
+
+        estoque.setQuantidadeAtual(estoque.getQuantidadeAtual() + quantidade);
+        estoqueRepository.save(estoque);
+    }
+
+    // =========================================================
+    // 🔽 BAIXAR ESTOQUE DE UMA FILIAL (TRANSFERÊNCIA)
+    // =========================================================
+    @Transactional
+    public void baixarEstoqueFilial(Produto produto, Filial filial, int quantidade) {
+
+        validarProdutoEQuantidade(produto, quantidade);
+
+        Estoque estoque = estoqueRepository
+                .findByProdutoAndFilial(produto, filial)
+                .orElseThrow(() -> new RuntimeException(
+                        "Estoque não encontrado na filial " + filial + " para o produto: " + produto.getNome()));
+
+        if (estoque.getQuantidadeAtual() < quantidade) {
+            throw new RuntimeException("Estoque insuficiente na filial " + filial);
+        }
+
+        estoque.setQuantidadeAtual(estoque.getQuantidadeAtual() - quantidade);
+        estoqueRepository.save(estoque);
+    }
+
+    // =========================================================
+    // 📦 CONSULTA ESTOQUE POR FILIAL
+    // =========================================================
     public List<Estoque> listarPorFilial(Filial filial) {
         return estoqueRepository.findByFilial(filial);
     }
 
+    // =========================================================
+    // 🛡 VALIDAÇÃO PADRÃO
+    // =========================================================
     private void validarProdutoEQuantidade(Produto produto, int quantidade) {
         if (produto == null) {
             throw new IllegalArgumentException("Produto inválido");

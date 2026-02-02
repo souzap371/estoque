@@ -50,9 +50,11 @@ public interface VendaItemRepository extends JpaRepository<VendaItem, Long> {
                         JOIN FETCH vi.venda v
                         JOIN FETCH vi.produto p
                         WHERE (:pedido IS NULL OR v.id = :pedido)
-                        AND (:produto IS NULL OR LOWER(TRIM(p.nome)) LIKE LOWER(CONCAT('%', :produto, '%')))
-                        AND (:cliente IS NULL OR LOWER(TRIM(v.clienteNome)) LIKE LOWER(CONCAT('%', :cliente, '%')))
-                        AND (:estado IS NULL OR LOWER(TRIM(v.clienteEstado)) LIKE LOWER(CONCAT('%', :estado, '%')))
+
+                        AND (:produto IS NULL OR LOWER(p.nome) LIKE LOWER(CONCAT('%', CAST(:produto AS string), '%')))
+                        AND (:cliente IS NULL OR LOWER(v.clienteNome) LIKE LOWER(CONCAT('%', CAST(:cliente AS string), '%')))
+                        AND (:estado IS NULL OR LOWER(v.clienteEstado) LIKE LOWER(CONCAT('%', CAST(:estado AS string), '%')))
+
                         AND (:tipo IS NULL OR vi.tipoMovimentacao = :tipo)
                         AND (:dataInicio IS NULL OR v.dataSaida >= :dataInicio)
                         AND (:dataFim IS NULL OR v.dataSaida <= :dataFim)
@@ -62,9 +64,11 @@ public interface VendaItemRepository extends JpaRepository<VendaItem, Long> {
                         JOIN vi.venda v
                         JOIN vi.produto p
                         WHERE (:pedido IS NULL OR v.id = :pedido)
-                        AND (:produto IS NULL OR LOWER(TRIM(p.nome)) LIKE LOWER(CONCAT('%', :produto, '%')))
-                        AND (:cliente IS NULL OR LOWER(TRIM(v.clienteNome)) LIKE LOWER(CONCAT('%', :cliente, '%')))
-                        AND (:estado IS NULL OR LOWER(TRIM(v.clienteEstado)) LIKE LOWER(CONCAT('%', :estado, '%')))
+
+                        AND (:produto IS NULL OR LOWER(p.nome) LIKE LOWER(CONCAT('%', CAST(:produto AS string), '%')))
+                        AND (:cliente IS NULL OR LOWER(v.clienteNome) LIKE LOWER(CONCAT('%', CAST(:cliente AS string), '%')))
+                        AND (:estado IS NULL OR LOWER(v.clienteEstado) LIKE LOWER(CONCAT('%', CAST(:estado AS string), '%')))
+
                         AND (:tipo IS NULL OR vi.tipoMovimentacao = :tipo)
                         AND (:dataInicio IS NULL OR v.dataSaida >= :dataInicio)
                         AND (:dataFim IS NULL OR v.dataSaida <= :dataFim)

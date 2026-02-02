@@ -13,60 +13,89 @@ import org.springframework.data.repository.query.Param;
 
 public interface VendaItemRepository extends JpaRepository<VendaItem, Long> {
 
-    // 🔍 RELATÓRIO COM FILTROS + FETCH PARA EVITAR LAZY
-    @Query(value = """
-            SELECT vi FROM VendaItem vi
-            JOIN FETCH vi.venda v
-            JOIN FETCH vi.produto p
-            WHERE (:pedido IS NULL OR v.id = :pedido)
-            AND (:produto IS NULL OR LOWER(TRIM(p.nome)) LIKE LOWER(CONCAT('%', TRIM(:produto), '%')))
-            AND (:cliente IS NULL OR LOWER(TRIM(v.clienteNome)) LIKE LOWER(CONCAT('%', TRIM(:cliente), '%')))
-            AND (:estado IS NULL OR LOWER(TRIM(v.clienteEstado)) LIKE LOWER(CONCAT('%', TRIM(:estado), '%')))
-            AND (:tipo IS NULL OR vi.tipoMovimentacao = :tipo)
-            AND (:dataInicio IS NULL OR v.dataSaida >= :dataInicio)
-            AND (:dataFim IS NULL OR v.dataSaida <= :dataFim)
-            ORDER BY v.dataSaida DESC
-            """,
-            countQuery = """
-            SELECT COUNT(vi) FROM VendaItem vi
-            JOIN vi.venda v
-            JOIN vi.produto p
-            WHERE (:pedido IS NULL OR v.id = :pedido)
-            AND (:produto IS NULL OR LOWER(TRIM(p.nome)) LIKE LOWER(CONCAT('%', TRIM(:produto), '%')))
-            AND (:cliente IS NULL OR LOWER(TRIM(v.clienteNome)) LIKE LOWER(CONCAT('%', TRIM(:cliente), '%')))
-            AND (:estado IS NULL OR LOWER(TRIM(v.clienteEstado)) LIKE LOWER(CONCAT('%', TRIM(:estado), '%')))
-            AND (:tipo IS NULL OR vi.tipoMovimentacao = :tipo)
-            AND (:dataInicio IS NULL OR v.dataSaida >= :dataInicio)
-            AND (:dataFim IS NULL OR v.dataSaida <= :dataFim)
-            """)
-    Page<VendaItem> filtrar(
-            @Param("pedido") Long pedido,
-            @Param("produto") String produto,
-            @Param("cliente") String cliente,
-            @Param("estado") String estado,
-            @Param("tipo") TipoMovimentacao tipo,
-            @Param("dataInicio") LocalDate dataInicio,
-            @Param("dataFim") LocalDate dataFim,
-            Pageable pageable);
+        // 🔍 RELATÓRIO COM FILTROS + FETCH PARA EVITAR LAZY
+        // @Query(value = """
+        // SELECT vi FROM VendaItem vi
+        // JOIN FETCH vi.venda v
+        // JOIN FETCH vi.produto p
+        // WHERE (:pedido IS NULL OR v.id = :pedido)
+        // AND (:produto IS NULL OR LOWER(TRIM(p.nome)) LIKE LOWER(CONCAT('%',
+        // TRIM(:produto), '%')))
+        // AND (:cliente IS NULL OR LOWER(TRIM(v.clienteNome)) LIKE LOWER(CONCAT('%',
+        // TRIM(:cliente), '%')))
+        // AND (:estado IS NULL OR LOWER(TRIM(v.clienteEstado)) LIKE LOWER(CONCAT('%',
+        // TRIM(:estado), '%')))
+        // AND (:tipo IS NULL OR vi.tipoMovimentacao = :tipo)
+        // AND (:dataInicio IS NULL OR v.dataSaida >= :dataInicio)
+        // AND (:dataFim IS NULL OR v.dataSaida <= :dataFim)
+        // ORDER BY v.dataSaida DESC
+        // """,
+        // countQuery = """
+        // SELECT COUNT(vi) FROM VendaItem vi
+        // JOIN vi.venda v
+        // JOIN vi.produto p
+        // WHERE (:pedido IS NULL OR v.id = :pedido)
+        // AND (:produto IS NULL OR LOWER(TRIM(p.nome)) LIKE LOWER(CONCAT('%',
+        // TRIM(:produto), '%')))
+        // AND (:cliente IS NULL OR LOWER(TRIM(v.clienteNome)) LIKE LOWER(CONCAT('%',
+        // TRIM(:cliente), '%')))
+        // AND (:estado IS NULL OR LOWER(TRIM(v.clienteEstado)) LIKE LOWER(CONCAT('%',
+        // TRIM(:estado), '%')))
+        // AND (:tipo IS NULL OR vi.tipoMovimentacao = :tipo)
+        // AND (:dataInicio IS NULL OR v.dataSaida >= :dataInicio)
+        // AND (:dataFim IS NULL OR v.dataSaida <= :dataFim)
+        // """)
+        @Query(value = """
+                        SELECT vi FROM VendaItem vi
+                        JOIN FETCH vi.venda v
+                        JOIN FETCH vi.produto p
+                        WHERE (:pedido IS NULL OR v.id = :pedido)
+                        AND (:produto IS NULL OR LOWER(TRIM(p.nome)) LIKE LOWER(CONCAT('%', :produto, '%')))
+                        AND (:cliente IS NULL OR LOWER(TRIM(v.clienteNome)) LIKE LOWER(CONCAT('%', :cliente, '%')))
+                        AND (:estado IS NULL OR LOWER(TRIM(v.clienteEstado)) LIKE LOWER(CONCAT('%', :estado, '%')))
+                        AND (:tipo IS NULL OR vi.tipoMovimentacao = :tipo)
+                        AND (:dataInicio IS NULL OR v.dataSaida >= :dataInicio)
+                        AND (:dataFim IS NULL OR v.dataSaida <= :dataFim)
+                        ORDER BY v.dataSaida DESC
+                        """, countQuery = """
+                        SELECT COUNT(vi) FROM VendaItem vi
+                        JOIN vi.venda v
+                        JOIN vi.produto p
+                        WHERE (:pedido IS NULL OR v.id = :pedido)
+                        AND (:produto IS NULL OR LOWER(TRIM(p.nome)) LIKE LOWER(CONCAT('%', :produto, '%')))
+                        AND (:cliente IS NULL OR LOWER(TRIM(v.clienteNome)) LIKE LOWER(CONCAT('%', :cliente, '%')))
+                        AND (:estado IS NULL OR LOWER(TRIM(v.clienteEstado)) LIKE LOWER(CONCAT('%', :estado, '%')))
+                        AND (:tipo IS NULL OR vi.tipoMovimentacao = :tipo)
+                        AND (:dataInicio IS NULL OR v.dataSaida >= :dataInicio)
+                        AND (:dataFim IS NULL OR v.dataSaida <= :dataFim)
+                        """)
 
+        Page<VendaItem> filtrar(
+                        @Param("pedido") Long pedido,
+                        @Param("produto") String produto,
+                        @Param("cliente") String cliente,
+                        @Param("estado") String estado,
+                        @Param("tipo") TipoMovimentacao tipo,
+                        @Param("dataInicio") LocalDate dataInicio,
+                        @Param("dataFim") LocalDate dataFim,
+                        Pageable pageable);
 
-    // 📋 LISTAS PARA OS FILTROS (mantidas como estavam)
+        // 📋 LISTAS PARA OS FILTROS (mantidas como estavam)
 
-    @Query("SELECT DISTINCT v.id FROM VendaItem vi JOIN vi.venda v ORDER BY v.id")
-    List<Long> buscarPedidos();
+        @Query("SELECT DISTINCT v.id FROM VendaItem vi JOIN vi.venda v ORDER BY v.id")
+        List<Long> buscarPedidos();
 
-    @Query("SELECT DISTINCT p.nome FROM VendaItem vi JOIN vi.produto p ORDER BY p.nome")
-    List<String> buscarProdutos();
+        @Query("SELECT DISTINCT p.nome FROM VendaItem vi JOIN vi.produto p ORDER BY p.nome")
+        List<String> buscarProdutos();
 
-    @Query("SELECT DISTINCT v.clienteNome FROM VendaItem vi JOIN vi.venda v ORDER BY v.clienteNome")
-    List<String> buscarClientes();
+        @Query("SELECT DISTINCT v.clienteNome FROM VendaItem vi JOIN vi.venda v ORDER BY v.clienteNome")
+        List<String> buscarClientes();
 
-    @Query("SELECT DISTINCT v.clienteEstado FROM VendaItem vi JOIN vi.venda v ORDER BY v.clienteEstado")
-    List<String> buscarEstados();
+        @Query("SELECT DISTINCT v.clienteEstado FROM VendaItem vi JOIN vi.venda v ORDER BY v.clienteEstado")
+        List<String> buscarEstados();
 
-
-    // 🗑 EXCLUSÃO EM CASCATA DOS ITENS DA VENDA
-    @Modifying
-    @Query("DELETE FROM VendaItem vi WHERE vi.venda.id = :id")
-    void deleteByVendaId(@Param("id") Long id);
+        // 🗑 EXCLUSÃO EM CASCATA DOS ITENS DA VENDA
+        @Modifying
+        @Query("DELETE FROM VendaItem vi WHERE vi.venda.id = :id")
+        void deleteByVendaId(@Param("id") Long id);
 }

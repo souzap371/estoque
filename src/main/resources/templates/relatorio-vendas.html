@@ -177,7 +177,7 @@
                     <td th:text="${#temporals.format(item.venda.dataSaida, 'dd/MM/yyyy')}"></td>
                     <td th:text="${item.tipoMovimentacao}"></td>
                     <td class="acoes">
-                        <!-- <a class="editar" th:href="@{/vendas/editar/{id}(id=${item.venda.id})}">✏ Editar</a> -->
+                        <a class="editar" th:href="@{/vendas/editar/{id}(id=${item.venda.id})}">✏ Editar</a>
 
                         <a class="excluir" th:href="@{/vendas/excluir/{id}(id=${item.venda.id})}"
                             onclick="return confirm('Tem certeza que deseja excluir esta venda?');">

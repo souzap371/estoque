@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <title>Pedido / Venda</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
     <style>
+        /* (mantive seu CSS igual) */
         * {
-            box-sizing: border-box;
+            box-sizing: border-box
         }
 
         body {
@@ -19,7 +19,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 30px;
+            padding: 30px
         }
 
         .container {
@@ -28,21 +28,21 @@
             background: #fff;
             padding: 32px;
             border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, .2)
         }
 
         h2 {
             text-align: center;
             margin-bottom: 28px;
             font-size: 20px;
-            font-weight: 600;
+            font-weight: 600
         }
 
         label {
             font-size: 12px;
             font-weight: 600;
             margin-bottom: 6px;
-            display: block;
+            display: block
         }
 
         input,
@@ -51,110 +51,86 @@
             padding: 10px;
             border: 1px solid #cbd5e1;
             border-radius: 6px;
-            margin-bottom: 16px;
+            margin-bottom: 16px
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            gap: 16px
         }
 
         .flex {
             display: flex;
             gap: 20px;
-            align-items: center;
+            align-items: center
         }
 
         hr {
             margin: 20px 0;
             border: none;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid #e2e8f0
         }
 
         button {
             padding: 12px 18px;
             border: none;
             border-radius: 6px;
-            cursor: pointer;
+            cursor: pointer
         }
 
         .btn-add {
             background: #2563eb;
-            color: #fff;
+            color: #fff
         }
 
         .btn-finish {
             background: #16a34a;
-            color: #fff;
+            color: #fff
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 20px
         }
 
         th,
         td {
             padding: 12px;
             border-bottom: 1px solid #e2e8f0;
-            text-align: center;
+            text-align: center
         }
 
         th {
-            background: #f1f5f9;
+            background: #f1f5f9
         }
 
         .actions {
             display: flex;
             justify-content: space-between;
-            margin-top: 26px;
+            margin-top: 26px
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h2>Pedido / Venda</h2>
-
+        <h2 th:text="${vendaId != null} ? '✏ Editar Venda' : '🛒 Nova Venda'"></h2>
 
         <div class="grid">
             <div>
                 <label>Nome do Cliente</label>
-                <input id="clienteNome">
+                <input id="clienteNome" th:value="${clienteNomeEdicao}">
             </div>
             <div>
                 <label>Estado do Cliente</label>
                 <select id="clienteEstado">
                     <option value="">Selecione</option>
-                    <option value="AC">AC</option>
-                    <option value="AL">AL</option>
-                    <option value="AP">AP</option>
-                    <option value="AM">AM</option>
-                    <option value="BA">BA</option>
-                    <option value="CE">CE</option>
-                    <option value="DF">DF</option>
-                    <option value="ES">ES</option>
-                    <option value="GO">GO</option>
-                    <option value="MA">MA</option>
-                    <option value="MT">MT</option>
-                    <option value="MS">MS</option>
-                    <option value="MG">MG</option>
-                    <option value="PA">PA</option>
-                    <option value="PB">PB</option>
-                    <option value="PR">PR</option>
-                    <option value="PE">PE</option>
-                    <option value="PI">PI</option>
-                    <option value="RJ">RJ</option>
-                    <option value="RN">RN</option>
-                    <option value="RS">RS</option>
-                    <option value="RO">RO</option>
-                    <option value="RR">RR</option>
-                    <option value="SC">SC</option>
-                    <option value="SP">SP</option>
-                    <option value="SE">SE</option>
-                    <option value="TO">TO</option>
+                    <option
+                        th:each="uf : ${T(java.util.List).of('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO')}"
+                        th:value="${uf}" th:text="${uf}" th:selected="${uf == clienteEstadoEdicao}">
+                    </option>
                 </select>
             </div>
         </div>
@@ -162,13 +138,11 @@
         <hr>
 
         <div class="grid">
-
             <div>
                 <label>Produto</label>
                 <select id="produto">
-                    <option value="">Selecione um produto</option>
-                    <option th:each="p : ${produtos}" th:value="${p.codigo}" th:text="${p.nome}">
-                    </option>
+                    <option value="">Selecione</option>
+                    <option th:each="p : ${produtos}" th:value="${p.codigo}" th:text="${p.nome}"></option>
                 </select>
             </div>
             <div>
@@ -189,7 +163,6 @@
                     <label><input type="radio" name="tipoItem" value="T"> Transferência</label>
                 </div>
             </div>
-
             <div id="estadoDestinoDiv" style="display:none;">
                 <label>Estado Destino</label>
                 <select id="estadoDestino">
@@ -203,6 +176,8 @@
         <button class="btn-add" type="button" onclick="adicionarItem()">➕ Adicionar Produto</button>
 
         <table>
+
+
             <thead>
                 <tr>
                     <th>Produto</th>
@@ -211,6 +186,7 @@
                     <th>Tipo</th>
                     <th>Destino</th>
                     <th>Subtotal</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody id="itens"></tbody>
@@ -224,20 +200,30 @@
         </div>
     </div>
 
-    <script>
+    <script th:inline="javascript">
+        const vendaId = /*[[${vendaId}]]*/ null;
+        const vendaEdicao = vendaId !== null;
+
+        const clienteNomeBackend = /*[[${clienteNomeEdicao}]]*/ "";
+        const clienteEstadoBackend = /*[[${clienteEstadoEdicao}]]*/ "";
+        const itensBackend = /*[[${itensEdicao}]]*/[];
+
+        const salvarUrl = /*[[@{/vendas/salvar}]]*/ "/vendas/salvar";
+
         let itens = [];
         let total = 0;
 
         const moedaBR = v => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v);
 
-        document.querySelectorAll("input[name='tipoItem']").forEach(radio => {
-            radio.addEventListener("change", () => {
-                const tipo = document.querySelector("input[name='tipoItem']:checked").value;
-                document.getElementById("estadoDestinoDiv").style.display = tipo === "T" ? "block" : "none";
-            });
-        });
+        const produtoInput = document.getElementById("produto");
+        const quantidade = document.getElementById("quantidade");
+        const valorInput = document.getElementById("valor");
+        const estadoDestinoSelect = document.getElementById("estadoDestino");
+        const totalLabel = document.getElementById("total");
+        const clienteNome = document.getElementById("clienteNome");
+        const clienteEstado = document.getElementById("clienteEstado");
 
-        function adicionarItem() {
+        window.adicionarItem = function () {
             const produto = produtoInput.value;
             const qtd = parseInt(quantidade.value);
             const valor = parseFloat(valorInput.value);
@@ -245,9 +231,7 @@
             const estadoDestino = estadoDestinoSelect.value;
 
             if (!produto || !qtd || !valor) return alert("Preencha os dados do produto");
-
-            if (tipo === "T" && !estadoDestino)
-                return alert("Informe o estado de destino para transferência");
+            if (tipo === "T" && !estadoDestino) return alert("Informe o estado de destino");
 
             const subtotal = qtd * valor;
             total += subtotal;
@@ -257,42 +241,183 @@
                 quantidade: qtd,
                 valorPorCaixa: valor,
                 tipoMovimentacao: tipo,
-                estadoDestino: tipo === "T" ? estadoDestino : null
+                estadoDestino
             });
 
+            renderTabela();
+
+            produtoInput.value = quantidade.value = valorInput.value = "";
+
             const tr = document.createElement("tr");
-            tr.innerHTML = `
-            <td>${produto}</td>
-            <td>${qtd}</td>
-            <td>${moedaBR(valor)}</td>
-            <td>${tipo}</td>
-            <td>${tipo === "T" ? estadoDestino : "-"}</td>
-            <td>${moedaBR(subtotal)}</td>
-        `;
+            tr.innerHTML =
+                "<td>" + produto + "</td>" +
+                "<td>" + qtd + "</td>" +
+                "<td>" + moedaBR(valor) + "</td>" +
+                "<td>" + tipo + "</td>" +
+                "<td>" + (tipo === "T" ? estadoDestino : "-") + "</td>" +
+                "<td>" + moedaBR(subtotal) + "</td>";
+
             document.getElementById("itens").appendChild(tr);
 
             totalLabel.innerText = "TOTAL: " + moedaBR(total);
             produtoInput.value = quantidade.value = valorInput.value = "";
+        };
+
+        function atualizarCampoDestino() {
+            const selecionado = document.querySelector("input[name='tipoItem']:checked");
+            const divDestino = document.getElementById("estadoDestinoDiv");
+
+            if (!selecionado) {
+                divDestino.style.display = "none";
+                return;
+            }
+
+            divDestino.style.display = selecionado.value === "T" ? "block" : "none";
+        }
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("input[name='tipoItem']").forEach(radio => {
+                radio.addEventListener("change", atualizarCampoDestino);
+            });
+
+            atualizarCampoDestino();
+        });
+
+        function renderTabela() {
+            const tbody = document.getElementById("itens");
+            tbody.innerHTML = "";
+            total = 0;
+
+            itens.forEach((item, index) => {
+                const subtotal = item.quantidade * item.valorPorCaixa;
+                total += subtotal;
+
+                const tr = document.createElement("tr");
+
+                tr.innerHTML = `
+            <td>${item.codigoOuNome}</td>
+            <td>${item.quantidade}</td>
+            <td>${moedaBR(item.valorPorCaixa)}</td>
+            <td>${item.tipoMovimentacao}</td>
+            <td>${item.tipoMovimentacao === 'T' ? item.estadoDestino : '-'}</td>
+            <td>${moedaBR(subtotal)}</td>
+            <td>
+                <button onclick="editarItem(${index})">✏</button>
+                <button onclick="excluirItem(${index})">🗑</button>
+            </td>
+        `;
+
+                tbody.appendChild(tr);
+            });
+
+            totalLabel.innerText = "TOTAL: " + moedaBR(total);
+        }
+
+
+        function editarItem(index) {
+            const item = itens[index];
+            const tbody = document.getElementById("itens");
+            const tr = tbody.children[index];
+
+            tr.innerHTML = `
+        <td><input value="${item.codigoOuNome}" disabled></td>
+        <td><input type="number" id="qtdEdit" value="${item.quantidade}"></td>
+        <td><input type="number" step="0.01" id="valorEdit" value="${item.valorPorCaixa}"></td>
+        <td>
+            <select id="tipoEdit">
+                <option value="V" ${item.tipoMovimentacao === 'V' ? 'selected' : ''}>Venda</option>
+                <option value="T" ${item.tipoMovimentacao === 'T' ? 'selected' : ''}>Transferência</option>
+            </select>
+        </td>
+        <td>
+            <input id="destinoEdit" value="${item.estadoDestino || ''}">
+        </td>
+        <td>-</td>
+        <td>
+            <button onclick="salvarEdicao(${index})">💾</button>
+            <button onclick="renderTabela()">❌</button>
+        </td>
+    `;
         }
 
         function concluirPedido() {
-            fetch("[[@{/vendas/salvar}]]", {
+
+            if (!Array.isArray(itens) || itens.length === 0) {
+                alert("Nenhum item adicionado ao pedido");
+                return;
+            }
+
+            const payload = {
+                id: vendaId,
+                clienteNome: clienteNome.value,
+                clienteEstado: clienteEstado.value,
+                itens: itens
+            };
+
+            console.log("Payload enviado:", payload);
+
+            fetch(salvarUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    clienteNome: clienteNome.value,
-                    clienteEstado: clienteEstado.value,
-                    itens: itens
+                body: JSON.stringify(payload)
+            })
+                .then(resp => {
+                    if (!resp.ok) throw new Error("Erro ao salvar venda");
+                    return resp.text();
                 })
-            }).then(() => location.reload());
+                .then(() => {
+                    alert("Venda salva com sucesso!");
+                    window.location.href = "/relatorios/vendas";
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Erro ao concluir pedido");
+                });
         }
 
-        const produtoInput = document.getElementById("produto");
-        const quantidade = document.getElementById("quantidade");
-        const valorInput = document.getElementById("valor");
-        const estadoDestinoSelect = document.getElementById("estadoDestino");
-        const totalLabel = document.getElementById("total");
+
+
+
+        // 🔵 MODO EDIÇÃO
+        if (vendaEdicao) {
+            clienteNome.value = clienteNomeBackend;
+            clienteEstado.value = clienteEstadoBackend;
+
+            itensBackend.forEach(i => {
+                itens.push({
+                    codigoOuNome: i.produtoCodigo,
+
+                    quantidade: i.quantidade,
+                    valorPorCaixa: i.valorPorCaixa,
+                    tipoMovimentacao: i.tipoMovimentacao,
+                    estadoDestino: i.estadoDestino
+                });
+            });
+
+            renderTabela();
+        }
+
+
+        function salvarEdicao(index) {
+            itens[index].quantidade = parseInt(document.getElementById("qtdEdit").value);
+            itens[index].valorPorCaixa = parseFloat(document.getElementById("valorEdit").value);
+            itens[index].tipoMovimentacao = document.getElementById("tipoEdit").value;
+            itens[index].estadoDestino = document.getElementById("destinoEdit").value;
+
+            renderTabela();
+        }
+
+
+        function excluirItem(index) {
+            if (!confirm("Deseja remover este item?")) return;
+            itens.splice(index, 1);
+            renderTabela();
+        }
+
     </script>
+
+
 </body>
 
 </html>

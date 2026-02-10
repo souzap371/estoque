@@ -3,6 +3,7 @@ package com.expedicao.estoque.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,7 +21,19 @@ public class Venda {
     private BigDecimal valorTotal;
 
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<VendaItem> itens;
+    private List<VendaItem> itens = new ArrayList<>();
+
+    // =====================
+    // MÉTODOS AUXILIARES
+    // =====================
+    public void adicionarItem(VendaItem item) {
+        item.setVenda(this);
+        this.itens.add(item);
+    }
+
+    public void limparItens() {
+        this.itens.clear(); // orphanRemoval cuida do delete
+    }
 
     // GETTERS & SETTERS
     public Long getId() {
@@ -61,9 +74,5 @@ public class Venda {
 
     public List<VendaItem> getItens() {
         return itens;
-    }
-
-    public void setItens(List<VendaItem> itens) {
-        this.itens = itens;
     }
 }

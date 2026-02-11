@@ -160,6 +160,8 @@
                     <th>Pedido</th>
                     <th>Produto</th>
                     <th>Qtd</th>
+                    <th>Valor Unit.</th> <!-- NOVA -->
+                    <th>Subtotal</th> <!-- NOVA -->
                     <th>Cliente</th>
                     <th>Estado</th>
                     <th>Data</th>
@@ -172,6 +174,15 @@
                     <td th:text="${item.venda.id}"></td>
                     <td th:text="${item.produto.nome}"></td>
                     <td th:text="${item.quantidade}"></td>
+
+                    <!-- <td th:text="${#numbers.formatDecimal(item.valorPorCaixa, 1, 2)}"></td>
+
+                   
+                    <td th:text="${#numbers.formatDecimal(item.subtotal, 1, 2)}"></td> -->
+
+
+                    <td th:text="${#numbers.formatCurrency(item.valorPorCaixa)}"></td>
+                    <td th:text="${#numbers.formatCurrency(item.subtotal)}"></td>
                     <td th:text="${item.venda.clienteNome}"></td>
                     <td th:text="${item.venda.clienteEstado}"></td>
                     <td th:text="${#temporals.format(item.venda.dataSaida, 'dd/MM/yyyy')}"></td>

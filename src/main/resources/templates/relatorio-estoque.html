@@ -123,7 +123,7 @@
                         th:classappend="${e.produto == null} ? 'empty' : ''">
                     </td>
 
-                    <td th:switch="${e.filial}">
+                    <td th:text="${e.filial}">
                         <span th:case="'MATRIZ'">🏢 MATRIZ</span>
                         <span th:case="'MG'">📍 FILIAL MG</span>
                         <span th:case="'AL'">📍 FILIAL AL</span>

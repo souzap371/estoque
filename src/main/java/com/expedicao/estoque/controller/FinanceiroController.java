@@ -30,6 +30,7 @@ public class FinanceiroController {
     // =========================
     // TELAS
     // =========================
+
     @GetMapping
     public String financeiro() {
         return "financeiro";
@@ -47,57 +48,20 @@ public class FinanceiroController {
     }
 
     // =========================
-    // API JSON
+    // API RELATÓRIO (USADA PELO HTML NOVO)
     // =========================
-    @GetMapping("/api/clientes")
-    @ResponseBody
-    public List<String> listarClientes() {
-        return financeiroService.listarClientes();
-    }
-
-    @GetMapping("/api/cliente/{nome}")
-    @ResponseBody
-    public List<ContaReceberDTO> buscarPorCliente(@PathVariable String nome) {
-        return financeiroService.buscarPorCliente(nome);
-    }
-
-    @GetMapping("/api/todos")
-    @ResponseBody
-    public List<ContaReceberDTO> listarTodas() {
-        return financeiroService.buscarTodas();
-    }
-
-    @PostMapping("/api/baixar/{id}")
-    @ResponseBody
-    public ResponseEntity<?> darBaixa(
-            @PathVariable Long id,
-            @RequestParam BigDecimal valor,
-            @RequestParam String data,
-            @RequestParam FormaPagamento formaPagamento,
-            @RequestParam(required = false) MultipartFile anexo) {
-
-        financeiroService.darBaixa(id, valor, data, formaPagamento, anexo);
-        return ResponseEntity.ok().build();
-    }
 
     @GetMapping("/api/relatorio")
     @ResponseBody
-    public List<ContaReceberDTO> relatorioFinanceiro(@RequestParam(required = false) String status) {
-        return financeiroService.relatorioFinanceiro(status);
+    public List<ContaReceberDTO> relatorioFinanceiro(
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String cliente,
+            @RequestParam(required = false) FormaPagamento formaPagamento) {
+
+        return financeiroService.relatorioFinanceiro(status, cliente, formaPagamento);
     }
 
-    @GetMapping("/api/pagamento/anexo/{id}")
-    public ResponseEntity<Resource> baixarAnexo(@PathVariable Long id) {
-        Pagamento pagamento = financeiroService.buscarPagamento(id);
-        File file = new File(pagamento.getAnexoPath());
-        Resource resource = new FileSystemResource(file);
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\"" + pagamento.getAnexoNome() + "\"")
-                .contentType(MediaType.parseMediaType(pagamento.getAnexoTipo()))
-                .body(resource);
-    }
+    // ENDPOINT FILTRAR
 
     @GetMapping("/api/filtrar")
     @ResponseBody
@@ -108,4 +72,68 @@ public class FinanceiroController {
         return financeiroService.filtrar(cliente, status);
     }
 
+    @GetMapping("/api/formas-pagamento")
+    @ResponseBody
+    public List<FormaPagamento> listarFormasPagamento() {
+        return financeiroService.listarFormasPagamento();
+    }
+
+    // ENDPOINT CLIENTES
+
+    @GetMapping("/api/clientes")
+    @ResponseBody
+    public List<String> listarClientes() {
+        return financeiroService.listarClientes();
+    }
+
+    // =========================
+    // DAR BAIXA
+    // =========================
+
+    @PostMapping("/api/baixar/{id}")
+    @ResponseBody
+    public ResponseEntity<Void> darBaixa(
+            @PathVariable Long id,
+            @RequestParam BigDecimal valor,
+            @RequestParam String data,
+            @RequestParam FormaPagamento formaPagamento,
+            @RequestParam(required = false) MultipartFile anexo) {
+
+        financeiroService.darBaixa(id, valor, data, formaPagamento, anexo);
+        return ResponseEntity.ok().build();
+    }
+
+    // =========================
+    // EXCLUIR PAGAMENTO (BOTÃO EXCLUIR DO HTML)
+    // =========================
+
+    @DeleteMapping("/api/pagamento/{id}")
+    @ResponseBody
+    public ResponseEntity<Void> excluirPagamento(@PathVariable Long id) {
+        financeiroService.excluirPagamento(id);
+        return ResponseEntity.ok().build();
+    }
+
+    // =========================
+    // BAIXAR ANEXO
+    // =========================
+
+    @GetMapping("/api/pagamento/anexo/{id}")
+    public ResponseEntity<Resource> baixarAnexo(@PathVariable Long id) {
+
+        Pagamento pagamento = financeiroService.buscarPagamento(id);
+
+        if (pagamento.getAnexoPath() == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        File file = new File(pagamento.getAnexoPath());
+        Resource resource = new FileSystemResource(file);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + pagamento.getAnexoNome() + "\"")
+                .contentType(MediaType.parseMediaType(pagamento.getAnexoTipo()))
+                .body(resource);
+    }
 }

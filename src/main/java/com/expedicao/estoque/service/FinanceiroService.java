@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.nio.file.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,8 +36,58 @@ public class FinanceiroService {
     }
 
     // =========================
-    // CONSULTAS
+    // RELATÓRIO COMPLETO (HTML NOVO)
     // =========================
+    @Transactional
+    public List<ContaReceberDTO> relatorioFinanceiro(
+            String status,
+            String cliente,
+            FormaPagamento formaPagamento) {
+
+        List<ContaReceber> contas = contaReceberRepository.buscarRelatorioCompleto();
+
+        // Filtro Cliente
+        if (cliente != null && !cliente.isBlank()) {
+            contas = contas.stream()
+                    .filter(c -> c.getClienteNome()
+                            .toLowerCase()
+                            .contains(cliente.toLowerCase()))
+                    .toList();
+        }
+
+        // Filtro Status
+        if (status != null && !status.isBlank()) {
+
+            if (status.equalsIgnoreCase("ABERTO")) {
+                contas = contas.stream()
+                        .filter(c -> c.getSaldoDevedor().compareTo(BigDecimal.ZERO) > 0)
+                        .toList();
+            }
+
+            if (status.equalsIgnoreCase("QUITADO")) {
+                contas = contas.stream()
+                        .filter(c -> c.getSaldoDevedor().compareTo(BigDecimal.ZERO) == 0)
+                        .toList();
+            }
+        }
+        if (formaPagamento != null) {
+
+            contas = contas.stream()
+                    .filter(c -> c.getPagamentos()
+                            .stream()
+                            .anyMatch(p -> p.getFormaPagamento() == formaPagamento))
+                    .toList();
+
+        }
+
+        return contas.stream()
+                .map(c -> new ContaReceberDTO(c, formaPagamento))
+                .toList();
+    }
+
+    // =========================
+    // // CONSULTAS
+    // // =========================
     public List<String> listarClientes() {
         return contaReceberRepository.listarClientes();
     }
@@ -60,59 +111,33 @@ public class FinanceiroService {
                 .collect(Collectors.toList());
     }
 
+    // =========================
+    // BUSCAR PAGAMENTO
+    // =========================
     public Pagamento buscarPagamento(Long id) {
         return pagamentoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pagamento não encontrado"));
     }
 
-    @Transactional
-    public List<ContaReceberDTO> filtrar(String cliente, String status) {
-
-        List<ContaReceber> contas = contaReceberRepository.buscarComFiltro(cliente);
-
-        // Filtrar status manualmente
-        if (status != null && !status.equals("TODOS")) {
-
-            if (status.equals("ABERTO")) {
-                contas = contas.stream()
-                        .filter(c -> c.getSaldoDevedor().compareTo(BigDecimal.ZERO) > 0)
-                        .toList();
-            }
-
-            if (status.equals("QUITADO")) {
-                contas = contas.stream()
-                        .filter(c -> c.getSaldoDevedor().compareTo(BigDecimal.ZERO) == 0)
-                        .toList();
-            }
-        }
-
-        return contas.stream()
-                .map(ContaReceberDTO::new)
+    public List<FormaPagamento> listarFormasPagamento() {
+        return pagamentoRepository.findAll()
+                .stream()
+                .map(Pagamento::getFormaPagamento)
+                .filter(Objects::nonNull)
+                .distinct()
+                .sorted()
                 .toList();
     }
 
-    public List<ContaReceberDTO> relatorioFinanceiro(String status) {
-
-        return contaReceberRepository.buscarRelatorioCompleto()
-                .stream()
-                .filter(c -> {
-                    if (status == null || status.isBlank())
-                        return true;
-                    if ("ABERTO".equalsIgnoreCase(status))
-                        return c.getSaldoDevedor().compareTo(BigDecimal.ZERO) > 0;
-                    if ("QUITADO".equalsIgnoreCase(status))
-                        return c.getSaldoDevedor().compareTo(BigDecimal.ZERO) == 0;
-                    return true;
-                })
-                .map(ContaReceberDTO::new)
-                .collect(Collectors.toList());
-    }
-
     // =========================
-    // BAIXA FINANCEIRA
+    // DAR BAIXA
     // =========================
     @Transactional
-    public void darBaixa(Long id, BigDecimal valor, String data, FormaPagamento formaPagamento, MultipartFile anexo) {
+    public void darBaixa(Long id,
+            BigDecimal valor,
+            String data,
+            FormaPagamento formaPagamento,
+            MultipartFile anexo) {
 
         ContaReceber conta = contaReceberRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
@@ -129,11 +154,12 @@ public class FinanceiroService {
             processarAnexo(anexo, pagamento);
         }
 
-        conta.getPagamentos().add(pagamento);
+        pagamentoRepository.save(pagamento);
 
-        // Atualiza saldo corretamente
+        // Atualiza saldo
         conta.setValorPago(conta.getValorPago().add(valor));
         conta.setSaldoDevedor(conta.getValorOriginal().subtract(conta.getValorPago()));
+
         if (conta.getSaldoDevedor().compareTo(BigDecimal.ZERO) < 0) {
             conta.setSaldoDevedor(BigDecimal.ZERO);
         }
@@ -141,17 +167,86 @@ public class FinanceiroService {
         contaReceberRepository.save(conta);
     }
 
+    ////////
+    ///
+    ///
+    ///
+    ///
+    ///
+
+    @Transactional
+    public List<ContaReceberDTO> filtrar(String cliente, String status) {
+
+        List<ContaReceber> contas;
+
+        // 🔥 Se não tiver cliente ou for TODOS → buscar tudo
+        if (cliente == null || cliente.isBlank() || cliente.equalsIgnoreCase("TODOS")) {
+            contas = contaReceberRepository.findAll();
+        } else {
+            contas = contaReceberRepository.buscarComFiltro(cliente);
+        }
+
+        // 🔥 Filtrar status manualmente
+        if (status != null && !status.isBlank() && !status.equalsIgnoreCase("TODOS")) {
+
+            if (status.equalsIgnoreCase("ABERTO")) {
+                contas = contas.stream()
+                        .filter(c -> c.getSaldoDevedor().compareTo(BigDecimal.ZERO) > 0)
+                        .toList();
+            }
+
+            if (status.equalsIgnoreCase("QUITADO")) {
+                contas = contas.stream()
+                        .filter(c -> c.getSaldoDevedor().compareTo(BigDecimal.ZERO) == 0)
+                        .toList();
+            }
+        }
+
+        return contas.stream()
+                .map(ContaReceberDTO::new)
+                .toList();
+    }
+
+    // =========================
+    // EXCLUIR PAGAMENTO
+    // =========================
+    @Transactional
+    public void excluirPagamento(Long id) {
+
+        Pagamento pagamento = pagamentoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pagamento não encontrado"));
+
+        ContaReceber conta = pagamento.getContaReceber();
+
+        // Remove valor do total pago
+        conta.setValorPago(conta.getValorPago().subtract(pagamento.getValorPago()));
+
+        if (conta.getValorPago().compareTo(BigDecimal.ZERO) < 0) {
+            conta.setValorPago(BigDecimal.ZERO);
+        }
+
+        conta.setSaldoDevedor(conta.getValorOriginal().subtract(conta.getValorPago()));
+
+        pagamentoRepository.delete(pagamento);
+        contaReceberRepository.save(conta);
+    }
+
+    // =========================
+    // VALIDAÇÃO
+    // =========================
     private void validarValor(BigDecimal valor, ContaReceber conta) {
+
         if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
             throw new RuntimeException("Valor inválido");
         }
+
         if (valor.compareTo(conta.getSaldoDevedor()) > 0) {
             throw new RuntimeException("Valor maior que o saldo devedor");
         }
     }
 
     // =========================
-    // MÉTODOS AUXILIARES
+    // PROCESSAR ANEXO
     // =========================
     private void processarAnexo(MultipartFile anexo, Pagamento pagamento) {
 
@@ -160,19 +255,25 @@ public class FinanceiroService {
             throw new RuntimeException("Arquivo inválido");
 
         String nomeLower = nomeOriginal.toLowerCase();
-        boolean permitido = EXTENSOES_PERMITIDAS.stream().anyMatch(nomeLower::endsWith);
+
+        boolean permitido = EXTENSOES_PERMITIDAS.stream()
+                .anyMatch(nomeLower::endsWith);
+
         if (!permitido)
             throw new RuntimeException("Tipo de arquivo não permitido");
 
         try {
             Path pasta = Paths.get(DIRETORIO_UPLOAD);
+
             if (!Files.exists(pasta))
                 Files.createDirectories(pasta);
 
             String nomeArquivo = UUID.randomUUID() + "_" + nomeOriginal;
             Path destino = pasta.resolve(nomeArquivo);
 
-            Files.copy(anexo.getInputStream(), destino, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(anexo.getInputStream(),
+                    destino,
+                    StandardCopyOption.REPLACE_EXISTING);
 
             pagamento.setAnexoNome(nomeOriginal);
             pagamento.setAnexoTipo(anexo.getContentType());

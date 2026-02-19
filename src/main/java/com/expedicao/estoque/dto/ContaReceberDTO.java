@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.expedicao.estoque.model.ContaReceber;
+import com.expedicao.estoque.model.FormaPagamento;
 
 public class ContaReceberDTO {
 
@@ -19,6 +20,10 @@ public class ContaReceberDTO {
     private List<PagamentoDTO> pagamentos;
 
     public ContaReceberDTO(ContaReceber conta) {
+        this(conta, null);
+    }
+
+    public ContaReceberDTO(ContaReceber conta, FormaPagamento filtroForma) {
 
         this.id = conta.getId();
         this.clienteNome = conta.getClienteNome();
@@ -27,12 +32,20 @@ public class ContaReceberDTO {
         this.saldoDevedor = conta.getSaldoDevedor();
         this.dataCriacao = conta.getDataCriacao();
 
-        // ✅ CARREGA PAGAMENTOS
         if (conta.getPagamentos() != null) {
-            this.pagamentos = conta.getPagamentos()
-                    .stream()
-                    .map(PagamentoDTO::new)
-                    .collect(Collectors.toList());
+
+            if (filtroForma != null) {
+                this.pagamentos = conta.getPagamentos()
+                        .stream()
+                        .filter(p -> p.getFormaPagamento() == filtroForma)
+                        .map(PagamentoDTO::new)
+                        .collect(Collectors.toList());
+            } else {
+                this.pagamentos = conta.getPagamentos()
+                        .stream()
+                        .map(PagamentoDTO::new)
+                        .collect(Collectors.toList());
+            }
         }
     }
 

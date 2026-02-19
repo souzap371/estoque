@@ -1,0 +1,773 @@
+2026-02-19T16:06:36.775-03:00  INFO 187721 --- [estoque] [restartedMain] c.expedicao.estoque.EstoqueApplication   : Starting EstoqueApplication using Java 21.0.10 with PID 187721 (/home/pablo/Documentos/TSTECNOLOGIA/estoque/target/classes started by pablo in /home/pablo/Documentos/TSTECNOLOGIA/estoque)
+2026-02-19T16:06:36.779-03:00 DEBUG 187721 --- [estoque] [restartedMain] c.expedicao.estoque.EstoqueApplication   : Running with Spring Boot v4.0.1, Spring v7.0.2
+2026-02-19T16:06:36.780-03:00  INFO 187721 --- [estoque] [restartedMain] c.expedicao.estoque.EstoqueApplication   : No active profile set, falling back to 1 default profile: "default"
+2026-02-19T16:06:36.860-03:00  INFO 187721 --- [estoque] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-02-19T16:06:36.861-03:00  INFO 187721 --- [estoque] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-02-19T16:06:37.849-03:00  INFO 187721 --- [estoque] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-19T16:06:37.956-03:00  INFO 187721 --- [estoque] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 94 ms. Found 10 JPA repository interfaces.
+2026-02-19T16:06:38.831-03:00  INFO 187721 --- [estoque] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8383 (http)
+2026-02-19T16:06:38.855-03:00  INFO 187721 --- [estoque] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-19T16:06:38.856-03:00  INFO 187721 --- [estoque] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-19T16:06:38.909-03:00  INFO 187721 --- [estoque] [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2046 ms
+2026-02-19T16:06:39.115-03:00 DEBUG 187721 --- [estoque] [restartedMain] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2026-02-19T16:06:39.738-03:00  INFO 187721 --- [estoque] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-19T16:06:39.779-03:00  INFO 187721 --- [estoque] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-19T16:06:39.968-03:00  INFO 187721 --- [estoque] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6f6115c8
+2026-02-19T16:06:39.970-03:00  INFO 187721 --- [estoque] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-02-19T16:06:41.189-03:00  INFO 187721 --- [estoque] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-19T16:06:41.280-03:00  INFO 187721 --- [estoque] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-19T16:06:42.740-03:00  WARN 187721 --- [estoque] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-19T16:06:42.833-03:00  INFO 187721 --- [estoque] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name usuarioDetailsService
+2026-02-19T16:06:43.032-03:00  INFO 187721 --- [estoque] [restartedMain] o.s.b.w.a.WelcomePageHandlerMapping      : Adding welcome page template: index
+2026-02-19T16:06:43.124-03:00 DEBUG 187721 --- [estoque] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 30 mappings in 'requestMappingHandlerMapping'
+2026-02-19T16:06:43.162-03:00 DEBUG 187721 --- [estoque] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2026-02-19T16:06:43.196-03:00 DEBUG 187721 --- [estoque] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-02-19T16:06:43.271-03:00 DEBUG 187721 --- [estoque] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-02-19T16:06:43.592-03:00  INFO 187721 --- [estoque] [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 13 endpoints beneath base path '/actuator'
+2026-02-19T16:06:43.669-03:00  INFO 187721 --- [estoque] [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8383 (http) with context path '/'
+2026-02-19T16:06:43.680-03:00  INFO 187721 --- [estoque] [restartedMain] c.expedicao.estoque.EstoqueApplication   : Started EstoqueApplication in 7.35 seconds (process running for 7.779)
+2026-02-19T16:06:44.780-03:00  INFO 187721 --- [estoque] [http-nio-8383-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-19T16:06:44.781-03:00  INFO 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-02-19T16:06:44.781-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2026-02-19T16:06:44.781-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2026-02-19T16:06:44.783-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@562256aa
+2026-02-19T16:06:44.784-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@3b020617
+2026-02-19T16:06:44.784-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-02-19T16:06:44.784-03:00  INFO 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-02-19T16:06:44.828-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/login", parameters={}
+2026-02-19T16:06:44.838-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.LoginController#login()
+2026-02-19T16:06:44.858-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View login will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:06:44.862-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View login.xml will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:06:44.867-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2026-02-19T16:06:44.877-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.TemplateEngine             : [THYMELEAF] INITIALIZING TEMPLATE ENGINE
+2026-02-19T16:06:44.974-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.TemplateEngine.cache.TEMPLATE_CACHE  : [THYMELEAF][CACHE_INITIALIZE] Initializing cache TEMPLATE_CACHE. Max size: 200. Soft references are used.
+2026-02-19T16:06:45.002-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.TemplateEngine.CONFIG      : Initializing Thymeleaf Template engine configuration...
+[THYMELEAF] TEMPLATE ENGINE CONFIGURATION:
+[THYMELEAF] * Thymeleaf version: 3.1.3.RELEASE (built 2024-12-08T21:30:43+0000)
+[THYMELEAF] * Cache Manager implementation: org.thymeleaf.cache.StandardCacheManager
+[THYMELEAF] * Template resolvers:
+[THYMELEAF]     * org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver
+[THYMELEAF] * Message resolvers:
+[THYMELEAF]     * org.thymeleaf.spring6.messageresolver.SpringMessageResolver
+[THYMELEAF] * Link builders:
+[THYMELEAF]     * org.thymeleaf.linkbuilder.StandardLinkBuilder
+[THYMELEAF] * Dialect [1 of 2]: SpringStandard (org.thymeleaf.spring6.dialect.SpringStandardDialect)
+[THYMELEAF]     * Prefix: "th"
+[THYMELEAF]     * Processors for Template Mode: HTML
+[THYMELEAF]         * Element Tag Processors by [matching element and attribute name] [precedence]:
+[THYMELEAF]             * [* {th:include,data-th-include}] [100]: org.thymeleaf.standard.processor.StandardIncludeTagProcessor
+[THYMELEAF]             * [* {th:insert,data-th-insert}] [100]: org.thymeleaf.standard.processor.StandardInsertTagProcessor
+[THYMELEAF]             * [* {th:replace,data-th-replace}] [100]: org.thymeleaf.standard.processor.StandardReplaceTagProcessor
+[THYMELEAF]             * [* {th:each,data-th-each}] [200]: org.thymeleaf.standard.processor.StandardEachTagProcessor
+[THYMELEAF]             * [* {th:switch,data-th-switch}] [250]: org.thymeleaf.standard.processor.StandardSwitchTagProcessor
+[THYMELEAF]             * [* {th:case,data-th-case}] [275]: org.thymeleaf.standard.processor.StandardCaseTagProcessor
+[THYMELEAF]             * [* {th:if,data-th-if}] [300]: org.thymeleaf.standard.processor.StandardIfTagProcessor
+[THYMELEAF]             * [* {th:unless,data-th-unless}] [400]: org.thymeleaf.standard.processor.StandardUnlessTagProcessor
+[THYMELEAF]             * [* {th:object,data-th-object}] [500]: org.thymeleaf.spring6.processor.SpringObjectTagProcessor
+[THYMELEAF]             * [* {th:with,data-th-with}] [600]: org.thymeleaf.standard.processor.StandardWithTagProcessor
+[THYMELEAF]             * [* {th:attr,data-th-attr}] [700]: org.thymeleaf.standard.processor.StandardAttrTagProcessor
+[THYMELEAF]             * [* {th:attrprepend,data-th-attrprepend}] [800]: org.thymeleaf.standard.processor.StandardAttrprependTagProcessor
+[THYMELEAF]             * [* {th:attrappend,data-th-attrappend}] [900]: org.thymeleaf.standard.processor.StandardAttrappendTagProcessor
+[THYMELEAF]             * [* {th:method,data-th-method}] [990]: org.thymeleaf.spring6.processor.SpringMethodTagProcessor
+[THYMELEAF]             * [* {th:alt-title,data-th-alt-title}] [990]: org.thymeleaf.standard.processor.StandardAltTitleTagProcessor
+[THYMELEAF]             * [* {th:lang-xmllang,data-th-lang-xmllang}] [990]: org.thymeleaf.standard.processor.StandardLangXmlLangTagProcessor
+[THYMELEAF]             * [* {th:action,data-th-action}] [1000]: org.thymeleaf.spring6.processor.SpringActionTagProcessor
+[THYMELEAF]             * [* {th:href,data-th-href}] [1000]: org.thymeleaf.spring6.processor.SpringHrefTagProcessor
+[THYMELEAF]             * [* {th:src,data-th-src}] [1000]: org.thymeleaf.spring6.processor.SpringSrcTagProcessor
+[THYMELEAF]             * [* {th:formnovalidate,data-th-formnovalidate}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:defer,data-th-defer}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:nowrap,data-th-nowrap}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:autoplay,data-th-autoplay}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:readonly,data-th-readonly}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:controls,data-th-controls}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:disabled,data-th-disabled}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:novalidate,data-th-novalidate}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:selected,data-th-selected}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:default,data-th-default}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:open,data-th-open}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:seamless,data-th-seamless}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:pubdate,data-th-pubdate}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:loop,data-th-loop}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:scoped,data-th-scoped}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:checked,data-th-checked}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:multiple,data-th-multiple}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:declare,data-th-declare}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:autofocus,data-th-autofocus}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:required,data-th-required}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:async,data-th-async}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:hidden,data-th-hidden}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:reversed,data-th-reversed}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:ismap,data-th-ismap}] [1000]: org.thymeleaf.standard.processor.StandardConditionalFixedValueTagProcessor
+[THYMELEAF]             * [* {th:onvolumechange,data-th-onvolumechange}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onkeyup,data-th-onkeyup}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onunload,data-th-onunload}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:ondragleave,data-th-ondragleave}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onmousemove,data-th-onmousemove}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onmouseup,data-th-onmouseup}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onundo,data-th-onundo}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onmouseover,data-th-onmouseover}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onforminput,data-th-onforminput}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onresize,data-th-onresize}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:ondragstart,data-th-ondragstart}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onsubmit,data-th-onsubmit}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onmessage,data-th-onmessage}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onratechange,data-th-onratechange}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:ondblclick,data-th-ondblclick}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:oninput,data-th-oninput}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onpause,data-th-onpause}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onended,data-th-onended}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onseeking,data-th-onseeking}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onerror,data-th-onerror}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onreadystatechange,data-th-onreadystatechange}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onseeked,data-th-onseeked}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onprogress,data-th-onprogress}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:oninvalid,data-th-oninvalid}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onabort,data-th-onabort}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onloadeddata,data-th-onloadeddata}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onkeypress,data-th-onkeypress}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onstorage,data-th-onstorage}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:ondragenter,data-th-ondragenter}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onload,data-th-onload}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onbeforeunload,data-th-onbeforeunload}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:oncanplaythrough,data-th-oncanplaythrough}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onmouseout,data-th-onmouseout}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onwaiting,data-th-onwaiting}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onclick,data-th-onclick}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onredo,data-th-onredo}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onreset,data-th-onreset}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onplaying,data-th-onplaying}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onblur,data-th-onblur}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:ondragend,data-th-ondragend}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onselect,data-th-onselect}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:ondrag,data-th-ondrag}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onmousedown,data-th-onmousedown}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:ondragover,data-th-ondragover}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onemptied,data-th-onemptied}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onshow,data-th-onshow}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:oncanplay,data-th-oncanplay}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:oncontextmenu,data-th-oncontextmenu}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onoffline,data-th-onoffline}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onloadedmetadata,data-th-onloadedmetadata}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onloadstart,data-th-onloadstart}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:ononline,data-th-ononline}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onstalled,data-th-onstalled}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onfocus,data-th-onfocus}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onchange,data-th-onchange}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onplay,data-th-onplay}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onkeydown,data-th-onkeydown}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:ontimeupdate,data-th-ontimeupdate}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onsuspend,data-th-onsuspend}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:ondurationchange,data-th-ondurationchange}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onscroll,data-th-onscroll}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onhashchange,data-th-onhashchange}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onformchange,data-th-onformchange}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onafterprint,data-th-onafterprint}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:ondrop,data-th-ondrop}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onmousewheel,data-th-onmousewheel}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onpopstate,data-th-onpopstate}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:onbeforeprint,data-th-onbeforeprint}] [1000]: org.thymeleaf.standard.processor.StandardDOMEventAttributeTagProcessor
+[THYMELEAF]             * [* {th:inline,data-th-inline}] [1000]: org.thymeleaf.standard.processor.StandardInlineHTMLTagProcessor
+[THYMELEAF]             * [* {th:type,data-th-type}] [1000]: org.thymeleaf.standard.processor.StandardNonRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:name,data-th-name}] [1000]: org.thymeleaf.standard.processor.StandardNonRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:height,data-th-height}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:max,data-th-max}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:formenctype,data-th-formenctype}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:rev,data-th-rev}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:pattern,data-th-pattern}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:classid,data-th-classid}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:icon,data-th-icon}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:frameborder,data-th-frameborder}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:autocomplete,data-th-autocomplete}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:poster,data-th-poster}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:sandbox,data-th-sandbox}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:headers,data-th-headers}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:longdesc,data-th-longdesc}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:formtarget,data-th-formtarget}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:hreflang,data-th-hreflang}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:scheme,data-th-scheme}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:spellcheck,data-th-spellcheck}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:align,data-th-align}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:summary,data-th-summary}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:width,data-th-width}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:challenge,data-th-challenge}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:vspace,data-th-vspace}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:cellspacing,data-th-cellspacing}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:codetype,data-th-codetype}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:kind,data-th-kind}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:accesskey,data-th-accesskey}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:high,data-th-high}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:codebase,data-th-codebase}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:axis,data-th-axis}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:rel,data-th-rel}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:sizes,data-th-sizes}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:style,data-th-style}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:label,data-th-label}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:placeholder,data-th-placeholder}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:step,data-th-step}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:for,data-th-for}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:accept,data-th-accept}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:wrap,data-th-wrap}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:compact,data-th-compact}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:contenteditable,data-th-contenteditable}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:form,data-th-form}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:marginheight,data-th-marginheight}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:archive,data-th-archive}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:id,data-th-id}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:formaction,data-th-formaction}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:audio,data-th-audio}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:media,data-th-media}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:title,data-th-title}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:srclang,data-th-srclang}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:target,data-th-target}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:background,data-th-background}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:size,data-th-size}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:radiogroup,data-th-radiogroup}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:data,data-th-data}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:enctype,data-th-enctype}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:draggable,data-th-draggable}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:keytype,data-th-keytype}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:contextmenu,data-th-contextmenu}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:low,data-th-low}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:charset,data-th-charset}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:dir,data-th-dir}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:standby,data-th-standby}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:usemap,data-th-usemap}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:optimum,data-th-optimum}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:manifest,data-th-manifest}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:dropzone,data-th-dropzone}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:alt,data-th-alt}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:border,data-th-border}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:rules,data-th-rules}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:abbr,data-th-abbr}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:http-equiv,data-th-http-equiv}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:valuetype,data-th-valuetype}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:hspace,data-th-hspace}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:cols,data-th-cols}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:rows,data-th-rows}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:frame,data-th-frame}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:maxlength,data-th-maxlength}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:min,data-th-min}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:scrolling,data-th-scrolling}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:accept-charset,data-th-accept-charset}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:datetime,data-th-datetime}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:cellpadding,data-th-cellpadding}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:marginwidth,data-th-marginwidth}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:tabindex,data-th-tabindex}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:formmethod,data-th-formmethod}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:bgcolor,data-th-bgcolor}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:colspan,data-th-colspan}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:content,data-th-content}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:start,data-th-start}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:preload,data-th-preload}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:lang,data-th-lang}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:rowspan,data-th-rowspan}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:class,data-th-class}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:scope,data-th-scope}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:list,data-th-list}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:cite,data-th-cite}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:span,data-th-span}] [1000]: org.thymeleaf.standard.processor.StandardRemovableAttributeTagProcessor
+[THYMELEAF]             * [* {th:xmlbase,data-th-xmlbase}] [1000]: org.thymeleaf.standard.processor.StandardXmlBaseTagProcessor
+[THYMELEAF]             * [* {th:xmllang,data-th-xmllang}] [1000]: org.thymeleaf.standard.processor.StandardXmlLangTagProcessor
+[THYMELEAF]             * [* {xmlns:th}] [1000]: org.thymeleaf.standard.processor.StandardXmlNsTagProcessor
+[THYMELEAF]             * [* {th:xmlspace,data-th-xmlspace}] [1000]: org.thymeleaf.standard.processor.StandardXmlSpaceTagProcessor
+[THYMELEAF]             * [{option} *] [1005]: org.thymeleaf.spring6.processor.SpringOptionInSelectFieldTagProcessor
+[THYMELEAF]             * [* {th:value,data-th-value}] [1010]: org.thymeleaf.spring6.processor.SpringValueTagProcessor
+[THYMELEAF]             * [* {th:classappend,data-th-classappend}] [1100]: org.thymeleaf.standard.processor.StandardClassappendTagProcessor
+[THYMELEAF]             * [* {th:styleappend,data-th-styleappend}] [1100]: org.thymeleaf.standard.processor.StandardStyleappendTagProcessor
+[THYMELEAF]             * [* {th:text,data-th-text}] [1300]: org.thymeleaf.standard.processor.StandardTextTagProcessor
+[THYMELEAF]             * [* {th:utext,data-th-utext}] [1400]: org.thymeleaf.standard.processor.StandardUtextTagProcessor
+[THYMELEAF]             * [* {th:fragment,data-th-fragment}] [1500]: org.thymeleaf.standard.processor.StandardFragmentTagProcessor
+[THYMELEAF]             * [* {th:assert,data-th-assert}] [1550]: org.thymeleaf.standard.processor.StandardAssertTagProcessor
+[THYMELEAF]             * [* {th:remove,data-th-remove}] [1600]: org.thymeleaf.standard.processor.StandardRemoveTagProcessor
+[THYMELEAF]             * [* {th:errors,data-th-errors}] [1700]: org.thymeleaf.spring6.processor.SpringErrorsTagProcessor
+[THYMELEAF]             * [{input} {th:field,data-th-field}] [1700]: org.thymeleaf.spring6.processor.SpringInputCheckboxFieldTagProcessor
+[THYMELEAF]             * [{input} {th:field,data-th-field}] [1700]: org.thymeleaf.spring6.processor.SpringInputFileFieldTagProcessor
+[THYMELEAF]             * [{input} {th:field,data-th-field}] [1700]: org.thymeleaf.spring6.processor.SpringInputGeneralFieldTagProcessor
+[THYMELEAF]             * [{input} {th:field,data-th-field}] [1700]: org.thymeleaf.spring6.processor.SpringInputPasswordFieldTagProcessor
+[THYMELEAF]             * [{input} {th:field,data-th-field}] [1700]: org.thymeleaf.spring6.processor.SpringInputRadioFieldTagProcessor
+[THYMELEAF]             * [{option} {th:field,data-th-field}] [1700]: org.thymeleaf.spring6.processor.SpringOptionFieldTagProcessor
+[THYMELEAF]             * [{select} {th:field,data-th-field}] [1700]: org.thymeleaf.spring6.processor.SpringSelectFieldTagProcessor
+[THYMELEAF]             * [{textarea} {th:field,data-th-field}] [1700]: org.thymeleaf.spring6.processor.SpringTextareaFieldTagProcessor
+[THYMELEAF]             * [* {th:uerrors,data-th-uerrors}] [1700]: org.thymeleaf.spring6.processor.SpringUErrorsTagProcessor
+[THYMELEAF]             * [* {th:errorclass,data-th-errorclass}] [1800]: org.thymeleaf.spring6.processor.SpringErrorClassTagProcessor
+[THYMELEAF]             * [* {th:ref,data-th-ref}] [10000]: org.thymeleaf.standard.processor.StandardRefAttributeTagProcessor
+[THYMELEAF]             * [{th:block,th-block} *] [100000]: org.thymeleaf.standard.processor.StandardBlockTagProcessor
+[THYMELEAF]             * [* th:*] [2147483647]: org.thymeleaf.standard.processor.StandardDefaultAttributesTagProcessor
+[THYMELEAF]         * Text Processors by [precedence]:
+[THYMELEAF]             * [1000]: org.thymeleaf.standard.processor.StandardInliningTextProcessor
+[THYMELEAF]         * DOCTYPE Processors by [precedence]:
+[THYMELEAF]             * [1000]: org.thymeleaf.standard.processor.StandardTranslationDocTypeProcessor
+[THYMELEAF]         * CDATA Section Processors by [precedence]:
+[THYMELEAF]             * [1000]: org.thymeleaf.standard.processor.StandardInliningCDATASectionProcessor
+[THYMELEAF]         * Comment Processors by [precedence]:
+[THYMELEAF]             * [1000]: org.thymeleaf.standard.processor.StandardInliningCommentProcessor
+[THYMELEAF]             * [1100]: org.thymeleaf.standard.processor.StandardConditionalCommentProcessor
+[THYMELEAF]     * Processors for Template Mode: XML
+[THYMELEAF]         * Element Tag Processors by [matching element and attribute name] [precedence]:
+[THYMELEAF]             * [* {th:include}] [100]: org.thymeleaf.standard.processor.StandardIncludeTagProcessor
+[THYMELEAF]             * [* {th:insert}] [100]: org.thymeleaf.standard.processor.StandardInsertTagProcessor
+[THYMELEAF]             * [* {th:replace}] [100]: org.thymeleaf.standard.processor.StandardReplaceTagProcessor
+[THYMELEAF]             * [* {th:each}] [200]: org.thymeleaf.standard.processor.StandardEachTagProcessor
+[THYMELEAF]             * [* {th:switch}] [250]: org.thymeleaf.standard.processor.StandardSwitchTagProcessor
+[THYMELEAF]             * [* {th:case}] [275]: org.thymeleaf.standard.processor.StandardCaseTagProcessor
+[THYMELEAF]             * [* {th:if}] [300]: org.thymeleaf.standard.processor.StandardIfTagProcessor
+[THYMELEAF]             * [* {th:unless}] [400]: org.thymeleaf.standard.processor.StandardUnlessTagProcessor
+[THYMELEAF]             * [* {th:object}] [500]: org.thymeleaf.standard.processor.StandardObjectTagProcessor
+[THYMELEAF]             * [* {th:with}] [600]: org.thymeleaf.standard.processor.StandardWithTagProcessor
+[THYMELEAF]             * [* {th:attr}] [700]: org.thymeleaf.standard.processor.StandardAttrTagProcessor
+[THYMELEAF]             * [* {th:attrprepend}] [800]: org.thymeleaf.standard.processor.StandardAttrprependTagProcessor
+[THYMELEAF]             * [* {th:attrappend}] [900]: org.thymeleaf.standard.processor.StandardAttrappendTagProcessor
+[THYMELEAF]             * [* {th:inline}] [1000]: org.thymeleaf.standard.processor.StandardInlineXMLTagProcessor
+[THYMELEAF]             * [* {xmlns:th}] [1000]: org.thymeleaf.standard.processor.StandardXmlNsTagProcessor
+[THYMELEAF]             * [* {th:text}] [1300]: org.thymeleaf.standard.processor.StandardTextTagProcessor
+[THYMELEAF]             * [* {th:utext}] [1400]: org.thymeleaf.standard.processor.StandardUtextTagProcessor
+[THYMELEAF]             * [* {th:fragment}] [1500]: org.thymeleaf.standard.processor.StandardFragmentTagProcessor
+[THYMELEAF]             * [* {th:assert}] [1550]: org.thymeleaf.standard.processor.StandardAssertTagProcessor
+[THYMELEAF]             * [* {th:remove}] [1600]: org.thymeleaf.standard.processor.StandardRemoveTagProcessor
+[THYMELEAF]             * [* {th:ref}] [10000]: org.thymeleaf.standard.processor.StandardRefAttributeTagProcessor
+[THYMELEAF]             * [{th:block} *] [100000]: org.thymeleaf.standard.processor.StandardBlockTagProcessor
+[THYMELEAF]             * [* th:*] [2147483647]: org.thymeleaf.standard.processor.StandardDefaultAttributesTagProcessor
+[THYMELEAF]         * Text Processors by [precedence]:
+[THYMELEAF]             * [1000]: org.thymeleaf.standard.processor.StandardInliningTextProcessor
+[THYMELEAF]         * CDATA Section Processors by [precedence]:
+[THYMELEAF]             * [1000]: org.thymeleaf.standard.processor.StandardInliningCDATASectionProcessor
+[THYMELEAF]         * Comment Processors by [precedence]:
+[THYMELEAF]             * [1000]: org.thymeleaf.standard.processor.StandardInliningCommentProcessor
+[THYMELEAF]     * Processors for Template Mode: TEXT
+[THYMELEAF]         * Element Tag Processors by [matching element and attribute name] [precedence]:
+[THYMELEAF]             * [* {th:insert}] [100]: org.thymeleaf.standard.processor.StandardInsertTagProcessor
+[THYMELEAF]             * [* {th:replace}] [100]: org.thymeleaf.standard.processor.StandardReplaceTagProcessor
+[THYMELEAF]             * [* {th:each}] [200]: org.thymeleaf.standard.processor.StandardEachTagProcessor
+[THYMELEAF]             * [* {th:switch}] [250]: org.thymeleaf.standard.processor.StandardSwitchTagProcessor
+[THYMELEAF]             * [* {th:case}] [275]: org.thymeleaf.standard.processor.StandardCaseTagProcessor
+[THYMELEAF]             * [* {th:if}] [300]: org.thymeleaf.standard.processor.StandardIfTagProcessor
+[THYMELEAF]             * [* {th:unless}] [400]: org.thymeleaf.standard.processor.StandardUnlessTagProcessor
+[THYMELEAF]             * [* {th:object}] [500]: org.thymeleaf.standard.processor.StandardObjectTagProcessor
+[THYMELEAF]             * [* {th:with}] [600]: org.thymeleaf.standard.processor.StandardWithTagProcessor
+[THYMELEAF]             * [* {th:inline}] [1000]: org.thymeleaf.standard.processor.StandardInlineTextualTagProcessor
+[THYMELEAF]             * [* {th:text}] [1300]: org.thymeleaf.standard.processor.StandardTextTagProcessor
+[THYMELEAF]             * [* {th:utext}] [1400]: org.thymeleaf.standard.processor.StandardUtextTagProcessor
+[THYMELEAF]             * [* {th:assert}] [1550]: org.thymeleaf.standard.processor.StandardAssertTagProcessor
+[THYMELEAF]             * [* {th:remove}] [1600]: org.thymeleaf.standard.processor.StandardRemoveTagProcessor
+[THYMELEAF]             * [* 100000] [org.thymeleaf.standard.processor.StandardBlockTagProcessor]: {}
+[THYMELEAF]             * [{th:block} *] [100000]: org.thymeleaf.standard.processor.StandardBlockTagProcessor
+[THYMELEAF]         * Text Processors by [precedence]:
+[THYMELEAF]             * [1000]: org.thymeleaf.standard.processor.StandardInliningTextProcessor
+[THYMELEAF]     * Processors for Template Mode: JAVASCRIPT
+[THYMELEAF]         * Element Tag Processors by [matching element and attribute name] [precedence]:
+[THYMELEAF]             * [* {th:insert}] [100]: org.thymeleaf.standard.processor.StandardInsertTagProcessor
+[THYMELEAF]             * [* {th:replace}] [100]: org.thymeleaf.standard.processor.StandardReplaceTagProcessor
+[THYMELEAF]             * [* {th:each}] [200]: org.thymeleaf.standard.processor.StandardEachTagProcessor
+[THYMELEAF]             * [* {th:switch}] [250]: org.thymeleaf.standard.processor.StandardSwitchTagProcessor
+[THYMELEAF]             * [* {th:case}] [275]: org.thymeleaf.standard.processor.StandardCaseTagProcessor
+[THYMELEAF]             * [* {th:if}] [300]: org.thymeleaf.standard.processor.StandardIfTagProcessor
+[THYMELEAF]             * [* {th:unless}] [400]: org.thymeleaf.standard.processor.StandardUnlessTagProcessor
+[THYMELEAF]             * [* {th:object}] [500]: org.thymeleaf.standard.processor.StandardObjectTagProcessor
+[THYMELEAF]             * [* {th:with}] [600]: org.thymeleaf.standard.processor.StandardWithTagProcessor
+[THYMELEAF]             * [* {th:inline}] [1000]: org.thymeleaf.standard.processor.StandardInlineTextualTagProcessor
+[THYMELEAF]             * [* {th:text}] [1300]: org.thymeleaf.standard.processor.StandardTextTagProcessor
+[THYMELEAF]             * [* {th:utext}] [1400]: org.thymeleaf.standard.processor.StandardUtextTagProcessor
+[THYMELEAF]             * [* {th:assert}] [1550]: org.thymeleaf.standard.processor.StandardAssertTagProcessor
+[THYMELEAF]             * [* {th:remove}] [1600]: org.thymeleaf.standard.processor.StandardRemoveTagProcessor
+[THYMELEAF]             * [{th:block} *] [100000]: org.thymeleaf.standard.processor.StandardBlockTagProcessor
+[THYMELEAF]             * [* 100000] [org.thymeleaf.standard.processor.StandardBlockTagProcessor]: {}
+[THYMELEAF]         * Text Processors by [precedence]:
+[THYMELEAF]             * [1000]: org.thymeleaf.standard.processor.StandardInliningTextProcessor
+[THYMELEAF]     * Processors for Template Mode: CSS
+[THYMELEAF]         * Element Tag Processors by [matching element and attribute name] [precedence]:
+[THYMELEAF]             * [* {th:insert}] [100]: org.thymeleaf.standard.processor.StandardInsertTagProcessor
+[THYMELEAF]             * [* {th:replace}] [100]: org.thymeleaf.standard.processor.StandardReplaceTagProcessor
+[THYMELEAF]             * [* {th:each}] [200]: org.thymeleaf.standard.processor.StandardEachTagProcessor
+[THYMELEAF]             * [* {th:switch}] [250]: org.thymeleaf.standard.processor.StandardSwitchTagProcessor
+[THYMELEAF]             * [* {th:case}] [275]: org.thymeleaf.standard.processor.StandardCaseTagProcessor
+[THYMELEAF]             * [* {th:if}] [300]: org.thymeleaf.standard.processor.StandardIfTagProcessor
+[THYMELEAF]             * [* {th:unless}] [400]: org.thymeleaf.standard.processor.StandardUnlessTagProcessor
+[THYMELEAF]             * [* {th:object}] [500]: org.thymeleaf.standard.processor.StandardObjectTagProcessor
+[THYMELEAF]             * [* {th:with}] [600]: org.thymeleaf.standard.processor.StandardWithTagProcessor
+[THYMELEAF]             * [* {th:inline}] [1000]: org.thymeleaf.standard.processor.StandardInlineTextualTagProcessor
+[THYMELEAF]             * [* {th:text}] [1300]: org.thymeleaf.standard.processor.StandardTextTagProcessor
+[THYMELEAF]             * [* {th:utext}] [1400]: org.thymeleaf.standard.processor.StandardUtextTagProcessor
+[THYMELEAF]             * [* {th:assert}] [1550]: org.thymeleaf.standard.processor.StandardAssertTagProcessor
+[THYMELEAF]             * [* {th:remove}] [1600]: org.thymeleaf.standard.processor.StandardRemoveTagProcessor
+[THYMELEAF]             * [* 100000] [org.thymeleaf.standard.processor.StandardBlockTagProcessor]: {}
+[THYMELEAF]             * [{th:block} *] [100000]: org.thymeleaf.standard.processor.StandardBlockTagProcessor
+[THYMELEAF]         * Text Processors by [precedence]:
+[THYMELEAF]             * [1000]: org.thymeleaf.standard.processor.StandardInliningTextProcessor
+[THYMELEAF]     * Expression Objects:
+[THYMELEAF]         * #ctx
+[THYMELEAF]         * #root
+[THYMELEAF]         * #vars
+[THYMELEAF]         * #object
+[THYMELEAF]         * #locale
+[THYMELEAF]         * #conversions
+[THYMELEAF]         * #uris
+[THYMELEAF]         * #temporals
+[THYMELEAF]         * #calendars
+[THYMELEAF]         * #dates
+[THYMELEAF]         * #bools
+[THYMELEAF]         * #numbers
+[THYMELEAF]         * #objects
+[THYMELEAF]         * #strings
+[THYMELEAF]         * #arrays
+[THYMELEAF]         * #lists
+[THYMELEAF]         * #sets
+[THYMELEAF]         * #maps
+[THYMELEAF]         * #aggregates
+[THYMELEAF]         * #messages
+[THYMELEAF]         * #ids
+[THYMELEAF]         * #execInfo
+[THYMELEAF]         * #request
+[THYMELEAF]         * #response
+[THYMELEAF]         * #session
+[THYMELEAF]         * #servletContext
+[THYMELEAF]         * #fields
+[THYMELEAF]         * #themes
+[THYMELEAF]         * #mvc
+[THYMELEAF]         * #requestdatavalues
+[THYMELEAF]     * Execution Attributes:
+[THYMELEAF]         * "StandardExpressionParser": Standard Expression Parser
+[THYMELEAF]         * "StandardJavaScriptSerializer": org.thymeleaf.standard.serializer.StandardJavaScriptSerializer@25b132f1
+[THYMELEAF]         * "StandardCSSSerializer": org.thymeleaf.standard.serializer.StandardCSSSerializer@3854989b
+[THYMELEAF]         * "EnableSpringELCompiler": false
+[THYMELEAF]         * "StandardVariableExpressionEvaluator": SpringEL
+[THYMELEAF]         * "StandardConversionService": org.thymeleaf.spring6.expression.SpringStandardConversionService@41bc9915
+[THYMELEAF] * Dialect [2 of 2]: SpringSecurity (org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect)
+[THYMELEAF]     * Prefix: "sec"
+[THYMELEAF]     * Processors for Template Mode: HTML
+[THYMELEAF]         * Element Tag Processors by [matching element and attribute name] [precedence]:
+[THYMELEAF]             * [* {sec:authorize-acl,data-sec-authorize-acl}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAclAttrProcessor
+[THYMELEAF]             * [* {sec:authorize-expr,data-sec-authorize-expr}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAttrProcessor
+[THYMELEAF]             * [* {sec:authorize,data-sec-authorize}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAttrProcessor
+[THYMELEAF]             * [* {sec:authorize-url,data-sec-authorize-url}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeUrlAttrProcessor
+[THYMELEAF]             * [* {xmlns:sec}] [1000]: org.thymeleaf.standard.processor.StandardXmlNsTagProcessor
+[THYMELEAF]             * [* {sec:authentication,data-sec-authentication}] [1300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthenticationAttrProcessor
+[THYMELEAF]     * Processors for Template Mode: XML
+[THYMELEAF]         * Element Tag Processors by [matching element and attribute name] [precedence]:
+[THYMELEAF]             * [* {sec:authorize-acl}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAclAttrProcessor
+[THYMELEAF]             * [* {sec:authorize-expr}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAttrProcessor
+[THYMELEAF]             * [* {sec:authorize}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAttrProcessor
+[THYMELEAF]             * [* {sec:authorize-url}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeUrlAttrProcessor
+[THYMELEAF]             * [* {xmlns:sec}] [1000]: org.thymeleaf.standard.processor.StandardXmlNsTagProcessor
+[THYMELEAF]             * [* {sec:authentication}] [1300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthenticationAttrProcessor
+[THYMELEAF]     * Processors for Template Mode: TEXT
+[THYMELEAF]         * Element Tag Processors by [matching element and attribute name] [precedence]:
+[THYMELEAF]             * [* {sec:authorize-acl}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAclAttrProcessor
+[THYMELEAF]             * [* {sec:authorize-expr}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAttrProcessor
+[THYMELEAF]             * [* {sec:authorize}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAttrProcessor
+[THYMELEAF]             * [* {sec:authorize-url}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeUrlAttrProcessor
+[THYMELEAF]             * [* {xmlns:sec}] [1000]: org.thymeleaf.standard.processor.StandardXmlNsTagProcessor
+[THYMELEAF]             * [* {sec:authentication}] [1300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthenticationAttrProcessor
+[THYMELEAF]     * Processors for Template Mode: JAVASCRIPT
+[THYMELEAF]         * Element Tag Processors by [matching element and attribute name] [precedence]:
+[THYMELEAF]             * [* {sec:authorize-acl}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAclAttrProcessor
+[THYMELEAF]             * [* {sec:authorize-expr}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAttrProcessor
+[THYMELEAF]             * [* {sec:authorize}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAttrProcessor
+[THYMELEAF]             * [* {sec:authorize-url}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeUrlAttrProcessor
+[THYMELEAF]             * [* {xmlns:sec}] [1000]: org.thymeleaf.standard.processor.StandardXmlNsTagProcessor
+[THYMELEAF]             * [* {sec:authentication}] [1300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthenticationAttrProcessor
+[THYMELEAF]     * Processors for Template Mode: CSS
+[THYMELEAF]         * Element Tag Processors by [matching element and attribute name] [precedence]:
+[THYMELEAF]             * [* {sec:authorize-acl}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAclAttrProcessor
+[THYMELEAF]             * [* {sec:authorize-expr}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAttrProcessor
+[THYMELEAF]             * [* {sec:authorize}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeAttrProcessor
+[THYMELEAF]             * [* {sec:authorize-url}] [300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthorizeUrlAttrProcessor
+[THYMELEAF]             * [* {xmlns:sec}] [1000]: org.thymeleaf.standard.processor.StandardXmlNsTagProcessor
+[THYMELEAF]             * [* {sec:authentication}] [1300]: org.thymeleaf.extras.springsecurity6.dialect.processor.AuthenticationAttrProcessor
+[THYMELEAF]     * Expression Objects:
+[THYMELEAF]         * #authentication
+[THYMELEAF]         * #authorization
+[THYMELEAF] TEMPLATE ENGINE CONFIGURED OK
+2026-02-19T16:06:45.004-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.TemplateEngine             : [THYMELEAF] TEMPLATE ENGINE INITIALIZED
+2026-02-19T16:06:45.007-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-1] STARTING PROCESS OF TEMPLATE "login" WITH LOCALE pt_BR
+2026-02-19T16:06:45.008-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.TemplateEngine.cache.TEMPLATE_CACHE  : [THYMELEAF][http-nio-8383-exec-1][TEMPLATE_CACHE][CACHE_MISS] Cache miss in cache "TEMPLATE_CACHE" for key "login".
+2026-02-19T16:06:45.009-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.engine.TemplateManager     : [THYMELEAF][http-nio-8383-exec-1] Template resolver match! Resolver "org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver" will resolve template "login"
+2026-02-19T16:06:45.064-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][CACHE_INITIALIZE] Initializing cache EXPRESSION_CACHE. Max size: 500. Soft references are used.
+2026-02-19T16:06:45.065-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][http-nio-8383-exec-1][EXPRESSION_CACHE][CACHE_MISS] Cache miss in cache "EXPRESSION_CACHE" for key "expr|${param.error}".
+2026-02-19T16:06:45.084-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][http-nio-8383-exec-1][EXPRESSION_CACHE][CACHE_ADD][1] Adding cache entry in cache "EXPRESSION_CACHE" for key "expr|${param.error}". New size is 1.
+2026-02-19T16:06:45.084-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.s.expression.VariableExpression      : [THYMELEAF][http-nio-8383-exec-1] Evaluating variable expression: "${param.error}"
+2026-02-19T16:06:45.085-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.s.e.SPELVariableExpressionEvaluator  : [THYMELEAF][http-nio-8383-exec-1] SpringEL expression: evaluating expression "param.error" on target
+2026-02-19T16:06:45.086-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][http-nio-8383-exec-1][EXPRESSION_CACHE][CACHE_MISS] Cache miss in cache "EXPRESSION_CACHE" for key "spel|param.error".
+2026-02-19T16:06:45.112-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][http-nio-8383-exec-1][EXPRESSION_CACHE][CACHE_ADD][2] Adding cache entry in cache "EXPRESSION_CACHE" for key "spel|param.error". New size is 2.
+2026-02-19T16:06:45.122-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-1] FINISHED PROCESS AND OUTPUT OF TEMPLATE "login" WITH LOCALE pt_BR
+2026-02-19T16:06:45.123-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.TemplateEngine.TIMER       : [THYMELEAF][http-nio-8383-exec-1][login][pt_BR][114065388][114] TEMPLATE "login" WITH LOCALE pt_BR PROCESSED IN 114065388 nanoseconds (approx. 114ms)
+2026-02-19T16:06:45.128-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:06:45.188-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/login", parameters={}
+2026-02-19T16:06:45.190-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.LoginController#login()
+2026-02-19T16:06:45.191-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View login will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:06:45.192-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] o.s.w.s.v.ContentNegotiatingViewResolver : Selected '*/*' given [image/avif, image/webp, image/apng, image/svg+xml, image/*, */*;q=0.8]
+2026-02-19T16:06:45.193-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-3] STARTING PROCESS OF TEMPLATE "login" WITH LOCALE pt_BR
+2026-02-19T16:06:45.194-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] o.t.TemplateEngine.cache.TEMPLATE_CACHE  : [THYMELEAF][http-nio-8383-exec-3][TEMPLATE_CACHE][CACHE_MISS] Cache miss in cache "TEMPLATE_CACHE" for key "login".
+2026-02-19T16:06:45.195-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] org.thymeleaf.engine.TemplateManager     : [THYMELEAF][http-nio-8383-exec-3] Template resolver match! Resolver "org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver" will resolve template "login"
+2026-02-19T16:06:45.198-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][http-nio-8383-exec-3][EXPRESSION_CACHE][CACHE_HIT] Cache hit in cache "EXPRESSION_CACHE" for key "expr|${param.error}".
+2026-02-19T16:06:45.198-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] o.t.s.expression.VariableExpression      : [THYMELEAF][http-nio-8383-exec-3] Evaluating variable expression: "${param.error}"
+2026-02-19T16:06:45.199-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] o.t.s.e.SPELVariableExpressionEvaluator  : [THYMELEAF][http-nio-8383-exec-3] SpringEL expression: evaluating expression "param.error" on target
+2026-02-19T16:06:45.201-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-3] FINISHED PROCESS AND OUTPUT OF TEMPLATE "login" WITH LOCALE pt_BR
+2026-02-19T16:06:45.202-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] org.thymeleaf.TemplateEngine.TIMER       : [THYMELEAF][http-nio-8383-exec-3][login][pt_BR][6862912][7] TEMPLATE "login" WITH LOCALE pt_BR PROCESSED IN 6862912 nanoseconds (approx. 7ms)
+2026-02-19T16:06:45.204-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:06:53.122-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/dashboard", parameters={}
+2026-02-19T16:06:53.124-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.LoginController#dashboard()
+2026-02-19T16:06:53.125-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View dashboard will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:06:53.126-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View dashboard.xml will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:06:53.127-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2026-02-19T16:06:53.128-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-5] STARTING PROCESS OF TEMPLATE "dashboard" WITH LOCALE pt_BR
+2026-02-19T16:06:53.128-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.TemplateEngine.cache.TEMPLATE_CACHE  : [THYMELEAF][http-nio-8383-exec-5][TEMPLATE_CACHE][CACHE_MISS] Cache miss in cache "TEMPLATE_CACHE" for key "dashboard".
+2026-02-19T16:06:53.128-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] org.thymeleaf.engine.TemplateManager     : [THYMELEAF][http-nio-8383-exec-5] Template resolver match! Resolver "org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver" will resolve template "dashboard"
+2026-02-19T16:06:53.131-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][http-nio-8383-exec-5][EXPRESSION_CACHE][CACHE_MISS] Cache miss in cache "EXPRESSION_CACHE" for key "expr|@{/logout}".
+2026-02-19T16:06:53.135-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][http-nio-8383-exec-5][EXPRESSION_CACHE][CACHE_ADD][3] Adding cache entry in cache "EXPRESSION_CACHE" for key "expr|@{/logout}". New size is 3.
+2026-02-19T16:06:53.135-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.standard.expression.LinkExpression   : [THYMELEAF][http-nio-8383-exec-5] Evaluating link: "@{'/logout'}"
+2026-02-19T16:06:53.135-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.s.expression.TextLiteralExpression   : [THYMELEAF][http-nio-8383-exec-5] Evaluating text literal: "'/logout'"
+2026-02-19T16:06:53.217-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Obtaining authentication object.
+2026-02-19T16:06:53.218-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.s.util.SpringVersionSpecificUtils  : [THYMELEAF][TESTING] Spring 6.0+ found on classpath. Initializing version-specific utilities for Spring 6
+2026-02-19T16:06:53.219-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:06:53.219-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Checking authorization using access expression "hasRole('MASTER')" for user "master".
+2026-02-19T16:06:53.232-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Checked authorization using access expression "hasRole('MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:06:53.233-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Obtaining authentication object.
+2026-02-19T16:06:53.234-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:06:53.234-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Checking authorization using access expression "hasAnyRole('PRODUTO','MASTER')" for user "master".
+2026-02-19T16:06:53.234-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Checked authorization using access expression "hasAnyRole('PRODUTO','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:06:53.236-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Obtaining authentication object.
+2026-02-19T16:06:53.236-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:06:53.236-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Checking authorization using access expression "hasAnyRole('ESTOQUE','MASTER')" for user "master".
+2026-02-19T16:06:53.237-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Checked authorization using access expression "hasAnyRole('ESTOQUE','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:06:53.238-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Obtaining authentication object.
+2026-02-19T16:06:53.238-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:06:53.238-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Checking authorization using access expression "hasAnyRole('VENDAS','MASTER')" for user "master".
+2026-02-19T16:06:53.239-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Checked authorization using access expression "hasAnyRole('VENDAS','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:06:53.240-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Obtaining authentication object.
+2026-02-19T16:06:53.241-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:06:53.241-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Checking authorization using access expression "hasAnyRole('FINANCEIRO','MASTER')" for user "master".
+2026-02-19T16:06:53.241-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-5] Checked authorization using access expression "hasAnyRole('FINANCEIRO','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:06:53.243-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-5] FINISHED PROCESS AND OUTPUT OF TEMPLATE "dashboard" WITH LOCALE pt_BR
+2026-02-19T16:06:53.244-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-5] org.thymeleaf.TemplateEngine.TIMER       : [THYMELEAF][http-nio-8383-exec-5][dashboard][pt_BR][115429976][115] TEMPLATE "dashboard" WITH LOCALE pt_BR PROCESSED IN 115429976 nanoseconds (approx. 115ms)
+2026-02-19T16:06:53.245-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:06:53.275-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/favicon.ico", parameters={}
+2026-02-19T16:06:53.279-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
+2026-02-19T16:06:53.283-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] o.s.w.s.r.ResourceHttpRequestHandler     : Resource not found
+2026-02-19T16:06:53.291-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource favicon.ico for request '/favicon.ico'.]
+2026-02-19T16:06:53.291-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
+2026-02-19T16:06:53.300-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
+2026-02-19T16:06:53.302-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.webmvc.autoconfigure.error.BasicErrorController#error(HttpServletRequest)
+2026-02-19T16:06:53.314-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json;q=0.8', given [image/avif, image/webp, image/apng, image/svg+xml, image/*, */*;q=0.8] and supported [application/json, application/*+json]
+2026-02-19T16:06:53.316-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Thu Feb 19 16:06:53 BRT 2026, status=404, error=Not Found, trace=org.springframework.web. (truncated)...]
+2026-02-19T16:06:53.361-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 404
+2026-02-19T16:06:59.705-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/financeiro/receber", parameters={}
+2026-02-19T16:06:59.711-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
+2026-02-19T16:06:59.714-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] o.s.w.s.r.ResourceHttpRequestHandler     : Resource not found
+2026-02-19T16:06:59.715-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource financeiro/receber for request '/financeiro/receber'.]
+2026-02-19T16:06:59.716-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 404 NOT_FOUND
+2026-02-19T16:06:59.722-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for GET "/error", parameters={}
+2026-02-19T16:06:59.724-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.webmvc.autoconfigure.error.BasicErrorController#errorHtml(HttpServletRequest, HttpServletResponse)
+2026-02-19T16:06:59.732-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-7] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View error will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:06:59.734-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, text/html;q=0.8]
+2026-02-19T16:06:59.742-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 404
+2026-02-19T16:07:01.394-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/dashboard", parameters={}
+2026-02-19T16:07:01.397-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.LoginController#dashboard()
+2026-02-19T16:07:01.400-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View dashboard will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:07:01.401-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View dashboard.xml will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:07:01.403-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-8] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2026-02-19T16:07:01.404-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-8] STARTING PROCESS OF TEMPLATE "dashboard" WITH LOCALE pt_BR
+2026-02-19T16:07:01.404-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.TemplateEngine.cache.TEMPLATE_CACHE  : [THYMELEAF][http-nio-8383-exec-8][TEMPLATE_CACHE][CACHE_MISS] Cache miss in cache "TEMPLATE_CACHE" for key "dashboard".
+2026-02-19T16:07:01.404-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] org.thymeleaf.engine.TemplateManager     : [THYMELEAF][http-nio-8383-exec-8] Template resolver match! Resolver "org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver" will resolve template "dashboard"
+2026-02-19T16:07:01.408-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][http-nio-8383-exec-8][EXPRESSION_CACHE][CACHE_HIT] Cache hit in cache "EXPRESSION_CACHE" for key "expr|@{/logout}".
+2026-02-19T16:07:01.409-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.standard.expression.LinkExpression   : [THYMELEAF][http-nio-8383-exec-8] Evaluating link: "@{'/logout'}"
+2026-02-19T16:07:01.409-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.s.expression.TextLiteralExpression   : [THYMELEAF][http-nio-8383-exec-8] Evaluating text literal: "'/logout'"
+2026-02-19T16:07:01.410-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Obtaining authentication object.
+2026-02-19T16:07:01.410-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:07:01.410-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Checking authorization using access expression "hasRole('MASTER')" for user "master".
+2026-02-19T16:07:01.411-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Checked authorization using access expression "hasRole('MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:07:01.413-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Obtaining authentication object.
+2026-02-19T16:07:01.413-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:07:01.414-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Checking authorization using access expression "hasAnyRole('PRODUTO','MASTER')" for user "master".
+2026-02-19T16:07:01.415-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Checked authorization using access expression "hasAnyRole('PRODUTO','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:07:01.416-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Obtaining authentication object.
+2026-02-19T16:07:01.416-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:07:01.417-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Checking authorization using access expression "hasAnyRole('ESTOQUE','MASTER')" for user "master".
+2026-02-19T16:07:01.417-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Checked authorization using access expression "hasAnyRole('ESTOQUE','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:07:01.418-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Obtaining authentication object.
+2026-02-19T16:07:01.419-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:07:01.419-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Checking authorization using access expression "hasAnyRole('VENDAS','MASTER')" for user "master".
+2026-02-19T16:07:01.420-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Checked authorization using access expression "hasAnyRole('VENDAS','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:07:01.421-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Obtaining authentication object.
+2026-02-19T16:07:01.421-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:07:01.421-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Checking authorization using access expression "hasAnyRole('FINANCEIRO','MASTER')" for user "master".
+2026-02-19T16:07:01.422-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-8] Checked authorization using access expression "hasAnyRole('FINANCEIRO','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:07:01.424-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-8] FINISHED PROCESS AND OUTPUT OF TEMPLATE "dashboard" WITH LOCALE pt_BR
+2026-02-19T16:07:01.425-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-8] org.thymeleaf.TemplateEngine.TIMER       : [THYMELEAF][http-nio-8383-exec-8][dashboard][pt_BR][20250303][20] TEMPLATE "dashboard" WITH LOCALE pt_BR PROCESSED IN 20250303 nanoseconds (approx. 20ms)
+2026-02-19T16:07:01.427-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:07:59.053-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/dashboard", parameters={}
+2026-02-19T16:07:59.055-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.LoginController#dashboard()
+2026-02-19T16:07:59.057-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View dashboard will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:07:59.058-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View dashboard.xml will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:07:59.059-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-10] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2026-02-19T16:07:59.060-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-10] STARTING PROCESS OF TEMPLATE "dashboard" WITH LOCALE pt_BR
+2026-02-19T16:07:59.060-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.TemplateEngine.cache.TEMPLATE_CACHE  : [THYMELEAF][http-nio-8383-exec-10][TEMPLATE_CACHE][CACHE_MISS] Cache miss in cache "TEMPLATE_CACHE" for key "dashboard".
+2026-02-19T16:07:59.061-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] org.thymeleaf.engine.TemplateManager     : [THYMELEAF][http-nio-8383-exec-10] Template resolver match! Resolver "org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver" will resolve template "dashboard"
+2026-02-19T16:07:59.066-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][http-nio-8383-exec-10][EXPRESSION_CACHE][CACHE_HIT] Cache hit in cache "EXPRESSION_CACHE" for key "expr|@{/logout}".
+2026-02-19T16:07:59.066-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.standard.expression.LinkExpression   : [THYMELEAF][http-nio-8383-exec-10] Evaluating link: "@{'/logout'}"
+2026-02-19T16:07:59.066-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.s.expression.TextLiteralExpression   : [THYMELEAF][http-nio-8383-exec-10] Evaluating text literal: "'/logout'"
+2026-02-19T16:07:59.068-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Obtaining authentication object.
+2026-02-19T16:07:59.068-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:07:59.069-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Checking authorization using access expression "hasRole('MASTER')" for user "master".
+2026-02-19T16:07:59.070-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Checked authorization using access expression "hasRole('MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:07:59.071-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Obtaining authentication object.
+2026-02-19T16:07:59.072-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:07:59.072-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Checking authorization using access expression "hasAnyRole('PRODUTO','MASTER')" for user "master".
+2026-02-19T16:07:59.073-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Checked authorization using access expression "hasAnyRole('PRODUTO','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:07:59.075-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Obtaining authentication object.
+2026-02-19T16:07:59.075-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:07:59.075-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Checking authorization using access expression "hasAnyRole('ESTOQUE','MASTER')" for user "master".
+2026-02-19T16:07:59.076-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Checked authorization using access expression "hasAnyRole('ESTOQUE','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:07:59.077-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Obtaining authentication object.
+2026-02-19T16:07:59.078-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:07:59.078-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Checking authorization using access expression "hasAnyRole('VENDAS','MASTER')" for user "master".
+2026-02-19T16:07:59.079-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Checked authorization using access expression "hasAnyRole('VENDAS','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:07:59.080-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Obtaining authentication object.
+2026-02-19T16:07:59.081-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:07:59.081-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Checking authorization using access expression "hasAnyRole('FINANCEIRO','MASTER')" for user "master".
+2026-02-19T16:07:59.082-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-10] Checked authorization using access expression "hasAnyRole('FINANCEIRO','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:07:59.084-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-10] FINISHED PROCESS AND OUTPUT OF TEMPLATE "dashboard" WITH LOCALE pt_BR
+2026-02-19T16:07:59.085-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-10] org.thymeleaf.TemplateEngine.TIMER       : [THYMELEAF][http-nio-8383-exec-10][dashboard][pt_BR][23849994][24] TEMPLATE "dashboard" WITH LOCALE pt_BR PROCESSED IN 23849994 nanoseconds (approx. 24ms)
+2026-02-19T16:07:59.087-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:08:00.239-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/financeiro", parameters={}
+2026-02-19T16:08:00.240-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.FinanceiroController#financeiro()
+2026-02-19T16:08:00.242-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View financeiro will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:08:00.244-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View financeiro.xml will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:08:00.248-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2026-02-19T16:08:00.248-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-1] STARTING PROCESS OF TEMPLATE "financeiro" WITH LOCALE pt_BR
+2026-02-19T16:08:00.249-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.TemplateEngine.cache.TEMPLATE_CACHE  : [THYMELEAF][http-nio-8383-exec-1][TEMPLATE_CACHE][CACHE_MISS] Cache miss in cache "TEMPLATE_CACHE" for key "financeiro".
+2026-02-19T16:08:00.249-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.engine.TemplateManager     : [THYMELEAF][http-nio-8383-exec-1] Template resolver match! Resolver "org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver" will resolve template "financeiro"
+2026-02-19T16:08:00.254-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-1] FINISHED PROCESS AND OUTPUT OF TEMPLATE "financeiro" WITH LOCALE pt_BR
+2026-02-19T16:08:00.254-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.TemplateEngine.TIMER       : [THYMELEAF][http-nio-8383-exec-1][financeiro][pt_BR][5362187][5] TEMPLATE "financeiro" WITH LOCALE pt_BR PROCESSED IN 5362187 nanoseconds (approx. 5ms)
+2026-02-19T16:08:00.256-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:08:00.279-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/financeiro/api/clientes", parameters={}
+2026-02-19T16:08:00.282-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.FinanceiroController#listarClientes()
+2026-02-19T16:08:00.298-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-02-19T16:08:00.298-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [[JOAOZINHO, JUAN, MARCELO, PABLO]]
+2026-02-19T16:08:00.303-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:08:00.313-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/financeiro/api/filtrar", parameters={}
+2026-02-19T16:08:00.315-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.FinanceiroController#filtrar(String, String)
+2026-02-19T16:08:00.419-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-02-19T16:08:00.420-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.expedicao.estoque.dto.ContaReceberDTO@188fe0cf, com.expedicao.estoque.dto.ContaReceberDTO@5e974 (truncated)...]
+2026-02-19T16:08:00.465-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:08:02.967-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/financeiro/relatorio", parameters={}
+2026-02-19T16:08:02.970-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.FinanceiroController#relatorioFinanceiroTela()
+2026-02-19T16:08:02.973-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-4] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View relatorio-financeiro will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:08:02.975-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-4] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View relatorio-financeiro.xml will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:08:02.979-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-4] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2026-02-19T16:08:02.980-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-4] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-4] STARTING PROCESS OF TEMPLATE "relatorio-financeiro" WITH LOCALE pt_BR
+2026-02-19T16:08:02.980-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-4] o.t.TemplateEngine.cache.TEMPLATE_CACHE  : [THYMELEAF][http-nio-8383-exec-4][TEMPLATE_CACHE][CACHE_MISS] Cache miss in cache "TEMPLATE_CACHE" for key "relatorio-financeiro".
+2026-02-19T16:08:02.981-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-4] org.thymeleaf.engine.TemplateManager     : [THYMELEAF][http-nio-8383-exec-4] Template resolver match! Resolver "org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver" will resolve template "relatorio-financeiro"
+2026-02-19T16:08:02.989-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-4] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-4] FINISHED PROCESS AND OUTPUT OF TEMPLATE "relatorio-financeiro" WITH LOCALE pt_BR
+2026-02-19T16:08:02.989-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-4] org.thymeleaf.TemplateEngine.TIMER       : [THYMELEAF][http-nio-8383-exec-4][relatorio-financeiro][pt_BR][8491570][8] TEMPLATE "relatorio-financeiro" WITH LOCALE pt_BR PROCESSED IN 8491570 nanoseconds (approx. 8ms)
+2026-02-19T16:08:02.990-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:08:03.012-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/financeiro/api/clientes", parameters={}
+2026-02-19T16:08:03.013-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/financeiro/api/formas-pagamento", parameters={}
+2026-02-19T16:08:03.014-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/financeiro/api/relatorio", parameters={}
+2026-02-19T16:08:03.016-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.FinanceiroController#listarClientes()
+2026-02-19T16:08:03.016-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.FinanceiroController#listarFormasPagamento()
+2026-02-19T16:08:03.017-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.FinanceiroController#relatorioFinanceiro(String, String, FormaPagamento)
+2026-02-19T16:08:03.021-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-02-19T16:08:03.022-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [[JOAOZINHO, JUAN, MARCELO, PABLO]]
+2026-02-19T16:08:03.024-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:08:03.041-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-02-19T16:08:03.042-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] m.m.a.RequestResponseBodyMethodProcessor : Writing [[PIX, PIX_VIT, CHEQUE]]
+2026-02-19T16:08:03.046-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:08:03.049-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-02-19T16:08:03.049-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.expedicao.estoque.dto.ContaReceberDTO@17a1d3d0, com.expedicao.estoque.dto.ContaReceberDTO@2b7b4 (truncated)...]
+2026-02-19T16:08:03.052-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:11:37.605-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/dashboard", parameters={}
+2026-02-19T16:11:37.608-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.LoginController#dashboard()
+2026-02-19T16:11:37.611-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View dashboard will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:11:37.612-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View dashboard.xml will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:11:37.613-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2026-02-19T16:11:37.614-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-1] STARTING PROCESS OF TEMPLATE "dashboard" WITH LOCALE pt_BR
+2026-02-19T16:11:37.615-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.TemplateEngine.cache.TEMPLATE_CACHE  : [THYMELEAF][http-nio-8383-exec-1][TEMPLATE_CACHE][CACHE_MISS] Cache miss in cache "TEMPLATE_CACHE" for key "dashboard".
+2026-02-19T16:11:37.615-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.engine.TemplateManager     : [THYMELEAF][http-nio-8383-exec-1] Template resolver match! Resolver "org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver" will resolve template "dashboard"
+2026-02-19T16:11:37.619-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][http-nio-8383-exec-1][EXPRESSION_CACHE][CACHE_HIT] Cache hit in cache "EXPRESSION_CACHE" for key "expr|@{/logout}".
+2026-02-19T16:11:37.619-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.standard.expression.LinkExpression   : [THYMELEAF][http-nio-8383-exec-1] Evaluating link: "@{'/logout'}"
+2026-02-19T16:11:37.619-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.s.expression.TextLiteralExpression   : [THYMELEAF][http-nio-8383-exec-1] Evaluating text literal: "'/logout'"
+2026-02-19T16:11:37.621-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Obtaining authentication object.
+2026-02-19T16:11:37.621-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:11:37.621-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Checking authorization using access expression "hasRole('MASTER')" for user "master".
+2026-02-19T16:11:37.623-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Checked authorization using access expression "hasRole('MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:11:37.624-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Obtaining authentication object.
+2026-02-19T16:11:37.624-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:11:37.625-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Checking authorization using access expression "hasAnyRole('PRODUTO','MASTER')" for user "master".
+2026-02-19T16:11:37.626-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Checked authorization using access expression "hasAnyRole('PRODUTO','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:11:37.627-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Obtaining authentication object.
+2026-02-19T16:11:37.627-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:11:37.628-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Checking authorization using access expression "hasAnyRole('ESTOQUE','MASTER')" for user "master".
+2026-02-19T16:11:37.628-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Checked authorization using access expression "hasAnyRole('ESTOQUE','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:11:37.629-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Obtaining authentication object.
+2026-02-19T16:11:37.629-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:11:37.630-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Checking authorization using access expression "hasAnyRole('VENDAS','MASTER')" for user "master".
+2026-02-19T16:11:37.630-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Checked authorization using access expression "hasAnyRole('VENDAS','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:11:37.631-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Obtaining authentication object.
+2026-02-19T16:11:37.632-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:11:37.632-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Checking authorization using access expression "hasAnyRole('FINANCEIRO','MASTER')" for user "master".
+2026-02-19T16:11:37.633-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-1] Checked authorization using access expression "hasAnyRole('FINANCEIRO','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:11:37.635-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-1] FINISHED PROCESS AND OUTPUT OF TEMPLATE "dashboard" WITH LOCALE pt_BR
+2026-02-19T16:11:37.635-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-1] org.thymeleaf.TemplateEngine.TIMER       : [THYMELEAF][http-nio-8383-exec-1][dashboard][pt_BR][20103154][20] TEMPLATE "dashboard" WITH LOCALE pt_BR PROCESSED IN 20103154 nanoseconds (approx. 20ms)
+2026-02-19T16:11:37.637-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:12:22.830-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/dashboard", parameters={}
+2026-02-19T16:12:22.831-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.LoginController#dashboard()
+2026-02-19T16:12:22.833-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View dashboard will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:12:22.833-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View dashboard.xml will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:12:22.834-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-2] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2026-02-19T16:12:22.834-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-2] STARTING PROCESS OF TEMPLATE "dashboard" WITH LOCALE pt_BR
+2026-02-19T16:12:22.835-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.TemplateEngine.cache.TEMPLATE_CACHE  : [THYMELEAF][http-nio-8383-exec-2][TEMPLATE_CACHE][CACHE_MISS] Cache miss in cache "TEMPLATE_CACHE" for key "dashboard".
+2026-02-19T16:12:22.837-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.TemplateEngine.cache.TEMPLATE_CACHE  : [THYMELEAF][*][*][*][CACHE_REPORT]        0 elements |            0 puts |            9 gets |            0 hits |            9 misses | 0,00 hit ratio | 1,00 miss ratio - [TEMPLATE_CACHE]
+2026-02-19T16:12:22.838-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] org.thymeleaf.engine.TemplateManager     : [THYMELEAF][http-nio-8383-exec-2] Template resolver match! Resolver "org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver" will resolve template "dashboard"
+2026-02-19T16:12:22.841-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][http-nio-8383-exec-2][EXPRESSION_CACHE][CACHE_HIT] Cache hit in cache "EXPRESSION_CACHE" for key "expr|@{/logout}".
+2026-02-19T16:12:22.842-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.T.cache.EXPRESSION_CACHE             : [THYMELEAF][*][*][*][CACHE_REPORT]        3 elements |            3 puts |            8 gets |            5 hits |            3 misses | 0,63 hit ratio | 0,38 miss ratio - [EXPRESSION_CACHE]
+2026-02-19T16:12:22.842-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.standard.expression.LinkExpression   : [THYMELEAF][http-nio-8383-exec-2] Evaluating link: "@{'/logout'}"
+2026-02-19T16:12:22.842-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.s.expression.TextLiteralExpression   : [THYMELEAF][http-nio-8383-exec-2] Evaluating text literal: "'/logout'"
+2026-02-19T16:12:22.843-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Obtaining authentication object.
+2026-02-19T16:12:22.844-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:12:22.844-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Checking authorization using access expression "hasRole('MASTER')" for user "master".
+2026-02-19T16:12:22.845-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Checked authorization using access expression "hasRole('MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:12:22.846-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Obtaining authentication object.
+2026-02-19T16:12:22.847-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:12:22.848-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Checking authorization using access expression "hasAnyRole('PRODUTO','MASTER')" for user "master".
+2026-02-19T16:12:22.850-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Checked authorization using access expression "hasAnyRole('PRODUTO','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:12:22.852-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Obtaining authentication object.
+2026-02-19T16:12:22.852-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:12:22.852-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Checking authorization using access expression "hasAnyRole('ESTOQUE','MASTER')" for user "master".
+2026-02-19T16:12:22.853-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Checked authorization using access expression "hasAnyRole('ESTOQUE','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:12:22.854-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Obtaining authentication object.
+2026-02-19T16:12:22.855-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:12:22.855-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Checking authorization using access expression "hasAnyRole('VENDAS','MASTER')" for user "master".
+2026-02-19T16:12:22.856-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Checked authorization using access expression "hasAnyRole('VENDAS','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:12:22.858-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Obtaining authentication object.
+2026-02-19T16:12:22.858-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Authentication object of class org.springframework.security.authentication.UsernamePasswordAuthenticationToken found in context for user "master".
+2026-02-19T16:12:22.859-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Checking authorization using access expression "hasAnyRole('FINANCEIRO','MASTER')" for user "master".
+2026-02-19T16:12:22.859-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] o.t.e.springsecurity6.auth.AuthUtils     : [THYMELEAF][http-nio-8383-exec-2] Checked authorization using access expression "hasAnyRole('FINANCEIRO','MASTER')" for user "master". Access GRANTED.
+2026-02-19T16:12:22.861-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-2] FINISHED PROCESS AND OUTPUT OF TEMPLATE "dashboard" WITH LOCALE pt_BR
+2026-02-19T16:12:22.861-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-2] org.thymeleaf.TemplateEngine.TIMER       : [THYMELEAF][http-nio-8383-exec-2][dashboard][pt_BR][26624772][27] TEMPLATE "dashboard" WITH LOCALE pt_BR PROCESSED IN 26624772 nanoseconds (approx. 27ms)
+2026-02-19T16:12:22.863-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:12:25.782-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/financeiro", parameters={}
+2026-02-19T16:12:25.784-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.FinanceiroController#financeiro()
+2026-02-19T16:12:25.786-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View financeiro will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:12:25.787-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] o.t.spring6.view.ThymeleafViewResolver   : [THYMELEAF] View financeiro.xml will be handled by ThymeleafViewResolver and a ThymeleafView instance will be created for it
+2026-02-19T16:12:25.788-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] o.s.w.s.v.ContentNegotiatingViewResolver : Selected 'text/html' given [text/html, application/xhtml+xml, image/avif, image/webp, image/apng, application/xml;q=0.9, */*;q=0.8, application/signed-exchange;v=b3;q=0.7]
+2026-02-19T16:12:25.789-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-3] STARTING PROCESS OF TEMPLATE "financeiro" WITH LOCALE pt_BR
+2026-02-19T16:12:25.789-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] o.t.TemplateEngine.cache.TEMPLATE_CACHE  : [THYMELEAF][http-nio-8383-exec-3][TEMPLATE_CACHE][CACHE_MISS] Cache miss in cache "TEMPLATE_CACHE" for key "financeiro".
+2026-02-19T16:12:25.790-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] org.thymeleaf.engine.TemplateManager     : [THYMELEAF][http-nio-8383-exec-3] Template resolver match! Resolver "org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver" will resolve template "financeiro"
+2026-02-19T16:12:25.795-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] org.thymeleaf.TemplateEngine             : [THYMELEAF][http-nio-8383-exec-3] FINISHED PROCESS AND OUTPUT OF TEMPLATE "financeiro" WITH LOCALE pt_BR
+2026-02-19T16:12:25.795-03:00 TRACE 187721 --- [estoque] [http-nio-8383-exec-3] org.thymeleaf.TemplateEngine.TIMER       : [THYMELEAF][http-nio-8383-exec-3][financeiro][pt_BR][5731405][6] TEMPLATE "financeiro" WITH LOCALE pt_BR PROCESSED IN 5731405 nanoseconds (approx. 6ms)
+2026-02-19T16:12:25.797-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:12:25.822-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/financeiro/api/clientes", parameters={}
+2026-02-19T16:12:25.823-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.FinanceiroController#listarClientes()
+2026-02-19T16:12:25.828-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-02-19T16:12:25.828-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [[JOAOZINHO, JUAN, MARCELO, PABLO]]
+2026-02-19T16:12:25.830-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:12:25.838-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/financeiro/api/filtrar", parameters={}
+2026-02-19T16:12:25.839-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.expedicao.estoque.controller.FinanceiroController#filtrar(String, String)
+2026-02-19T16:12:25.867-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-02-19T16:12:25.867-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.expedicao.estoque.dto.ContaReceberDTO@35d6e3d5, com.expedicao.estoque.dto.ContaReceberDTO@3a6be (truncated)...]
+2026-02-19T16:12:25.869-03:00 DEBUG 187721 --- [estoque] [http-nio-8383-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-02-19T16:12:43.790-03:00  INFO 187721 --- [estoque] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-19T16:12:43.793-03:00  INFO 187721 --- [estoque] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-02-19T16:12:43.803-03:00  INFO 187721 --- [estoque] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-19T16:12:43.809-03:00  INFO 187721 --- [estoque] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-02-19T16:12:43.817-03:00  INFO 187721 --- [estoque] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

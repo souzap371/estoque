@@ -142,8 +142,9 @@
 
       function formatarDataBR(dataIso) {
         if (!dataIso) return '-';
-        const data = new Date(dataIso);
-        return data.toLocaleDateString('pt-BR');
+
+        const partes = dataIso.split('-');
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
       }
 
       function carregarClientes() {

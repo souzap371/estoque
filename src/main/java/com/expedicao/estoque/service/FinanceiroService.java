@@ -135,9 +135,11 @@ public class FinanceiroService {
     @Transactional
     public void darBaixa(Long id,
             BigDecimal valor,
-            String data,
+            LocalDate data,
             FormaPagamento formaPagamento,
             MultipartFile anexo) {
+
+        
 
         ContaReceber conta = contaReceberRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
@@ -147,7 +149,7 @@ public class FinanceiroService {
         Pagamento pagamento = new Pagamento();
         pagamento.setContaReceber(conta);
         pagamento.setValorPago(valor);
-        pagamento.setDataPagamento(LocalDate.parse(data));
+        pagamento.setDataPagamento(data);
         pagamento.setFormaPagamento(formaPagamento);
 
         if (anexo != null && !anexo.isEmpty()) {

@@ -2,10 +2,12 @@ package com.expedicao.estoque.controller;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -95,7 +97,8 @@ public class FinanceiroController {
     public ResponseEntity<Void> darBaixa(
             @PathVariable Long id,
             @RequestParam BigDecimal valor,
-            @RequestParam String data,
+            // @RequestParam String data,
+            @RequestParam LocalDate data,
             @RequestParam FormaPagamento formaPagamento,
             @RequestParam(required = false) MultipartFile anexo) {
 

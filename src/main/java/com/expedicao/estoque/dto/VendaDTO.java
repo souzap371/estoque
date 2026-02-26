@@ -9,6 +9,7 @@ public class VendaDTO {
     private String clienteNome;
     private String clienteEstado;
     private List<VendaItemDTO> itens;
+    private Boolean comNotaFiscal;
 
     public Long getId() {
         return id;
@@ -40,5 +41,13 @@ public class VendaDTO {
 
     public void setItens(List<VendaItemDTO> itens) {
         this.itens = itens;
+    }
+
+    public Boolean getComNotaFiscal() {
+        return comNotaFiscal;
+    }
+
+    public void setComNotaFiscal(Boolean comNotaFiscal) {
+        this.comNotaFiscal = comNotaFiscal;
     }
 }

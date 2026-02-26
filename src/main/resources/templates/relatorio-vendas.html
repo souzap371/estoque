@@ -140,6 +140,17 @@
                         th:selected="${param.tipo == t.name()}">
                     </option>
                 </select>
+                <select name="notaFiscal">
+                    <option value="">Com e Sem NF</option>
+
+                    <option value="true" th:selected="${param.notaFiscal == 'true'}">
+                        Com Nota Fiscal
+                    </option>
+
+                    <option value="false" th:selected="${param.notaFiscal == 'false'}">
+                        Sem Nota Fiscal
+                    </option>
+                </select>
 
                 <input type="date" name="dataInicio" th:value="${param.dataInicio}">
                 <input type="date" name="dataFim" th:value="${param.dataFim}">
@@ -166,6 +177,7 @@
                     <th>Estado</th>
                     <th>Data</th>
                     <th>Tipo</th>
+                    <th>NF</th>
                     <th>Ações</th> <!-- NOVA COLUNA -->
                 </tr>
             </thead>
@@ -187,6 +199,15 @@
                     <td th:text="${item.venda.clienteEstado}"></td>
                     <td th:text="${#temporals.format(item.venda.dataSaida, 'dd/MM/yyyy')}"></td>
                     <td th:text="${item.tipoMovimentacao}"></td>
+                    <td>
+                        <span th:if="${item.venda.comNotaFiscal}" style="color:green;font-weight:600">
+                            ✔ NF
+                        </span>
+
+                        <span th:unless="${item.venda.comNotaFiscal}" style="color:#dc2626;font-weight:600">
+                            ✖ Sem NF
+                        </span>
+                    </td>
                     <td class="acoes">
                         <a class="editar" th:href="@{/vendas/editar/{id}(id=${item.venda.id})}">✏ Editar</a>
 

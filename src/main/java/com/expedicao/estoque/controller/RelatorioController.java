@@ -41,6 +41,7 @@ public class RelatorioController {
             @RequestParam(required = false) String tipo,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim,
+            @RequestParam(required = false) Boolean notaFiscal,
             @RequestParam(defaultValue = "0") int page,
             Model model) {
 
@@ -59,7 +60,7 @@ public class RelatorioController {
         }
 
         Page<VendaItem> pagina = vendaItemRepository.filtrar(
-                pedidoId, produto, cliente, estado, tipoEnum, dataInicio, dataFim, pageable);
+                pedidoId, produto, cliente, estado, tipoEnum, notaFiscal, dataInicio, dataFim, pageable);
 
         model.addAttribute("pagina", pagina);
         model.addAttribute("itens", pagina.getContent());

@@ -57,6 +57,7 @@ public class VendaService {
 
         venda.setClienteNome(dto.getClienteNome());
         venda.setClienteEstado(dto.getClienteEstado());
+        venda.setComNotaFiscal(dto.getComNotaFiscal());
 
         BigDecimal total = BigDecimal.ZERO;
 

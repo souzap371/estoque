@@ -133,6 +133,20 @@
                     </option>
                 </select>
             </div>
+            <div>
+                <label>Nota Fiscal</label>
+                <div class="flex">
+                    <label>
+                        <input type="radio" name="notaFiscal" value="true" checked>
+                        C/NF
+                    </label>
+
+                    <label>
+                        <input type="radio" name="notaFiscal" value="false">
+                        S/NF
+                    </label>
+                </div>
+            </div>
         </div>
 
         <hr>
@@ -347,11 +361,14 @@
                 alert("Nenhum item adicionado ao pedido");
                 return;
             }
+            const comNotaFiscal =
+                document.querySelector("input[name='notaFiscal']:checked").value === "true";
 
             const payload = {
                 id: vendaId,
                 clienteNome: clienteNome.value,
                 clienteEstado: clienteEstado.value,
+                comNotaFiscal: comNotaFiscal,
                 itens: itens
             };
 

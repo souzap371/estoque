@@ -16,6 +16,7 @@ public class Venda {
     private String clienteNome;
     private String clienteEstado;
     private LocalDate dataSaida;
+     private Boolean comNotaFiscal;
 
     @Column(precision = 14, scale = 2)
     private BigDecimal valorTotal;
@@ -74,5 +75,12 @@ public class Venda {
 
     public List<VendaItem> getItens() {
         return itens;
+    }
+    public Boolean getComNotaFiscal() {
+        return comNotaFiscal;
+    }
+
+    public void setComNotaFiscal(Boolean comNotaFiscal) {
+        this.comNotaFiscal = comNotaFiscal;
     }
 }

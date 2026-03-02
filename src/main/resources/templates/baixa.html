@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -78,7 +78,7 @@
     <button onclick="confirmarBaixa()">Confirmar Baixa</button>
     <button onclick="window.location.href='/financeiro'">Voltar </button>
   </div>
-  
+
 
   <script>
 
@@ -96,17 +96,614 @@
 
       const id = document.getElementById("contaId").value;
 
-      fetch(`/financeiro/api/baixar/${id}`, {
-        method: "POST",
+      fetch(`/api/baixar/${contaId}`, {
+        method: 'POST',
         body: formData
       })
-        .then(res => {
-          if (!res.ok) throw new Error();
-          alert("Baixa registrada com sucesso!");
-          window.location.href = "/financeiro";
-        })
-        .catch(() => alert("Erro ao registrar baixa"));
+        .then(r => r.json())
+        .then(restante => {
+
+          if (restante > 0) {
+
+            alert("Existe valor restante: " + restante);
+
+            buscarPedidosAbertos(cliente, restante);
+          } else {
+            location.reload();
+          }
+        });
     }
+
+    let valorRestanteGlobal = 0;
+
+    function buscarPedidosAbertos(cliente, restante) {
+
+      valorRestanteGlobal = restante;
+
+      fetch(`/financeiro/api/pedidos-abertos?cliente=${cliente}`)
+        .then(r => r.json())
+        .then(lista => {
+
+          let html = "";
+
+          lista.forEach(p => {
+
+            let saldo =
+              p.valorOriginal - p.valorPago;
+
+            html += `
+                    <tr>
+                        <td>${p.venda.id}</td>
+                        <td>${p.valorOriginal}</td>
+                        <td>${saldo}</td>
+                        <td>
+                           <button onclick="aplicarBaixa(${p.id})">
+                               Selecionar
+                           </button>
+                        </td>
+                    </tr>`;
+          });
+
+          document
+            .getElementById("listaPedidos")
+            .innerHTML = html;
+
+          abrirModal();
+        });
+    }
+
+    function abrirModal() {
+      document.getElementById("modalPedidos")
+        .style.display = "block";
+    }
+
+    function fecharModal() {
+      document.getElementById("modalPedidos")
+        .style.display = "none";
+    }
+
+
+    function aplicarBaixa(contaId) {
+
+      fetch(`/financeiro/api/baixar-restante`, {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'application/x-www-form-urlencoded'
+        },
+        body:
+          `contaId=${contaId}&valor=${valorRestanteGlobal}`
+      })
+        .then(() => {
+
+          alert("Baixa aplicada com sucesso!");
+
+          fecharModal();
+
+          location.reload();
+        });
+    }
+
+
+
+  </script>
+
+  <div id="modalPedidos" style="display:none;
+            position:fixed;
+            top:10%;
+            left:20%;
+            width:60%;
+            background:white;
+            border:1px solid #ccc;
+            padding:20px;
+            z-index:999">
+
+    <h3>Selecione o pedido para aplicar o restante</h3>
+
+    <table border="1" width="100%">
+      <thead>
+        <tr>
+          <th>Pedido</th>
+          <th>Total</th>
+          <th>Saldo</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+
+      <tbody id="listaPedidos"></tbody>
+    </table>
+
+    <br>
+    <button onclick="fecharModal()">Fechar</button>
+  </div>
+
+</body>
+
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dar Baixa</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #f4f6f9;
+    }
+
+    .container {
+      width: 400px;
+      margin: 50px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 6px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+
+    button {
+      background: #1e88e5;
+      color: white;
+      border: none;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
+    /* .modal {
+      display: none;
+      position: fixed;
+      top: 10%;
+      left: 20%;
+      width: 60%;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      z-index: 999;
+    } */
+
+
+
+    /* ===== OVERLAY ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(3px);
+      z-index: 998;
+    }
+
+    /* ===== MODAL ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70%;
+      max-width: 900px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      padding: 25px;
+      z-index: 999;
+      animation: fadeIn .25s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+      }
+
+      to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    /* ===== HEADER ===== */
+    .modal h3 {
+      margin-top: 0;
+      color: #1e88e5;
+    }
+
+    /* ===== TABLE ===== */
+    .modal table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    .modal thead {
+      background: #1e88e5;
+      color: white;
+    }
+
+    .modal th,
+    .modal td {
+      padding: 12px;
+      text-align: center;
+    }
+
+    .modal tbody tr {
+      border-bottom: 1px solid #eee;
+      transition: .2s;
+    }
+
+    .modal tbody tr:hover {
+      background: #f1f7ff;
+    }
+
+    /* ===== BOTÃO ===== */
+    .btn-selecionar {
+      background: #1e88e5;
+      color: white;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .btn-selecionar:hover {
+      background: #1565c0;
+      transform: scale(1.05);
+    }
+
+    /* ===== FECHAR ===== */
+    .btn-fechar {
+      margin-top: 15px;
+      background: #ccc;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h2>💰 Dar Baixa</h2>
+
+    <!-- IDs vindos do backend -->
+    <input type="hidden" id="contaId" th:value="${contaId}">
+    <input type="hidden" id="cliente" th:value="${cliente}">
+
+    <label>Valor da Baixa</label>
+    <input type="number" id="valor" step="0.01">
+
+    <label>Data da Baixa</label>
+    <input type="date" id="data">
+
+    <label>Forma de Pagamento</label>
+    <select id="forma">
+      <option value="PIX">PIX</option>
+      <option value="PIX_VIT">PIX_VIT</option>
+      <option value="CHEQUE">CHEQUE</option>
+      <option value="CHEQUE_PRE">CHEQUE_PRE</option>
+      <option value="CC">Cartão Crédito</option>
+      <option value="CD">Cartão Débito</option>
+      <option value="DEPOSITO">Depósito</option>
+      <option value="DEPOSITO_VIT">Depósito_VIT</option>
+      <option value="ESPECIE">Espécie</option>
+      <option value="GNRE">GNRE</option>
+      <option value="CARRO">Carro</option>
+      <option value="MOTO">Moto</option>
+      <option value="IMOVEL">Imóvel</option>
+    </select>
+
+    <label>Anexo (PDF / Imagem)</label>
+    <input type="file" id="anexo" accept=".pdf,.jpg,.jpeg,.png">
+
+    <button onclick="confirmarBaixa()">Confirmar Baixa</button>
+    <button onclick="window.location.href='/financeiro'">
+      Voltar
+    </button>
+
+  </div>
+
+  <!-- ================= MODAL ================= -->
+
+  <div id="overlay" class="modal-overlay"></div>
+
+  <!-- <div id="modalPedidos" class="modal">
+
+    <h3>Selecione o pedido para aplicar o restante</h3>
+
+    <table border="1" width="100%">
+      <thead>
+        <tr>
+          <th>Pedido</th>
+          <th>Total</th>
+          <th>Saldo</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+
+      <tbody id="listaPedidos"></tbody>
+    </table>
+
+    <br>
+    <button onclick="fecharModal()">Fechar</button>
+
+  </div> -->
+
+  <div id="modalPedidos" class="modal">
+
+    <h3>📋 Selecione o pedido para aplicar valor restante</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Pedido</th>
+          <th>Total</th>
+          <th>Saldo</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+
+      <tbody id="listaPedidos"></tbody>
+    </table>
+
+    <button class="btn-fechar" onclick="fecharModal()">
+      Fechar
+    </button>
+
+  </div>
+
+  <!-- ================= SCRIPT ================= -->
+
+  <script>
+
+    let valorRestanteGlobal = 0;
+
+    /* ==============================
+       CONFIRMAR BAIXA
+    ================================ */
+    function confirmarBaixa() {
+
+      const contaId =
+        document.getElementById("contaId").value;
+
+      const cliente =
+        document.getElementById("cliente").value;
+
+      const formData = new FormData();
+
+      formData.append(
+        "valor",
+        document.getElementById("valor").value
+      );
+
+      formData.append(
+        "data",
+        document.getElementById("data").value
+      );
+
+      formData.append(
+        "formaPagamento",
+        document.getElementById("forma").value
+      );
+
+      const anexo =
+        document.getElementById("anexo").files[0];
+
+      if (anexo) {
+        formData.append("anexo", anexo);
+      }
+
+      fetch(`/financeiro/api/baixar/${contaId}`, {
+        method: 'POST',
+        body: formData
+      })
+        .then(r => r.json())
+        .then(restante => {
+
+          console.log("RESTANTE =", restante);
+
+          if (restante > 0) {
+
+            valorRestanteGlobal = restante;
+
+            buscarPedidosAbertos(cliente);
+
+          } else {
+            alert("Baixa realizada!");
+            location.reload();
+          }
+        })
+        .catch(e => {
+          console.error(e);
+          alert("Erro ao realizar baixa");
+        });
+    }
+
+    function moeda(valor) {
+      return Number(valor)
+        .toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL'
+        });
+    }
+
+    /* ==============================
+       BUSCAR PEDIDOS ABERTOS
+    ================================ */
+    // function buscarPedidosAbertos(cliente) {
+
+    //   fetch(`/financeiro/api/pedidos-abertos?cliente=${cliente}`)
+    //     .then(r => r.json())
+    //     .then(lista => {
+
+    //       let html = "";
+
+    //       lista.forEach(p => {
+
+    //         let saldo =
+    //           Number(p.valorOriginal)
+    //           - Number(p.valorPago);
+
+    //         html += `
+    //         <tr>
+    //             <td>${p.id}</td>
+    //             <td>${p.valorOriginal}</td>
+    //             <td>${saldo.toFixed(2)}</td>
+    //             <td>
+    //                 <button onclick="aplicarBaixa(${p.id})">
+    //                     Selecionar
+    //                 </button>
+    //             </td>
+    //         </tr>`;
+    //       });
+
+    //       document
+    //         .getElementById("listaPedidos")
+    //         .innerHTML = html;
+
+    //       abrirModal();
+    //     });
+    // }
+
+    function buscarPedidosAbertos(cliente) {
+
+      const contaAtual =
+        document.getElementById("contaId").value;
+
+      fetch(`/financeiro/api/pedidos-abertos?cliente=${cliente}`)
+        .then(r => r.json())
+        .then(lista => {
+
+          let html = "";
+
+          lista
+            .filter(p => p.id != contaAtual)
+            .forEach(p => {
+
+              let saldo =
+                Number(p.valorOriginal)
+                - Number(p.valorPago);
+
+              html += `
+        <tr>
+            <td>${p.id}</td>
+            <td>${moeda(p.valorOriginal)}</td>
+<td>${moeda(saldo)}</td>
+            <td>
+                <button class="btn-selecionar"
+        onclick="aplicarBaixa(${p.id}, ${saldo})">
+   Selecionar
+</button>
+            </td>
+        </tr>`;
+            });
+
+          document
+            .getElementById("listaPedidos")
+            .innerHTML = html;
+
+          abrirModal();
+        });
+    }
+
+    /* ==============================
+       MODAL
+    ================================ */
+    function abrirModal() {
+      document
+        .getElementById("modalPedidos")
+        .style.display = "block";
+    }
+
+    function fecharModal() {
+      document
+        .getElementById("modalPedidos")
+        .style.display = "none";
+    }
+
+    /* ==============================
+       APLICAR RESTANTE
+    ================================ */
+    // function aplicarBaixa(contaId) {
+
+    //   fetch(`/financeiro/api/baixar-restante`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type':
+    //         'application/x-www-form-urlencoded'
+    //     },
+    //     body:
+    //       `contaId=${contaId}&valor=${valorRestanteGlobal}`
+    //   })
+    //     .then(() => {
+    //       alert("Baixa aplicada com sucesso!");
+    //       fecharModal();
+    //       location.reload();
+    //     });
+    // }
+
+    function aplicarBaixa(contaId, saldoPedido) {
+
+      let valorAplicar =
+        Math.min(valorRestanteGlobal, saldoPedido);
+
+      fetch(`/financeiro/api/baixar-restante`, {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'application/x-www-form-urlencoded'
+        },
+        body:
+          `contaId=${contaId}&valor=${valorAplicar}`
+      })
+        .then(() => {
+
+          valorRestanteGlobal -= valorAplicar;
+
+          if (valorRestanteGlobal > 0) {
+            buscarPedidosAbertos(
+              document.getElementById("cliente").value
+            );
+          } else {
+            alert("Baixa concluída!");
+            fecharModal();
+            location.reload();
+          }
+        });
+    }
+
+    function abrirModal() {
+      document.getElementById("overlay").style.display = "block";
+      document.getElementById("modalPedidos").style.display = "block";
+    }
+
+    function fecharModal() {
+      document.getElementById("overlay").style.display = "none";
+      document.getElementById("modalPedidos").style.display = "none";
+    }
+
   </script>
 
 </body>

@@ -25,6 +25,35 @@ public interface ContaReceberRepository extends JpaRepository<ContaReceber, Long
             """)
     List<String> listarClientes();
 
+    // NOVA QUERY E METODO DE BUSCAR CONTAS ABERTAS
+    @Query("""
+                SELECT c
+                FROM ContaReceber c
+                WHERE c.clienteNome = :cliente
+                AND c.saldoDevedor > 0
+                ORDER BY c.dataCriacao ASC
+            """)
+    List<ContaReceber> buscarContasAbertasCliente(
+            @Param("cliente") String cliente);
+
+    ///////////////////////////////////////////
+    ///
+    ///
+
+    // SOMENTE CONTAS COM SALDO PENDENTE
+    @Query("""
+            SELECT c
+            FROM ContaReceber c
+            WHERE LOWER(c.clienteNome)
+            LIKE LOWER(CONCAT('%', :cliente, '%'))
+            AND (c.valorOriginal - c.valorPago) > 0
+            ORDER BY c.dataCriacao
+            """)
+    List<ContaReceber> buscarEmAbertoPorCliente(
+            @Param("cliente") String cliente);
+
+    //////////////////
+
     List<ContaReceber> findByClienteNomeIgnoreCase(String clienteNome);
 
     @Query("SELECT c FROM ContaReceber c LEFT JOIN FETCH c.pagamentos")

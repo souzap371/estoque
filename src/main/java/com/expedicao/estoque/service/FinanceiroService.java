@@ -132,23 +132,76 @@ public class FinanceiroService {
     // =========================
     // DAR BAIXA
     // =========================
+    // @Transactional
+    // public void darBaixa(Long id,
+    // BigDecimal valor,
+    // LocalDate data,
+    // FormaPagamento formaPagamento,
+    // MultipartFile anexo) {
+
+    // ContaReceber conta = contaReceberRepository.findById(id)
+    // .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
+
+    // validarValor(valor, conta);
+
+    // Pagamento pagamento = new Pagamento();
+    // pagamento.setContaReceber(conta);
+    // pagamento.setValorPago(valor);
+    // pagamento.setDataPagamento(data);
+    // pagamento.setFormaPagamento(formaPagamento);
+
+    // if (anexo != null && !anexo.isEmpty()) {
+    // processarAnexo(anexo, pagamento);
+    // }
+
+    // pagamentoRepository.save(pagamento);
+
+    // // Atualiza saldo
+    // conta.setValorPago(conta.getValorPago().add(valor));
+    // conta.setSaldoDevedor(conta.getValorOriginal().subtract(conta.getValorPago()));
+
+    // if (conta.getSaldoDevedor().compareTo(BigDecimal.ZERO) < 0) {
+    // conta.setSaldoDevedor(BigDecimal.ZERO);
+    // }
+
+    // contaReceberRepository.save(conta);
+    // }
+
     @Transactional
-    public void darBaixa(Long id,
+    public BigDecimal darBaixa(
+            Long id,
             BigDecimal valor,
             LocalDate data,
             FormaPagamento formaPagamento,
             MultipartFile anexo) {
 
-        
-
         ContaReceber conta = contaReceberRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
 
-        validarValor(valor, conta);
+        // 🔹 saldo antes da baixa
+        BigDecimal saldoAtual = conta.getSaldoDevedor();
 
+        BigDecimal valorAplicado;
+        BigDecimal restante = BigDecimal.ZERO;
+
+        // ✅ verifica se pagou além do saldo
+        if (valor.compareTo(saldoAtual) > 0) {
+
+            valorAplicado = saldoAtual;
+            restante = valor.subtract(saldoAtual);
+
+        } else {
+            valorAplicado = valor;
+        }
+
+        validarValor(valorAplicado, conta);
+
+        // ==========================
+        // 💰 REGISTRA PAGAMENTO
+        // ==========================
         Pagamento pagamento = new Pagamento();
         pagamento.setContaReceber(conta);
-        pagamento.setValorPago(valor);
+        pagamento.setValorPago(valorAplicado);
         pagamento.setDataPagamento(data);
         pagamento.setFormaPagamento(formaPagamento);
 
@@ -158,15 +211,114 @@ public class FinanceiroService {
 
         pagamentoRepository.save(pagamento);
 
-        // Atualiza saldo
-        conta.setValorPago(conta.getValorPago().add(valor));
-        conta.setSaldoDevedor(conta.getValorOriginal().subtract(conta.getValorPago()));
+        // ==========================
+        // 🔄 ATUALIZA CONTA
+        // ==========================
+        conta.setValorPago(
+                conta.getValorPago().add(valorAplicado));
 
-        if (conta.getSaldoDevedor().compareTo(BigDecimal.ZERO) < 0) {
+        conta.setSaldoDevedor(
+                conta.getValorOriginal()
+                        .subtract(conta.getValorPago()));
+
+        if (conta.getSaldoDevedor()
+                .compareTo(BigDecimal.ZERO) < 0) {
+
             conta.setSaldoDevedor(BigDecimal.ZERO);
         }
 
         contaReceberRepository.save(conta);
+
+        // ✅ RETORNA VALOR QUE SOBROU
+        return restante;
+    }
+
+    // @Transactional
+    // public void baixarConta(Long contaId, BigDecimal valor) {
+
+    // ContaReceber conta = contaReceberRepository
+    // .findById(contaId)
+    // .orElseThrow();
+
+    // conta.setValorPago(
+    // conta.getValorPago().add(valor));
+
+    // conta.setSaldoDevedor(
+    // conta.getValorOriginal()
+    // .subtract(conta.getValorPago()));
+
+    // if (conta.getSaldoDevedor()
+    // .compareTo(BigDecimal.ZERO) < 0) {
+    // conta.setSaldoDevedor(BigDecimal.ZERO);
+    // }
+
+    // contaReceberRepository.save(conta);
+    // }
+
+    @Transactional
+    public void baixarConta(Long contaId, BigDecimal valor) {
+
+        ContaReceber conta = contaReceberRepository
+                .findById(contaId)
+                .orElseThrow();
+
+        conta.setValorPago(
+                conta.getValorPago().add(valor));
+
+        conta.setSaldoDevedor(
+                conta.getValorOriginal()
+                        .subtract(conta.getValorPago()));
+
+        if (conta.getSaldoDevedor()
+                .compareTo(BigDecimal.ZERO) < 0) {
+            conta.setSaldoDevedor(BigDecimal.ZERO);
+        }
+
+        contaReceberRepository.save(conta);
+    }
+
+    @Transactional
+    public BigDecimal darBaixaDistribuida(
+            Long contaId,
+            BigDecimal valor,
+            LocalDate data,
+            FormaPagamento forma,
+            MultipartFile anexo) {
+
+        ContaReceber contaInicial = contaReceberRepository.findById(contaId)
+                .orElseThrow();
+
+        String cliente = contaInicial.getClienteNome();
+
+        List<ContaReceber> contas = contaReceberRepository
+                .buscarContasAbertasCliente(cliente);
+
+        BigDecimal restante = valor;
+
+        for (ContaReceber conta : contas) {
+
+            if (restante.compareTo(BigDecimal.ZERO) <= 0)
+                break;
+
+            BigDecimal saldo = conta.getSaldoDevedor();
+
+            BigDecimal valorAplicado = restante.min(saldo);
+
+            Pagamento pagamento = new Pagamento();
+            pagamento.setContaReceber(conta);
+            pagamento.setValorPago(valorAplicado);
+            pagamento.setDataPagamento(data);
+            pagamento.setFormaPagamento(forma);
+
+            pagamentoRepository.save(pagamento);
+
+            conta.registrarPagamento(valorAplicado);
+            contaReceberRepository.save(conta);
+
+            restante = restante.subtract(valorAplicado);
+        }
+
+        return restante;
     }
 
     ////////

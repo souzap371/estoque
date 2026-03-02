@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.expedicao.estoque.dto.ContaReceberDTO;
+import com.expedicao.estoque.model.ContaReceber;
 import com.expedicao.estoque.model.FormaPagamento;
 import com.expedicao.estoque.model.Pagamento;
+import com.expedicao.estoque.repositorie.ContaReceberRepository;
 import com.expedicao.estoque.service.FinanceiroService;
 
 @Controller
@@ -24,9 +27,12 @@ import com.expedicao.estoque.service.FinanceiroService;
 public class FinanceiroController {
 
     private final FinanceiroService financeiroService;
+    @Autowired
+    private ContaReceberRepository contaReceberRepository;
 
-    public FinanceiroController(FinanceiroService financeiroService) {
+    public FinanceiroController(FinanceiroService financeiroService, ContaReceberRepository contaReceberRepository) {
         this.financeiroService = financeiroService;
+        this.contaReceberRepository = contaReceberRepository;
     }
 
     // =========================
@@ -43,12 +49,25 @@ public class FinanceiroController {
         return "relatorio-financeiro";
     }
 
+    // @GetMapping("/baixar/{id}")
+    // public String telaDarBaixa(@PathVariable Long id, Model model) {
+    // model.addAttribute("contaId", id);
+    // return "baixa";
+    // }
+
     @GetMapping("/baixar/{id}")
-    public String telaDarBaixa(@PathVariable Long id, Model model) {
+    public String telaDarBaixa(
+            @PathVariable Long id,
+            Model model) {
+
+        ContaReceber conta = contaReceberRepository.findById(id).get();
+
         model.addAttribute("contaId", id);
+        model.addAttribute("cliente",
+                conta.getClienteNome());
+
         return "baixa";
     }
-
     // =========================
     // API RELATÓRIO (USADA PELO HTML NOVO)
     // =========================
@@ -94,7 +113,7 @@ public class FinanceiroController {
 
     @PostMapping("/api/baixar/{id}")
     @ResponseBody
-    public ResponseEntity<Void> darBaixa(
+    public ResponseEntity<BigDecimal> darBaixa(
             @PathVariable Long id,
             @RequestParam BigDecimal valor,
             // @RequestParam String data,
@@ -102,8 +121,35 @@ public class FinanceiroController {
             @RequestParam FormaPagamento formaPagamento,
             @RequestParam(required = false) MultipartFile anexo) {
 
-        financeiroService.darBaixa(id, valor, data, formaPagamento, anexo);
+        // financeiroService.darBaixa(id, valor, data, formaPagamento, anexo);
+        BigDecimal restante = financeiroService.darBaixa(
+                id, valor, data, formaPagamento, anexo);
+
+        // return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok(restante);
+    }
+
+    @PostMapping("/api/baixar-restante")
+    @ResponseBody
+    public ResponseEntity<Void> baixarRestante(
+            @RequestParam Long contaId,
+            @RequestParam BigDecimal valor) {
+
+        financeiroService.baixarConta(contaId, valor);
+
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/api/pedidos-abertos")
+    @ResponseBody
+    public List<ContaReceber> pedidosEmAberto(
+            @RequestParam String cliente) {
+
+        System.out.println("CLIENTE RECEBIDO: " + cliente);
+
+        return contaReceberRepository
+                .buscarEmAbertoPorCliente(cliente);
     }
 
     // =========================

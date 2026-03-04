@@ -49,12 +49,6 @@ public class FinanceiroController {
         return "relatorio-financeiro";
     }
 
-    // @GetMapping("/baixar/{id}")
-    // public String telaDarBaixa(@PathVariable Long id, Model model) {
-    // model.addAttribute("contaId", id);
-    // return "baixa";
-    // }
-
     @GetMapping("/baixar/{id}")
     public String telaDarBaixa(
             @PathVariable Long id,

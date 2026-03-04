@@ -132,41 +132,6 @@ public class FinanceiroService {
     // =========================
     // DAR BAIXA
     // =========================
-    // @Transactional
-    // public void darBaixa(Long id,
-    // BigDecimal valor,
-    // LocalDate data,
-    // FormaPagamento formaPagamento,
-    // MultipartFile anexo) {
-
-    // ContaReceber conta = contaReceberRepository.findById(id)
-    // .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
-
-    // validarValor(valor, conta);
-
-    // Pagamento pagamento = new Pagamento();
-    // pagamento.setContaReceber(conta);
-    // pagamento.setValorPago(valor);
-    // pagamento.setDataPagamento(data);
-    // pagamento.setFormaPagamento(formaPagamento);
-
-    // if (anexo != null && !anexo.isEmpty()) {
-    // processarAnexo(anexo, pagamento);
-    // }
-
-    // pagamentoRepository.save(pagamento);
-
-    // // Atualiza saldo
-    // conta.setValorPago(conta.getValorPago().add(valor));
-    // conta.setSaldoDevedor(conta.getValorOriginal().subtract(conta.getValorPago()));
-
-    // if (conta.getSaldoDevedor().compareTo(BigDecimal.ZERO) < 0) {
-    // conta.setSaldoDevedor(BigDecimal.ZERO);
-    // }
-
-    // contaReceberRepository.save(conta);
-    // }
-
     @Transactional
     public BigDecimal darBaixa(
             Long id,
@@ -233,28 +198,6 @@ public class FinanceiroService {
         return restante;
     }
 
-    // @Transactional
-    // public void baixarConta(Long contaId, BigDecimal valor) {
-
-    // ContaReceber conta = contaReceberRepository
-    // .findById(contaId)
-    // .orElseThrow();
-
-    // conta.setValorPago(
-    // conta.getValorPago().add(valor));
-
-    // conta.setSaldoDevedor(
-    // conta.getValorOriginal()
-    // .subtract(conta.getValorPago()));
-
-    // if (conta.getSaldoDevedor()
-    // .compareTo(BigDecimal.ZERO) < 0) {
-    // conta.setSaldoDevedor(BigDecimal.ZERO);
-    // }
-
-    // contaReceberRepository.save(conta);
-    // }
-
     @Transactional
     public void baixarConta(Long contaId, BigDecimal valor) {
 
@@ -320,13 +263,6 @@ public class FinanceiroService {
 
         return restante;
     }
-
-    ////////
-    ///
-    ///
-    ///
-    ///
-    ///
 
     @Transactional
     public List<ContaReceberDTO> filtrar(String cliente, String status) {

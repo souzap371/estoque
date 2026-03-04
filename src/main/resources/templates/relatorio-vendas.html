@@ -187,11 +187,6 @@
                     <td th:text="${item.produto.nome}"></td>
                     <td th:text="${item.quantidade}"></td>
 
-                    <!-- <td th:text="${#numbers.formatDecimal(item.valorPorCaixa, 1, 2)}"></td>
-
-                   
-                    <td th:text="${#numbers.formatDecimal(item.subtotal, 1, 2)}"></td> -->
-
 
                     <td th:text="${#numbers.formatCurrency(item.valorPorCaixa)}"></td>
                     <td th:text="${#numbers.formatCurrency(item.subtotal)}"></td>

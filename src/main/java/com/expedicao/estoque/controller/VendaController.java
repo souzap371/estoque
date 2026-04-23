@@ -1,5 +1,6 @@
 package com.expedicao.estoque.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class VendaController {
     // =============================
     @GetMapping
     public String novaVenda(Model model) {
-        prepararTela(model, null, "", "", List.of());
+        prepararTela(model, null, "", "", List.of(), null);
         return "Venda";
     }
 
@@ -55,7 +56,9 @@ public class VendaController {
                 venda.getId(),
                 venda.getClienteNome(),
                 venda.getClienteEstado(),
-                itens);
+                itens,
+                venda.getDataSaida() // 🔥 AQUI
+        );
 
         return "Venda";
     }
@@ -96,12 +99,14 @@ public class VendaController {
             Long vendaId,
             String clienteNome,
             String clienteEstado,
-            List<VendaItemEdicaoDTO> itens) {
+            List<VendaItemEdicaoDTO> itens,
+            LocalDate dataPedido) {
 
         model.addAttribute("vendaId", vendaId);
         model.addAttribute("clienteNomeEdicao", clienteNome);
         model.addAttribute("clienteEstadoEdicao", clienteEstado);
         model.addAttribute("itensEdicao", itens);
+        model.addAttribute("dataPedidoEdicao", dataPedido); // 🔥 NOVO
         model.addAttribute("produtos", produtoRepository.findAll());
     }
 }

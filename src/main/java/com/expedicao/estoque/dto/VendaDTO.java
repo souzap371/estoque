@@ -1,6 +1,9 @@
 package com.expedicao.estoque.dto;
 
+import java.time.LocalDate;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class VendaDTO {
 
@@ -10,6 +13,8 @@ public class VendaDTO {
     private String clienteEstado;
     private List<VendaItemDTO> itens;
     private Boolean comNotaFiscal;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataPedido;
 
     public Long getId() {
         return id;
@@ -49,5 +54,13 @@ public class VendaDTO {
 
     public void setComNotaFiscal(Boolean comNotaFiscal) {
         this.comNotaFiscal = comNotaFiscal;
+    }
+
+    public LocalDate getDataPedido() {
+        return dataPedido;
+    }
+
+    public void setDataPedido(LocalDate dataPedido) {
+        this.dataPedido = dataPedido;
     }
 }

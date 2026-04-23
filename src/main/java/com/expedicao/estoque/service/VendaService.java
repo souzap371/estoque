@@ -52,9 +52,14 @@ public class VendaService {
 
         } else {
             venda = new Venda();
-            venda.setDataSaida(LocalDate.now());
         }
 
+        // 🔥 AQUI É O PONTO PRINCIPAL
+        if (dto.getDataPedido() != null) {
+            venda.setDataSaida(dto.getDataPedido());
+        } else {
+            venda.setDataSaida(LocalDate.now());
+        }
         venda.setClienteNome(dto.getClienteNome());
         venda.setClienteEstado(dto.getClienteEstado());
         venda.setComNotaFiscal(dto.getComNotaFiscal());

@@ -132,6 +132,11 @@
                         th:value="${uf}" th:text="${uf}" th:selected="${uf == clienteEstadoEdicao}">
                     </option>
                 </select>
+                <!-- <input type="date" id="dataPedido"> -->
+            </div>
+            <div>
+                <label>Data do Pedido</label>
+                <input type="date" id="dataPedido" th:value="${#temporals.format(dataPedidoEdicao, 'yyyy-MM-dd')}">
             </div>
             <div>
                 <label>Nota Fiscal</label>
@@ -364,11 +369,14 @@
             const comNotaFiscal =
                 document.querySelector("input[name='notaFiscal']:checked").value === "true";
 
+            const dataPedido = document.getElementById("dataPedido");
+
             const payload = {
                 id: vendaId,
                 clienteNome: clienteNome.value,
                 clienteEstado: clienteEstado.value,
                 comNotaFiscal: comNotaFiscal,
+                dataPedido: dataPedido.value,
                 itens: itens
             };
 

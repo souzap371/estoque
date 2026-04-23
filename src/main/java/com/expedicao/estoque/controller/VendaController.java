@@ -57,7 +57,7 @@ public class VendaController {
                 venda.getClienteNome(),
                 venda.getClienteEstado(),
                 itens,
-                venda.getDataSaida() // 🔥 AQUI
+                venda.getDataSaida()
         );
 
         return "Venda";

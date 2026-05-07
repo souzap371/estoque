@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Contas a Pagar</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 95%;
+            margin: 30px auto;
+        }
+
+        h1 {
+            color: #1e88e5;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 6px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .card h2 {
+            color: #1e88e5;
+            margin-top: 0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #1e88e5;
+        }
+
+        .btn-primary:hover {
+            background: #1565c0;
+        }
+
+        .btn-success {
+            background: #2e7d32;
+        }
+
+        .btn-success:hover {
+            background: #1b5e20;
+        }
+
+        .btn-warning {
+            background: #f9a825;
+        }
+
+        .btn-warning:hover {
+            background: #f57f17;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background: #1e88e5;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .status-pago {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .status-pendente {
+            color: #ef6c00;
+            font-weight: bold;
+        }
+
+        .status-atrasado {
+            color: #c62828;
+            font-weight: bold;
+        }
+
+        .status-parcial {
+            color: #f9a825;
+            font-weight: bold;
+        }
+
+        .pagamento-form {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+
+        .pagamento-form input {
+            width: 90px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📤 Contas a Pagar</h1>
+
+        <a href="/dashboard" class="btn btn-primary">
+            ⬅ Voltar Dashboard
+        </a>
+
+        <br><br>
+
+        <!-- FORMULÁRIO -->
+
+        <div class="card">
+
+            <h2>
+                <span th:if="${conta.id == null}">
+                    ➕ Nova Conta
+                </span>
+
+                <span th:if="${conta.id != null}">
+                    ✏ Editar Conta
+                </span>
+            </h2>
+
+            <form th:action="@{/contas-pagar/salvar}" th:object="${conta}" method="post">
+
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>Descrição</label>
+
+                        <input type="text" th:field="*{descricao}" required>
+
+                    </div>
+                    <!-- 
+                <div class="form-group">
+
+                    <label>Fornecedor</label>
+
+                    <select th:field="*{fornecedor}"
+                            required>
+
+                        <option value="">
+                            Selecione
+                        </option>
+
+                        <option th:each="fornecedor : ${fornecedores}"
+                                th:value="${fornecedor.id}"
+                                th:text="${fornecedor.razaoSocial}">
+                        </option>
+
+                    </select>
+
+                </div> -->
+
+                    <div class="form-group">
+
+                        <label>Fornecedor</label>
+
+                        <input type="text" name="razaoSocialFornecedor" placeholder="Razão Social" required>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>CNPJ</label>
+
+                        <input type="text" name="cnpjFornecedor" placeholder="00.000.000/0000-00">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Telefone</label>
+
+                        <input type="text" name="telefoneFornecedor" placeholder="(00) 00000-0000">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Email</label>
+
+                        <input type="email" name="emailFornecedor" placeholder="email@empresa.com">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Valor</label>
+
+                        <input type="number" step="0.01" th:field="*{valor}" required>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Data Vencimento</label>
+
+                        <input type="date" th:field="*{dataVencimento}" required>
+
+                    </div>
+
+                </div>
+
+                <br>
+
+                <div class="form-group">
+
+                    <label>Observação</label>
+
+                    <textarea th:field="*{observacao}"></textarea>
+
+                </div>
+
+                <br>
+
+                <button type="submit" class="btn btn-success">
+
+                    💾 Salvar Conta
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+       
+
+    <!-- <script>
+
+        const pesquisa =
+            document.getElementById('pesquisa');
+
+        pesquisa.addEventListener('keyup', function () {
+
+            let termo =
+                pesquisa.value.toLowerCase();
+
+            let linhas =
+                document.querySelectorAll('#tabelaContas tbody tr');
+
+            linhas.forEach(function (linha) {
+
+                let textoLinha =
+                    linha.innerText.toLowerCase();
+
+                linha.style.display =
+                    textoLinha.includes(termo)
+                        ? ''
+                        : 'none';
+
+            });
+
+        });
+
+    </script> -->
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const pesquisa =
+                document.getElementById('pesquisa');
+
+            const linhas =
+                document.querySelectorAll('#tabelaContas tbody tr');
+
+            pesquisa.addEventListener('input', function () {
+
+                let termo =
+                    pesquisa.value.toLowerCase().trim();
+
+                linhas.forEach(function (linha) {
+
+                    let textoLinha =
+                        linha.textContent.toLowerCase();
+
+                    if (textoLinha.includes(termo)) {
+
+                        linha.style.display = '';
+
+                    } else {
+
+                        linha.style.display = 'none';
+
+                    }
+
+                });
+
+            });
+
+        });
+
+    </script>
+
+</body>
+
+</html>

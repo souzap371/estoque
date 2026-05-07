@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Contas a Pagar</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 95%;
+            margin: 30px auto;
+        }
+
+        h1 {
+            color: #1e88e5;
+            margin-bottom: 20px;
+        }
+
+        .top-actions {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #1e88e5;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #1565c0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: #1e88e5;
+            color: white;
+            padding: 14px;
+            text-align: center;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .status-pago {
+            color: #2e7d32;
+            font-weight: bold;
+        }
+
+        .status-pendente {
+            color: #ef6c00;
+            font-weight: bold;
+        }
+
+        .status-atrasado {
+            color: #c62828;
+            font-weight: bold;
+        }
+
+        .status-parcial {
+            color: #f9a825;
+            font-weight: bold;
+        }
+
+        .pagamento-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .pagamento-form input {
+            width: 90px;
+            padding: 5px;
+        }
+
+        .sem-registros {
+            padding: 20px;
+            text-align: center;
+            color: #777;
+        }
+
+        .voltar {
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📤 Contas a Pagar</h1>
+
+        <div class="top-actions">
+
+            <a href="/contas-pagar/nova" class="btn">
+                ➕ Nova Conta
+            </a>
+
+            <a href="/dashboard" class="btn">
+                ⬅ Voltar Dashboard
+            </a>
+
+        </div>
+
+        <table>
+
+            <!-- <thead>
+
+        <tr>
+            <th>ID</th>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Saldo</th>
+            <th>Status</th>
+            <th>Vencimento</th>
+            <th>Pagamento</th>
+        </tr>
+
+        </thead> -->
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th>Valor Pago</th>
+                    <th>Saldo</th>
+                    <th>Status</th>
+                    <th>Vencimento</th>
+                    <th>Data Pagamento</th>
+                    <th>Pagamento</th>
+                    <th>Ações</th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+
+                <tr th:if="${#lists.isEmpty(contas)}">
+                    <td colspan="7" class="sem-registros">
+                        Nenhuma conta cadastrada.
+                    </td>
+                </tr>
+
+                <tr th:each="conta : ${contas}">
+
+                    <!-- ID -->
+                    <td th:text="${conta.id}"></td>
+
+                    <!-- DESCRIÇÃO -->
+                    <td th:text="${conta.descricao}"></td>
+
+                    <!-- VALOR -->
+                    <td>
+                        R$
+                        <span th:text="${conta.valor}"></span>
+                    </td>
+
+                    <!-- VALOR PAGO -->
+                    <td>
+                        R$
+                        <span th:text="${conta.valorPago}"></span>
+                    </td>
+
+                    <!-- SALDO -->
+                    <td>
+                        R$
+                        <span th:text="${conta.saldoDevedor}"></span>
+                    </td>
+
+                    <!-- STATUS -->
+                    <td>
+
+                        <span th:if="${conta.status.name() == 'PAGO'}" class="status-pago">
+                            ✅ PAGO
+                        </span>
+
+                        <span th:if="${conta.status.name() == 'PENDENTE'}" class="status-pendente">
+                            ⏳ PENDENTE
+                        </span>
+
+                        <span th:if="${conta.status.name() == 'ATRASADO'}" class="status-atrasado">
+                            ❌ ATRASADO
+                        </span>
+
+                        <span th:if="${conta.status.name() == 'PARCIAL'}" class="status-parcial">
+                            ⚠ PARCIAL
+                        </span>
+
+                    </td>
+
+                    <!-- VENCIMENTO -->
+                    <td th:text="${conta.dataVencimento}"></td>
+
+                    <!-- DATA PAGAMENTO -->
+                    <td>
+
+                        <span th:if="${conta.dataPagamento != null}" th:text="${conta.dataPagamento}">
+                        </span>
+
+                        <span th:if="${conta.dataPagamento == null}">
+                            -
+                        </span>
+
+                    </td>
+
+                    <!-- PAGAMENTO -->
+                    <td>
+
+                        <form th:if="${conta.status.name() != 'PAGO'}"
+                            th:action="@{/contas-pagar/{id}/pagar(id=${conta.id})}" method="post"
+                            class="pagamento-form">
+
+                            <input type="number" step="0.01" name="valorPagamento" placeholder="Valor">
+
+                            <button type="submit" class="btn">
+                                Pagar
+                            </button>
+
+                        </form>
+
+                        <span th:if="${conta.status.name() == 'PAGO'}" class="status-pago">
+                            QUITADO
+                        </span>
+
+                    </td>
+
+                    <!-- AÇÕES -->
+                    <td>
+
+                        <a th:href="@{/contas-pagar/editar/{id}(id=${conta.id})}" class="btn"
+                            style="background:#f9a825;">
+
+                            ✏ Editar
+
+                        </a>
+
+                    </td>
+
+                </tr> -->
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</body>
+
+</html>

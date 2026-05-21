@@ -122,6 +122,20 @@
 
         <div class="top-actions">
 
+            <!-- MENSAGEM ERRO -->
+            <div th:if="${erro}" style="
+        background:#ffebee;
+        color:#c62828;
+        padding:12px;
+        margin-bottom:15px;
+        border-radius:5px;
+        font-weight:bold;
+     ">
+
+                <span th:text="${erro}"></span>
+
+            </div>
+
             <a href="/contas-pagar/nova" class="btn">
                 ➕ Nova Conta
             </a>
@@ -133,20 +147,6 @@
         </div>
 
         <table>
-
-            <!-- <thead>
-
-        <tr>
-            <th>ID</th>
-            <th>Descrição</th>
-            <th>Valor</th>
-            <th>Saldo</th>
-            <th>Status</th>
-            <th>Vencimento</th>
-            <th>Pagamento</th>
-        </tr>
-
-        </thead> -->
 
             <thead>
 
@@ -161,6 +161,7 @@
                     <th>Vencimento</th>
                     <th>Data Pagamento</th>
                     <th>Pagamento</th>
+                    <th>Histórico</th>
                     <th>Ações</th>
 
                 </tr>
@@ -174,108 +175,360 @@
                     </td>
                 </tr>
 
-                <tr th:each="conta : ${contas}">
+                <th:block th:each="conta : ${contas}">
+                    <tr>
 
-                    <!-- ID -->
-                    <td th:text="${conta.id}"></td>
+                        <!-- ID -->
+                        <td th:text="${conta.id}"></td>
 
-                    <!-- DESCRIÇÃO -->
-                    <td th:text="${conta.descricao}"></td>
+                        <!-- DESCRIÇÃO -->
+                        <td>
 
-                    <!-- VALOR -->
-                    <td>
-                        R$
-                        <span th:text="${conta.valor}"></span>
-                    </td>
+                            <input type="text" name="descricao" th:value="${conta.descricao}" class="editavel" disabled
+                                style="width:180px;">
 
-                    <!-- VALOR PAGO -->
-                    <td>
-                        R$
-                        <span th:text="${conta.valorPago}"></span>
-                    </td>
+                        </td>
+                        <!-- VALOR -->
+                        <td>
 
-                    <!-- SALDO -->
-                    <td>
-                        R$
-                        <span th:text="${conta.saldoDevedor}"></span>
-                    </td>
+                            <span class="valor-texto">
 
-                    <!-- STATUS -->
-                    <td>
+                                R$:
+                                <span th:text="${#numbers.formatDecimal(conta.valor,1,'POINT',2,'COMMA')}"></span>
 
-                        <span th:if="${conta.status.name() == 'PAGO'}" class="status-pago">
-                            ✅ PAGO
-                        </span>
+                            </span>
 
-                        <span th:if="${conta.status.name() == 'PENDENTE'}" class="status-pendente">
-                            ⏳ PENDENTE
-                        </span>
+                            <input type="number" step="0.01" name="valor" th:value="${conta.valor}" class="editavel"
+                                disabled style="display:none; width:100px;">
 
-                        <span th:if="${conta.status.name() == 'ATRASADO'}" class="status-atrasado">
-                            ❌ ATRASADO
-                        </span>
+                        </td>
 
-                        <span th:if="${conta.status.name() == 'PARCIAL'}" class="status-parcial">
-                            ⚠ PARCIAL
-                        </span>
+                        <!-- VALOR PAGO -->
+                        <td>
 
-                    </td>
+                            <span class="valor-pago-texto">
 
-                    <!-- VENCIMENTO -->
-                    <td th:text="${conta.dataVencimento}"></td>
+                                R$:
+                                <span th:text="${#numbers.formatDecimal(conta.valorPago,1,'POINT',2,'COMMA')}"></span>
 
-                    <!-- DATA PAGAMENTO -->
-                    <td>
+                            </span>
 
-                        <span th:if="${conta.dataPagamento != null}" th:text="${conta.dataPagamento}">
-                        </span>
+                            <input type="number" step="0.01" name="valorPago" th:value="${conta.valorPago}"
+                                class="editavel" disabled style="display:none; width:100px;">
 
-                        <span th:if="${conta.dataPagamento == null}">
-                            -
-                        </span>
+                        </td>
 
-                    </td>
+                        <!-- SALDO -->
+                        <td>
 
-                    <!-- PAGAMENTO -->
-                    <td>
+                            R$:
+                            <span th:text="${#numbers.formatDecimal(conta.saldoDevedor,1,'POINT',2,'COMMA')}"></span>
 
-                        <form th:if="${conta.status.name() != 'PAGO'}"
-                            th:action="@{/contas-pagar/{id}/pagar(id=${conta.id})}" method="post"
-                            class="pagamento-form">
+                        </td>
 
-                            <input type="number" step="0.01" name="valorPagamento" placeholder="Valor">
+                        <!-- STATUS -->
+                        <td>
 
-                            <button type="submit" class="btn">
-                                Pagar
+                            <span th:if="${conta.status.name() == 'PAGO'}" class="status-pago">
+
+                                ✅ PAGO
+
+                            </span>
+
+                            <span th:if="${conta.status.name() == 'PENDENTE'}" class="status-pendente">
+
+                                ⏳ PENDENTE
+
+                            </span>
+
+                            <span th:if="${conta.status.name() == 'ATRASADO'}" class="status-atrasado">
+
+                                ❌ ATRASADO
+
+                            </span>
+
+                            <span th:if="${conta.status.name() == 'PARCIAL'}" class="status-parcial">
+
+                                ⚠ PARCIAL
+
+                            </span>
+
+                        </td>
+
+                        <!-- VENCIMENTO -->
+                        <td>
+
+                            <input type="date" name="dataVencimento" th:value="${conta.dataVencimento}" class="editavel"
+                                disabled>
+
+                        </td>
+
+                        <!-- DATA PAGAMENTO -->
+                        <td>
+
+                            <span class="data-pagamento-texto" th:if="${conta.dataPagamento != null}"
+                                th:text="${#temporals.format(conta.dataPagamento, 'dd/MM/yyyy')}">
+                            </span>
+
+                            <span class="data-pagamento-texto" th:if="${conta.dataPagamento == null}">
+                                -
+                            </span>
+
+                            <input type="date" name="dataPagamento" th:value="${conta.dataPagamento}" class="editavel"
+                                disabled style="display:none;">
+
+                        </td>
+                        <!-- PAGAMENTO -->
+                        <td>
+
+                            <form th:if="${conta.status.name() != 'PAGO'}"
+                                th:action="@{/contas-pagar/{id}/pagar(id=${conta.id})}" method="post"
+                                class="pagamento-form">
+
+                                <input type="number" step="0.01" name="valorPagamento" placeholder="Valor">
+
+                                <button type="submit" class="btn">
+
+                                    Pagar
+
+                                </button>
+
+                            </form>
+
+                            <span th:if="${conta.status.name() == 'PAGO'}" class="status-pago">
+
+                                QUITADO
+
+                            </span>
+
+                        </td>
+
+                        <!--HISTORICO-->
+
+                        <td>
+                            <button type="button" class="btn historico-btn" style="background:#5e35b1;">
+
+                                📜 Histórico
+
+                            </button>
+                        </td>
+
+                        <!-- AÇÕES -->
+                        <td style="display:flex; gap:5px;">
+
+                            <!-- EDITAR -->
+                            <button type="button" class="btn btn-editar" style="background:#f9a825;">
+
+                                ✏ Editar
+
                             </button>
 
-                        </form>
+                            <!-- SALVAR -->
+                            <form th:action="@{/contas-pagar/atualizar}" method="post" style="display:inline;">
 
-                        <span th:if="${conta.status.name() == 'PAGO'}" class="status-pago">
-                            QUITADO
-                        </span>
+                                <input type="hidden" name="id" th:value="${conta.id}">
 
-                    </td>
+                                <input type="hidden" class="hidden-descricao" name="descricao">
 
-                    <!-- AÇÕES -->
-                    <td>
+                                <input type="hidden" class="hidden-valor" name="valor">
 
-                        <a th:href="@{/contas-pagar/editar/{id}(id=${conta.id})}" class="btn"
-                            style="background:#f9a825;">
+                                <input type="hidden" class="hidden-data" name="dataVencimento">
 
-                            ✏ Editar
+                                <input type="hidden" class="hidden-valorPago" name="valorPago">
 
-                        </a>
+                                <input type="hidden" class="hidden-dataPagamento" name="dataPagamento">
 
-                    </td>
+                                <button type="submit" class="btn btn-salvar" style="display:none; background:#2e7d32;">
 
-                </tr> -->
+                                    💾 Salvar
+
+                                </button>
+
+                            </form>
+
+                            <!-- CANCELAR -->
+                            <button type="button" class="btn btn-cancelar" style="display:none; background:#616161;">
+
+                                ❌ Cancelar
+
+                            </button>
+
+                            <!-- EXCLUIR -->
+                            <a th:href="@{/contas-pagar/excluir/{id}(id=${conta.id})}" class="btn"
+                                style="background:#c62828;"
+                                onclick="return confirm('Deseja realmente excluir esta conta?')">
+
+                                🗑 Excluir
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    <tr class="historico-linha" style="display:none; background:#fafafa;">
+
+                        <td colspan="11">
+
+                            <div style="padding:15px; text-align:left;">
+
+                                <h3>Histórico de Pagamentos</h3>
+
+                                <table style="width:100%;">
+
+                                    <thead>
+
+                                        <tr>
+
+                                            <th>Data</th>
+                                            <th>Valor</th>
+
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+
+                                        <tr th:if="${#lists.isEmpty(conta.pagamentos)}">
+
+                                            <td colspan="2">
+
+                                                Nenhum pagamento registrado.
+
+                                            </td>
+
+                                        </tr>
+
+                                        <tr th:each="pag : ${conta.pagamentos}">
+
+                                            <td th:text="${#temporals.format(pag.dataPagamento, 'dd/MM/yyyy HH:mm')}">
+                                            </td>
+
+                                            <td>
+
+                                                R$:
+                                                <span
+                                                    th:text="${#numbers.formatDecimal(pag.valorPagamento,1,'POINT',2,'COMMA')}"></span>
+
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                </th:block>
 
             </tbody>
 
         </table>
 
     </div>
+
+    <script>
+
+        document.querySelectorAll(".btn-editar").forEach(btn => {
+
+            btn.addEventListener("click", function () {
+
+                let row = this.closest("tr");
+
+                row.querySelectorAll(".editavel").forEach(campo => {
+
+                    campo.removeAttribute("disabled");
+
+                    campo.style.display = "inline-block";
+
+                    campo.style.background = "#fffde7";
+
+                });
+
+                // esconder textos formatados
+                row.querySelectorAll(".valor-texto").forEach(el => {
+                    el.style.display = "none";
+                });
+
+                row.querySelectorAll(".valor-pago-texto").forEach(el => {
+                    el.style.display = "none";
+                });
+
+                row.querySelectorAll(".data-pagamento-texto").forEach(el => {
+                    el.style.display = "none";
+                });
+
+                row.querySelector(".btn-salvar").style.display = "inline-block";
+
+                row.querySelector(".btn-cancelar").style.display = "inline-block";
+
+                this.style.display = "none";
+
+            });
+
+        });
+
+        document.querySelectorAll(".btn-cancelar").forEach(btn => {
+
+            btn.addEventListener("click", function () {
+
+                location.reload();
+
+            });
+
+        });
+
+        document.querySelectorAll(".btn-salvar").forEach(btn => {
+
+            btn.addEventListener("click", function () {
+
+                let row = this.closest("tr");
+
+                row.querySelector(".hidden-descricao").value =
+                    row.querySelector('input[name="descricao"]').value;
+
+                row.querySelector(".hidden-valor").value =
+                    row.querySelector('input[name="valor"]').value;
+
+                row.querySelector(".hidden-data").value =
+                    row.querySelector('input[name="dataVencimento"]').value;
+
+                row.querySelector(".hidden-valorPago").value =
+                    row.querySelector('input[name="valorPago"]').value;
+
+                row.querySelector(".hidden-dataPagamento").value =
+                    row.querySelector('input[name="dataPagamento"]').value;
+
+            });
+
+        });
+
+        document.querySelectorAll(".historico-btn").forEach(btn => {
+
+            btn.addEventListener("click", function () {
+
+                let row =
+                    this.closest("tr").nextElementSibling;
+
+                if (row.style.display === "none") {
+
+                    row.style.display = "table-row";
+
+                } else {
+
+                    row.style.display = "none";
+                }
+
+            });
+
+        });
+
+    </script>
 
 </body>
 

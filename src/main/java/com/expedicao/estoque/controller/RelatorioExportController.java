@@ -19,153 +19,186 @@ import java.util.List;
 @Controller
 public class RelatorioExportController {
 
-    @Autowired
-    private ContaPagarRepository repository;
+        @Autowired
+        private ContaPagarRepository repository;
 
-    // =========================
-    // EXPORTAR EXCEL
-    // =========================
-    @GetMapping("/financeiro/exportar/excel")
-    public void exportarExcel(
-            HttpServletResponse response) throws IOException {
+        // =========================
+        // EXPORTAR EXCEL
+        // =========================
+        @GetMapping("/financeiro/exportar/excel")
+        public void exportarExcel(
+                        HttpServletResponse response) throws IOException {
 
-        response.setContentType(
-                "application/octet-stream");
+                response.setContentType(
+                                "application/octet-stream");
 
-        response.setHeader(
-                "Content-Disposition",
-                "attachment; filename=relatorio-financeiro.xlsx");
+                response.setHeader(
+                                "Content-Disposition",
+                                "attachment; filename=relatorio-financeiro.xlsx");
 
-        List<ContaPagar> contas =
-                repository.findAll();
+                List<ContaPagar> contas = repository.findAll();
 
-        XSSFWorkbook workbook =
-                new XSSFWorkbook();
+                XSSFWorkbook workbook = new XSSFWorkbook();
 
-        XSSFSheet sheet =
-                workbook.createSheet("Financeiro");
+                XSSFSheet sheet = workbook.createSheet("Financeiro");
 
-        int rowNum = 0;
+                int rowNum = 0;
 
-        Row header =
-                sheet.createRow(rowNum++);
+                // =========================
+                // CABEÇALHO
+                // =========================
+                Row header = sheet.createRow(rowNum++);
 
-        header.createCell(0).setCellValue("ID");
-        header.createCell(1).setCellValue("Descrição");
-        header.createCell(2).setCellValue("Valor");
-        header.createCell(3).setCellValue("Valor Pago");
-        header.createCell(4).setCellValue("Saldo");
-        header.createCell(5).setCellValue("Status");
+                header.createCell(0).setCellValue("ID");
+                header.createCell(1).setCellValue("Fornecedor");
+                header.createCell(2).setCellValue("Valor");
+                header.createCell(3).setCellValue("Valor Pago");
+                header.createCell(4).setCellValue("Saldo");
+                header.createCell(5).setCellValue("Status");
 
-        for (ContaPagar conta : contas) {
+                // =========================
+                // DADOS
+                // =========================
+                for (ContaPagar conta : contas) {
 
-            Row row = sheet.createRow(rowNum++);
+                        Row row = sheet.createRow(rowNum++);
 
-            row.createCell(0)
-                    .setCellValue(conta.getId());
+                        row.createCell(0)
+                                        .setCellValue(conta.getId());
 
-            row.createCell(1)
-                    .setCellValue(conta.getDescricao());
+                        // FORNECEDOR
+                        row.createCell(1)
+                                        .setCellValue(
 
-            row.createCell(2)
-                    .setCellValue(
-                            conta.getValor() != null
-                                    ? conta.getValor().doubleValue()
-                                    : 0
-                    );
+                                                        conta.getFornecedor() != null
+                                                                        ? conta.getFornecedor().getRazaoSocial()
+                                                                        : "SEM FORNECEDOR");
 
-            row.createCell(3)
-                    .setCellValue(
-                            conta.getValorPago() != null
-                                    ? conta.getValorPago().doubleValue()
-                                    : 0
-                    );
+                        // VALOR
+                        row.createCell(2)
+                                        .setCellValue(
+                                                        conta.getValor() != null
+                                                                        ? conta.getValor().doubleValue()
+                                                                        : 0);
 
-            row.createCell(4)
-                    .setCellValue(
-                            conta.getSaldoDevedor() != null
-                                    ? conta.getSaldoDevedor().doubleValue()
-                                    : 0
-                    );
+                        // VALOR PAGO
+                        row.createCell(3)
+                                        .setCellValue(
+                                                        conta.getValorPago() != null
+                                                                        ? conta.getValorPago().doubleValue()
+                                                                        : 0);
 
-            row.createCell(5)
-                    .setCellValue(
-                            conta.getStatus().name()
-                    );
+                        // SALDO
+                        row.createCell(4)
+                                        .setCellValue(
+                                                        conta.getSaldoDevedor() != null
+                                                                        ? conta.getSaldoDevedor().doubleValue()
+                                                                        : 0);
+
+                        // STATUS
+                        row.createCell(5)
+                                        .setCellValue(
+                                                        conta.getStatus().name());
+                }
+
+                // AJUSTA LARGURA
+                for (int i = 0; i < 6; i++) {
+
+                        sheet.autoSizeColumn(i);
+                }
+
+                workbook.write(response.getOutputStream());
+
+                workbook.close();
         }
 
-        workbook.write(response.getOutputStream());
+        // =========================
+        // EXPORTAR PDF
+        // =========================
+        @GetMapping("/financeiro/exportar/pdf")
+        public void exportarPDF(
+                        HttpServletResponse response) throws Exception {
 
-        workbook.close();
-    }
+                response.setContentType("application/pdf");
 
-    // =========================
-    // EXPORTAR PDF
-    // =========================
-    @GetMapping("/financeiro/exportar/pdf")
-    public void exportarPDF(
-            HttpServletResponse response) throws Exception {
+                response.setHeader(
+                                "Content-Disposition",
+                                "attachment; filename=relatorio-financeiro.pdf");
 
-        response.setContentType("application/pdf");
+                Document document = new Document(PageSize.A4.rotate());
 
-        response.setHeader(
-                "Content-Disposition",
-                "attachment; filename=relatorio-financeiro.pdf");
+                PdfWriter.getInstance(
+                                document,
+                                response.getOutputStream());
 
-        Document document =
-                new Document();
+                document.open();
 
-        PdfWriter.getInstance(
-                document,
-                response.getOutputStream());
+                // =========================
+                // TÍTULO
+                // =========================
+                Font titulo = FontFactory.getFont(
+                                FontFactory.HELVETICA_BOLD,
+                                18);
 
-        document.open();
+                Paragraph p = new Paragraph(
+                                "RELATÓRIO FINANCEIRO",
+                                titulo);
 
-        Font titulo =
-                FontFactory.getFont(
-                        FontFactory.HELVETICA_BOLD,
-                        18);
+                p.setSpacingAfter(20);
 
-        Paragraph p =
-                new Paragraph(
-                        "RELATÓRIO FINANCEIRO",
-                        titulo);
+                document.add(p);
 
-        p.setSpacingAfter(20);
+                // =========================
+                // TABELA
+                // =========================
+                PdfPTable table = new PdfPTable(6);
 
-        document.add(p);
+                table.setWidthPercentage(100);
 
-        PdfPTable table =
-                new PdfPTable(5);
+                table.addCell("ID");
+                table.addCell("Fornecedor");
+                table.addCell("Valor");
+                table.addCell("Pago");
+                table.addCell("Saldo");
+                table.addCell("Status");
 
-        table.addCell("Descrição");
-        table.addCell("Valor");
-        table.addCell("Pago");
-        table.addCell("Saldo");
-        table.addCell("Status");
+                List<ContaPagar> contas = repository.findAll();
 
-        List<ContaPagar> contas =
-                repository.findAll();
+                // =========================
+                // DADOS
+                // =========================
+                for (ContaPagar conta : contas) {
 
-        for (ContaPagar conta : contas) {
+                        // ID
+                        table.addCell(
+                                        String.valueOf(conta.getId()));
 
-            table.addCell(conta.getDescricao());
+                        // FORNECEDOR
+                        table.addCell(
 
-            table.addCell(
-                    String.valueOf(conta.getValor()));
+                                        conta.getFornecedor() != null
+                                                        ? conta.getFornecedor().getRazaoSocial()
+                                                        : "SEM FORNECEDOR");
 
-            table.addCell(
-                    String.valueOf(conta.getValorPago()));
+                        // VALOR
+                        table.addCell(
+                                        "R$ " + String.valueOf(conta.getValor()));
 
-            table.addCell(
-                    String.valueOf(conta.getSaldoDevedor()));
+                        // PAGO
+                        table.addCell(
+                                        "R$ " + String.valueOf(conta.getValorPago()));
 
-            table.addCell(
-                    conta.getStatus().name());
+                        // SALDO
+                        table.addCell(
+                                        "R$ " + String.valueOf(conta.getSaldoDevedor()));
+
+                        // STATUS
+                        table.addCell(
+                                        conta.getStatus().name());
+                }
+
+                document.add(table);
+
+                document.close();
         }
-
-        document.add(table);
-
-        document.close();
-    }
 }

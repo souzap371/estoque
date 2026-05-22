@@ -99,6 +99,95 @@
 
         <h1>📊 BI Financeiro</h1>
 
+        <!-- FILTROS -->
+        <div style="
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:25px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+">
+
+            <form method="get" action="/financeiro/relatorios">
+
+                <div style="
+            display:grid;
+            grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+            gap:15px;
+            align-items:end;
+        ">
+
+                    <!-- FORNECEDOR -->
+                    <div>
+
+                        <label><strong>Fornecedor</strong></label><br>
+
+                        <select name="fornecedorId" style="
+                    width:100%;
+                    padding:10px;
+                    border:1px solid #ccc;
+                    border-radius:5px;
+                ">
+
+                            <option value="">TODOS</option>
+
+                            <option th:each="f : ${fornecedores}" th:value="${f.id}" th:text="${f.razaoSocial}"
+                                th:selected="${fornecedorId == f.id}">
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- DATA INICIO -->
+                    <div>
+
+                        <label><strong>Período Inicial</strong></label><br>
+
+                        <input type="date" name="dataInicio" th:value="${dataInicio}" style="
+                        width:100%;
+                        padding:10px;
+                        border:1px solid #ccc;
+                        border-radius:5px;
+                       ">
+
+                    </div>
+
+                    <!-- DATA FIM -->
+                    <div>
+
+                        <label><strong>Período Final</strong></label><br>
+
+                        <input type="date" name="dataFim" th:value="${dataFim}" style="
+                        width:100%;
+                        padding:10px;
+                        border:1px solid #ccc;
+                        border-radius:5px;
+                       ">
+
+                    </div>
+
+                    <!-- BOTÃO -->
+                    <div>
+
+                        <button type="submit" class="btn" style="
+                    width:100%;
+                    height:42px;
+                    border:none;
+                ">
+
+                            🔍 Filtrar
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
         <div style="margin-bottom:20px;">
 
             <a href="/dashboard" style="
@@ -111,7 +200,7 @@
             font-weight:bold;
        ">
 
-                ⬅ Voltar Menu Principal
+                ⬅ Voltar Menu inicial
 
             </a>
 
@@ -175,6 +264,14 @@
                 <h2>Contas Pendentes</h2>
 
                 <div class="valor" th:text="${quantidadePendentes}">
+                </div>
+
+            </div>
+            <div class="card">
+
+                <h2>⚠ Vencendo na Semana</h2>
+
+                <div class="valor" th:text="${contasSemana}">
                 </div>
 
             </div>

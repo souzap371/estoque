@@ -16,13 +16,17 @@ public class Venda {
     private String clienteNome;
     private String clienteEstado;
     private LocalDate dataSaida;
-     private Boolean comNotaFiscal;
+    private Boolean comNotaFiscal;
 
     @Column(precision = 14, scale = 2)
     private BigDecimal valorTotal;
 
     @OneToMany(mappedBy = "venda", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<VendaItem> itens = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 
     // =====================
     // MÉTODOS AUXILIARES
@@ -76,6 +80,7 @@ public class Venda {
     public List<VendaItem> getItens() {
         return itens;
     }
+
     public Boolean getComNotaFiscal() {
         return comNotaFiscal;
     }

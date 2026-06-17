@@ -26,6 +26,10 @@ public class ContaReceber {
     @Column(nullable = false, length = 150)
     private String clienteNome;
 
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
     @Column(nullable = false, precision = 15, scale = 2)
     private BigDecimal valorOriginal = BigDecimal.ZERO;
 

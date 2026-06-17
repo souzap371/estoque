@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Cadastro de Clientes</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.10);
+        }
+
+        h2 {
+            color: #1e88e5;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #444;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dcdcdc;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #1e88e5;
+        }
+
+        .btn-salvar {
+            background: #1e88e5;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn-salvar:hover {
+            background: #1565c0;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-relatorio {
+            background: #1e88e5;
+        }
+
+        .btn-dashboard {
+            background: #6c757d;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2 th:text="${cliente.id != null ? '✏️ Editar Cliente' : '👥 Cadastro de Clientes'}">
+                👥 Cadastro de Clientes
+            </h2>
+
+            <form th:action="@{/clientes/salvar}" th:object="${cliente}" method="post">
+
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group">
+
+                    <label>Nome Completo</label>
+
+                    <input type="text" th:field="*{nomeCompleto}" required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>UF</label>
+
+                    <select th:field="*{uf}" required>
+
+                        <option value="">Selecione</option>
+
+                        <option value="AC">AC</option>
+                        <option value="AL">AL</option>
+                        <option value="AP">AP</option>
+                        <option value="AM">AM</option>
+                        <option value="BA">BA</option>
+                        <option value="CE">CE</option>
+                        <option value="DF">DF</option>
+                        <option value="ES">ES</option>
+                        <option value="GO">GO</option>
+                        <option value="MA">MA</option>
+                        <option value="MG">MG</option>
+                        <option value="MS">MS</option>
+                        <option value="MT">MT</option>
+                        <option value="PA">PA</option>
+                        <option value="PB">PB</option>
+                        <option value="PE">PE</option>
+                        <option value="PI">PI</option>
+                        <option value="PR">PR</option>
+                        <option value="RJ">RJ</option>
+                        <option value="RN">RN</option>
+                        <option value="RO">RO</option>
+                        <option value="RR">RR</option>
+                        <option value="RS">RS</option>
+                        <option value="SC">SC</option>
+                        <option value="SE">SE</option>
+                        <option value="SP">SP</option>
+                        <option value="TO">TO</option>
+
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Referência (Quem Indicou)</label>
+
+                    <input type="text" th:field="*{referencia}" placeholder="Nome do cliente que indicou">
+
+                </div>
+
+                <button type="submit" class="btn-salvar">
+
+                    💾 Salvar Cliente
+
+                </button>
+
+            </form>
+
+            <div class="acoes">
+
+                <a href="/clientes/relatorio" class="btn btn-relatorio">
+
+                    📋 Ver Relatório
+
+                </a>
+
+                <a href="/dashboard" class="btn btn-dashboard">
+
+                    🏠 Voltar ao Dashboard
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

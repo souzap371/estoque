@@ -101,6 +101,28 @@
                 </div>
             </div>
 
+            <!-- CLIENTES -->
+            <div class="card" sec:authorize="hasAnyRole('CLIENTES','MASTER')">
+
+                <h2>👥 Clientes</h2>
+
+                <p>Cadastro e consulta de clientes</p>
+
+                <div class="card-actions">
+
+                    <a href="/clientes">
+                        Cadastro
+                    </a>
+
+                    <a href="/clientes/relatorio" class="secondary">
+
+                        Relatórios
+
+                    </a>
+
+                </div>
+
+            </div>
             <div class="card" sec:authorize="hasAnyRole('PRODUTO','MASTER')">
                 <h2>🚬 Produto</h2>
                 <p>Cadastro de produtos</p>
@@ -130,6 +152,8 @@
                     <a href="/relatorios/vendas" class="secondary">Relatórios</a>
                 </div>
             </div>
+
+
 
             <div class="card" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
                 <h2>💰 Financeiro</h2>

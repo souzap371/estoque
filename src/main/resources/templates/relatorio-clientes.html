@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Relatório de Clientes</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background: #f4f6f9;
+        }
+
+        h2 {
+            color: #1e88e5;
+            margin-bottom: 20px;
+        }
+
+        .acoes-topo {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-novo {
+            background: #1e88e5;
+        }
+
+        .btn-importar {
+            background: #28a745;
+        }
+
+        .btn-dashboard {
+            background: #6c757d;
+        }
+
+        .btn-buscar {
+            background: #1e88e5;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .filtro {
+            margin-bottom: 20px;
+        }
+
+        .filtro input {
+            padding: 10px;
+            width: 300px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #1e88e5;
+            color: white;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .acao-editar {
+            color: #1565c0;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .acao-excluir {
+            color: #d32f2f;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h2>👥 Relatório de Clientes</h2>
+
+    <div class="acoes-topo">
+
+        <a href="/clientes" class="btn btn-novo">
+            ➕ Novo Cliente
+        </a>
+
+        <a href="/clientes/importar-vendas" class="btn btn-importar">
+            🔄 Importar Clientes das Vendas
+        </a>
+
+        <a href="/dashboard" class="btn btn-dashboard">
+            🏠 Voltar ao Dashboard
+        </a>
+
+    </div>
+
+    <form method="get"
+          action="/clientes/relatorio"
+          class="filtro">
+
+        <input type="text"
+               name="nome"
+               placeholder="Pesquisar Cliente">
+
+        <button type="submit"
+                class="btn-buscar">
+
+            Buscar
+
+        </button>
+
+    </form>
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>UF</th>
+                <th>Referência</th>
+                <th>Ações</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr th:each="cliente : ${clientes}">
+
+                <td th:text="${cliente.id}"></td>
+
+                <td th:text="${cliente.nomeCompleto}"></td>
+
+                <td th:text="${cliente.uf}"></td>
+
+                <td th:text="${cliente.referencia}"></td>
+
+                <td>
+
+                    <a class="acao-editar"
+                       th:href="@{/clientes/editar/{id}(id=${cliente.id})}">
+                        ✏️ Editar
+                    </a>
+
+                    &nbsp;|&nbsp;
+
+                    <a class="acao-excluir"
+                       th:href="@{/clientes/excluir/{id}(id=${cliente.id})}"
+                       onclick="return confirm('Deseja excluir este cliente?')">
+
+                        🗑️ Excluir
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(clientes)}">
+
+                <td colspan="5"
+                    style="text-align:center;">
+
+                    Nenhum cliente encontrado.
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</body>
+
+</html>

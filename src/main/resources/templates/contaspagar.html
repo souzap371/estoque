@@ -1,562 +1,1434 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <title>Contas a Pagar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contas a Pagar - Sistema V</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
+        :root {
+            --primary-500: #6366f1;
+            --primary-600: #4f46e5;
+            --primary-700: #4338ca;
+            --primary-50: #eef2ff;
+            --primary-100: #e0e7ff;
+            --primary-200: #c7d2fe;
+
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --sidebar-active: #4f46e5;
+            --sidebar-text: #94a3b8;
+            --sidebar-text-active: #ffffff;
+
+            --neutral-0: #ffffff;
+            --neutral-50: #f8fafc;
+            --neutral-100: #f1f5f9;
+            --neutral-200: #e2e8f0;
+            --neutral-300: #cbd5e1;
+            --neutral-400: #94a3b8;
+            --neutral-500: #64748b;
+            --neutral-600: #475569;
+            --neutral-700: #334155;
+            --neutral-800: #1e293b;
+            --neutral-900: #0f172a;
+
+            --success-500: #10b981;
+            --success-50: #ecfdf5;
+            --warning-500: #f59e0b;
+            --warning-50: #fffbeb;
+            --danger-500: #ef4444;
+            --danger-50: #fef2f2;
+
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+
+            --sidebar-width: 260px;
+            --header-height: 72px;
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        .container {
-            width: 95%;
-            margin: 30px auto;
+        body {
+            font-family: var(--font-sans);
+            background: var(--neutral-50);
+            color: var(--neutral-800);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        h1 {
-            color: #1e88e5;
-            margin-bottom: 20px;
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
         }
 
-        .top-actions {
-            margin-bottom: 20px;
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            min-height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-brand {
+            padding: var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .sidebar-brand-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .sidebar-brand-text {
+            color: white;
+        }
+
+        .sidebar-brand-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+        }
+
+        .sidebar-brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--sidebar-text);
+            font-weight: 500;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: var(--space-4);
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: var(--space-2);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-lg);
+            color: var(--sidebar-text);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-bottom: var(--space-1);
+        }
+
+        .nav-item:hover {
+            background: var(--sidebar-hover);
+            color: var(--sidebar-text-active);
+        }
+
+        .nav-item.active {
+            background: var(--sidebar-active);
+            color: var(--sidebar-text-active);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .nav-item svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-user {
+            padding: var(--space-4);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: auto;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-email {
+            font-size: 0.75rem;
+            color: var(--sidebar-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-menu-btn {
+            background: none;
+            border: none;
+            color: var(--sidebar-text);
+            cursor: pointer;
+            padding: var(--space-1);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+
+        .user-menu-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-logout {
+            padding: var(--space-4);
+            padding-top: 0;
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font-sans);
+            text-decoration: none;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        /* MAIN CONTENT */
+        .main-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOP HEADER */
+        .top-header {
+            height: var(--header-height);
+            background: var(--neutral-0);
+            border-bottom: 1px solid var(--neutral-200);
+            padding: 0 var(--space-8);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-greeting {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .greeting-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            letter-spacing: -0.025em;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .greeting-subtitle {
+            font-size: 0.875rem;
+            color: var(--neutral-500);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 320px;
+            padding: var(--space-2) var(--space-4) var(--space-2) var(--space-10);
+            background: var(--neutral-100);
+            border: 1.5px solid transparent;
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            color: var(--neutral-700);
+            font-family: var(--font-sans);
+            transition: all 0.2s ease;
+        }
+
+        .search-input::placeholder {
+            color: var(--neutral-400);
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: var(--neutral-0);
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: var(--space-3);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--neutral-400);
+            pointer-events: none;
+        }
+
+        .search-kbd {
+            position: absolute;
+            right: var(--space-3);
+            top: 50%;
+            transform: translateY(-50%);
+            padding: var(--space-1) var(--space-2);
+            background: var(--neutral-200);
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            color: var(--neutral-500);
+            font-family: monospace;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--neutral-100);
+            border: none;
+            border-radius: var(--radius-lg);
+            color: var(--neutral-600);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .btn-icon:hover {
+            background: var(--neutral-200);
+            color: var(--neutral-800);
+        }
+
+        .btn-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 18px;
+            height: 18px;
+            background: var(--danger-500);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.625rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--neutral-0);
+        }
+
+        /* CONTENT AREA */
+        .content-area {
+            flex: 1;
+            padding: var(--space-8);
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .content-main {
+            min-width: 0;
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-8);
+        }
+
+        .page-title-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            letter-spacing: -0.025em;
+            margin-bottom: var(--space-2);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .page-title-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--danger-50);
+            color: var(--danger-500);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-title-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .page-subtitle {
+            font-size: 0.875rem;
+            color: var(--neutral-500);
+        }
+
+        .page-actions {
+            display: flex;
+            gap: var(--space-3);
         }
 
         .btn {
-            display: inline-block;
-            padding: 10px 15px;
-            background: #1e88e5;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-5);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            font-weight: 600;
+            font-family: var(--font-sans);
             cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            text-decoration: none;
         }
 
-        .btn:hover {
-            background: #1565c0;
+        .btn-primary {
+            background: var(--primary-600);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-700);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--neutral-100);
+            color: var(--neutral-700);
+            border: 1px solid var(--neutral-200);
+        }
+
+        .btn-secondary:hover {
+            background: var(--neutral-200);
+        }
+
+        .btn-success {
+            background: var(--success-500);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-warning {
+            background: var(--warning-500);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #d97706;
+        }
+
+        .btn-danger {
+            background: var(--danger-500);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-purple {
+            background: #7c3aed;
+            color: white;
+        }
+
+        .btn-purple:hover {
+            background: #6d28d9;
+        }
+
+        .btn-gray {
+            background: var(--neutral-500);
+            color: white;
+        }
+
+        .btn-gray:hover {
+            background: var(--neutral-600);
+        }
+
+        .btn-sm {
+            padding: var(--space-2) var(--space-3);
+            font-size: 0.75rem;
+        }
+
+        /* ALERT */
+        .alert {
+            padding: var(--space-4);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-5);
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .alert-danger {
+            background: var(--danger-50);
+            color: var(--danger-500);
+            border: 1px solid #fecaca;
+        }
+
+        /* TABLE CARD */
+        .table-card {
+            background: var(--neutral-0);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 0.875rem;
+        }
+
+        thead {
+            background: var(--neutral-50);
+            border-bottom: 1px solid var(--neutral-200);
         }
 
         th {
-            background: #1e88e5;
-            color: white;
-            padding: 14px;
-            text-align: center;
+            padding: var(--space-4) var(--space-5);
+            text-align: left;
+            font-weight: 600;
+            color: var(--neutral-600);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
         }
 
         td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: center;
+            padding: var(--space-4) var(--space-5);
+            border-bottom: 1px solid var(--neutral-100);
+            color: var(--neutral-700);
+            vertical-align: middle;
         }
 
-        tr:hover {
-            background: #f5f5f5;
+        tbody tr {
+            transition: background 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background: var(--neutral-50);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* STATUS BADGES */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            white-space: nowrap;
         }
 
         .status-pago {
-            color: #2e7d32;
-            font-weight: bold;
+            background: var(--success-50);
+            color: var(--success-500);
         }
 
         .status-pendente {
-            color: #ef6c00;
-            font-weight: bold;
+            background: var(--warning-50);
+            color: var(--warning-500);
         }
 
         .status-atrasado {
-            color: #c62828;
-            font-weight: bold;
+            background: var(--danger-50);
+            color: var(--danger-500);
         }
 
         .status-parcial {
-            color: #f9a825;
-            font-weight: bold;
+            background: #fef3c7;
+            color: #d97706;
         }
 
-        .pagamento-form {
+        /* FORM INPUTS */
+        .form-input {
+            padding: var(--space-2) var(--space-3);
+            border: 1.5px solid var(--neutral-200);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-family: var(--font-sans);
+            color: var(--neutral-700);
+            background: var(--neutral-0);
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-input:disabled {
+            background: var(--neutral-100);
+            color: var(--neutral-400);
+            cursor: not-allowed;
+        }
+
+        .form-input-sm {
+            width: 100px;
+            padding: var(--space-1) var(--space-2);
+            font-size: 0.8125rem;
+        }
+
+        .form-input-md {
+            width: 180px;
+        }
+
+        /* ACTIONS CELL */
+        .actions-cell {
             display: flex;
-            justify-content: center;
+            gap: var(--space-2);
             align-items: center;
-            gap: 5px;
+            flex-wrap: wrap;
         }
 
-        .pagamento-form input {
-            width: 90px;
-            padding: 5px;
+        .actions-cell form {
+            display: inline;
         }
 
-        .sem-registros {
-            padding: 20px;
+        /* HISTORICO ROW */
+        .historico-linha {
+            display: none;
+            background: var(--neutral-50);
+        }
+
+        .historico-linha td {
+            padding: 0;
+            border-bottom: none;
+        }
+
+        .historico-content {
+            padding: var(--space-6);
+        }
+
+        .historico-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            margin-bottom: var(--space-4);
+        }
+
+        .historico-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .historico-table th {
+            background: var(--neutral-100);
+            padding: var(--space-3) var(--space-4);
+            font-size: 0.75rem;
+        }
+
+        .historico-table td {
+            padding: var(--space-3) var(--space-4);
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .historico-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            padding: var(--space-10);
             text-align: center;
-            color: #777;
+            color: var(--neutral-400);
         }
 
-        .voltar {
-            margin-top: 20px;
+        .empty-state-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto var(--space-4);
+            color: var(--neutral-300);
+        }
+
+        .empty-state-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* FOOTER */
+        .app-footer {
+            border-top: 1px solid var(--neutral-200);
+            padding: var(--space-6) var(--space-8);
+            text-align: center;
+            color: var(--neutral-400);
+            font-size: 0.875rem;
+            background: var(--neutral-0);
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 1280px) {
+            .content-area {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .page-header {
+                flex-direction: column;
+                gap: var(--space-4);
+            }
+
+            .page-actions {
+                width: 100%;
+            }
+
+            .table-wrapper {
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .top-header {
+                padding: 0 var(--space-4);
+            }
+
+            .search-input {
+                width: 200px;
+            }
+
+            .content-area {
+                padding: var(--space-4);
+            }
+
+            .header-greeting {
+                display: none;
+            }
+
+            .page-actions {
+                flex-wrap: wrap;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .table-card,
+        .page-header {
+            animation: fadeIn 0.4s ease-out forwards;
         }
     </style>
-
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="app-layout">
 
-        <h1>📤 Contas a Pagar</h1>
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
 
-        <div class="top-actions">
-
-            <!-- MENSAGEM ERRO -->
-            <div th:if="${erro}" style="
-        background:#ffebee;
-        color:#c62828;
-        padding:12px;
-        margin-bottom:15px;
-        border-radius:5px;
-        font-weight:bold;
-     ">
-
-                <span th:text="${erro}"></span>
-
+            <div class="sidebar-brand">
+                <div class="sidebar-brand-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                    </svg>
+                </div>
+                <div class="sidebar-brand-text">
+                    <div class="sidebar-brand-title">Sistema V</div>
+                    <div class="sidebar-brand-subtitle">Painel de Controle</div>
+                </div>
             </div>
 
-            <a href="/contas-pagar/nova" class="btn">
-                ➕ Nova Conta
-            </a>
-
-            <a href="/dashboard" class="btn">
-                ⬅ Voltar Menu inicial
-            </a>
-
-        </div>
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>ID</th>
-                    <th>Fornecedor</th>
-                    <th>Valor</th>
-                    <th>Valor Pago</th>
-                    <th>Saldo</th>
-                    <th>Status</th>
-                    <th>Vencimento</th>
-                    <th>Data Pagamento</th>
-                    <th>Pagamento</th>
-                    <th>Histórico</th>
-                    <th>Ações</th>
-
-                </tr>
-
-            </thead>
-            <tbody>
-
-                <tr th:if="${#lists.isEmpty(contas)}">
-                    <td colspan="7" class="sem-registros">
-                        Nenhuma conta cadastrada.
-                    </td>
-                </tr>
-
-                <th:block th:each="conta : ${contas}">
-                    <tr>
-
-                        <!-- ID -->
-                        <td th:text="${conta.id}"></td>
-
-                        <!-- FORNECEDOR -->
-                        <td>
-
-                            <input type="text" th:value="${conta.fornecedor != null 
-                ? conta.fornecedor.razaoSocial 
-                : 'SEM FORNECEDOR'}" disabled style="width:220px;
-                  background:#f5f5f5;
-                  border:1px solid #ddd;">
-
-                        </td>
-                        <!-- VALOR -->
-                        <td>
-
-                            <span class="valor-texto">
-
-                                R$:
-                                <span th:text="${#numbers.formatDecimal(conta.valor,1,'POINT',2,'COMMA')}"></span>
-
-                            </span>
-
-                            <input type="number" step="0.01" name="valor" th:value="${conta.valor}" class="editavel"
-                                disabled style="display:none; width:100px;">
-
-                        </td>
-
-                        <!-- VALOR PAGO -->
-                        <td>
-
-                            <span class="valor-pago-texto">
-
-                                R$:
-                                <span th:text="${#numbers.formatDecimal(conta.valorPago,1,'POINT',2,'COMMA')}"></span>
-
-                            </span>
-
-                            <input type="number" step="0.01" name="valorPago" th:value="${conta.valorPago}"
-                                class="editavel" disabled style="display:none; width:100px;">
-
-                        </td>
-
-                        <!-- SALDO -->
-                        <td>
-
-                            R$:
-                            <span th:text="${#numbers.formatDecimal(conta.saldoDevedor,1,'POINT',2,'COMMA')}"></span>
-
-                        </td>
-
-                        <!-- STATUS -->
-                        <td>
-
-                            <span th:if="${conta.status.name() == 'PAGO'}" class="status-pago">
-
-                                ✅ PAGO
-
-                            </span>
-
-                            <span th:if="${conta.status.name() == 'PENDENTE'}" class="status-pendente">
-
-                                ⏳ PENDENTE
-
-                            </span>
-
-                            <span th:if="${conta.status.name() == 'ATRASADO'}" class="status-atrasado">
-
-                                ❌ ATRASADO
-
-                            </span>
-
-                            <span th:if="${conta.status.name() == 'PARCIAL'}" class="status-parcial">
-
-                                ⚠ PARCIAL
-
-                            </span>
-
-                        </td>
-
-                        <!-- VENCIMENTO -->
-                        <td>
-
-                            <input type="date" name="dataVencimento" th:value="${conta.dataVencimento}" class="editavel"
-                                disabled>
-
-                        </td>
-
-                        <!-- DATA PAGAMENTO -->
-                        <td>
-
-                            <span class="data-pagamento-texto" th:if="${conta.dataPagamento != null}"
-                                th:text="${#temporals.format(conta.dataPagamento, 'dd/MM/yyyy')}">
-                            </span>
-
-                            <span class="data-pagamento-texto" th:if="${conta.dataPagamento == null}">
-                                -
-                            </span>
-
-                            <input type="date" name="dataPagamento" th:value="${conta.dataPagamento}" class="editavel"
-                                disabled style="display:none;">
-
-                        </td>
-                        <!-- PAGAMENTO -->
-                        <td>
-
-                            <form th:if="${conta.status.name() != 'PAGO'}"
-                                th:action="@{/contas-pagar/{id}/pagar(id=${conta.id})}" method="post"
-                                class="pagamento-form form-pagamento">
-
-                                <input type="number" step="0.01" min="0.01" name="valorPagamento" placeholder="Valor"
-                                    required>
-
-                                <button type="submit" class="btn">
-                                    Pagar
-                                </button>
-
-                            </form>
-
-                            <span th:if="${conta.status.name() == 'PAGO'}" class="status-pago">
-
-                                QUITADO
-
-                            </span>
-
-                        </td>
-
-                        <!--HISTORICO-->
-
-                        <td>
-                            <button type="button" class="btn historico-btn" style="background:#5e35b1;">
-
-                                📜 Histórico
-
-                            </button>
-                        </td>
-
-                        <!-- AÇÕES -->
-                        <td style="display:flex; gap:5px;">
-
-                            <!-- EDITAR -->
-                            <button type="button" class="btn btn-editar" style="background:#f9a825;">
-
-                                ✏ Editar
-
-                            </button>
-
-                            <!-- SALVAR -->
-                            <form th:action="@{/contas-pagar/atualizar}" method="post" style="display:inline;">
-
-                                <input type="hidden" name="id" th:value="${conta.id}">
-
-                                <input type="hidden" class="hidden-descricao" name="descricao">
-
-                                <input type="hidden" class="hidden-valor" name="valor">
-
-                                <input type="hidden" class="hidden-data" name="dataVencimento">
-
-                                <input type="hidden" class="hidden-valorPago" name="valorPago">
-
-                                <input type="hidden" class="hidden-dataPagamento" name="dataPagamento">
-
-                                <button type="submit" class="btn btn-salvar" style="display:none; background:#2e7d32;">
-
-                                    💾 Salvar
-
-                                </button>
-
-                            </form>
-
-                            <!-- CANCELAR -->
-                            <button type="button" class="btn btn-cancelar" style="display:none; background:#616161;">
-
-                                ❌ Cancelar
-
-                            </button>
-
-                            <!-- EXCLUIR -->
-                            <a th:href="@{/contas-pagar/excluir/{id}(id=${conta.id})}" class="btn"
-                                style="background:#c62828;"
-                                onclick="return confirm('Deseja realmente excluir esta conta?')">
-
-                                🗑 Excluir
-
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <a href="/dashboard" class="nav-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        Dashboard
+                    </a>
+
+                    <a href="/usuarios" class="nav-item" sec:authorize="hasRole('MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Usuários
+                    </a>
+
+                    <a href="/clientes" class="nav-item" sec:authorize="hasAnyRole('CLIENTES','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Clientes
+                    </a>
+
+                    <a href="/produtos" class="nav-item" sec:authorize="hasAnyRole('PRODUTO','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                            </path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                        Produto
+                    </a>
+
+                    <a href="/estoque" class="nav-item" sec:authorize="hasAnyRole('ESTOQUE','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14">
+                            </path>
+                            <path d="M16.5 9.4 7.55 4.24"></path>
+                            <polyline points="3.29 7 12 12 20.71 7"></polyline>
+                            <line x1="12" y1="22" x2="12" y2="12"></line>
+                            <path d="m17 13 3 3-3 3"></path>
+                        </svg>
+                        Estoque
+                    </a>
+
+                    <a href="/vendas" class="nav-item" sec:authorize="hasAnyRole('VENDAS','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        Vendas
+                    </a>
+
+                    <a href="/financeiro" class="nav-item active" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        Financeiro
+                    </a>
+
+                    <a href="/relatorios" class="nav-item" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        Relatórios
+                    </a>
+
+                    <a href="/configuracoes" class="nav-item" sec:authorize="hasRole('MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.67 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.67a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                            </path>
+                        </svg>
+                        Configurações
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-card">
+                    <div class="user-avatar">A</div>
+                    <div class="user-info">
+                        <div class="user-name">Administrador</div>
+                        <div class="user-email">admin@sistemav.com</div>
+                    </div>
+                    <button class="user-menu-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="12" r="1"></circle>
+                            <circle cx="5" cy="12" r="1"></circle>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="sidebar-logout">
+                <form th:action="@{/logout}" method="post" style="margin:0">
+                    <button type="submit" class="btn-logout">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        Sair do sistema
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-wrapper">
+
+            <header class="top-header">
+                <div class="header-greeting">
+                    <h1 class="greeting-title">
+                        Contas a Pagar
+                    </h1>
+                    <p class="greeting-subtitle">Gerencie suas obrigações financeiras</p>
+                </div>
+
+                <div class="header-actions">
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Buscar no sistema...">
+                        <span class="search-kbd">⌘K</span>
+                    </div>
+
+                    <button class="btn-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <div class="content-main">
+
+                    <!-- MENSAGEM ERRO -->
+                    <div th:if="${erro}" class="alert alert-danger">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <span th:text="${erro}"></span>
+                    </div>
+
+                    <div class="page-header">
+                        <div class="page-title-group">
+                            <h2 class="page-title">
+                                <div class="page-title-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                </div>
+                                Lista de Contas a Pagar
+                            </h2>
+                            <p class="page-subtitle">Visualize, edite e registre pagamentos</p>
+                        </div>
+                        <div class="page-actions">
+                            <a href="/contas-pagar/nova" class="btn btn-primary">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                                Nova Conta
                             </a>
+                            <a href="/dashboard" class="btn btn-secondary">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                                Dashboard
+                            </a>
+                        </div>
+                    </div>
 
-                        </td>
+                    <div class="table-card">
+                        <div class="table-wrapper">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Fornecedor</th>
+                                        <th>Valor</th>
+                                        <th>Valor Pago</th>
+                                        <th>Saldo</th>
+                                        <th>Status</th>
+                                        <th>Vencimento</th>
+                                        <th>Data Pagamento</th>
+                                        <th>Pagamento</th>
+                                        <th>Histórico</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:if="${#lists.isEmpty(contas)}">
+                                        <td colspan="11">
+                                            <div class="empty-state">
+                                                <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
+                                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                                    <line x1="8" y1="21" x2="16" y2="21"></line>
+                                                    <line x1="12" y1="17" x2="12" y2="21"></line>
+                                                </svg>
+                                                <div class="empty-state-text">Nenhuma conta cadastrada.</div>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-                    </tr>
-
-                    <tr class="historico-linha" style="display:none; background:#fafafa;">
-
-                        <td colspan="11">
-
-                            <div style="padding:15px; text-align:left;">
-
-                                <h3>Histórico de Pagamentos</h3>
-
-                                <table style="width:100%;">
-
-                                    <thead>
-
+                                    <th:block th:each="conta : ${contas}">
                                         <tr>
+                                            <!-- ID -->
+                                            <td th:text="${conta.id}"></td>
 
-                                            <th>Data</th>
-                                            <th>Valor</th>
-
-                                        </tr>
-
-                                    </thead>
-
-                                    <tbody>
-
-                                        <tr th:if="${#lists.isEmpty(conta.pagamentos)}">
-
-                                            <td colspan="2">
-
-                                                Nenhum pagamento registrado.
-
-                                            </td>
-
-                                        </tr>
-
-                                        <tr th:each="pag : ${conta.pagamentos}">
-
-                                            <td th:text="${#temporals.format(pag.dataPagamento, 'dd/MM/yyyy HH:mm')}">
-                                            </td>
-
+                                            <!-- FORNECEDOR -->
                                             <td>
-
-                                                R$:
-                                                <span
-                                                    th:text="${#numbers.formatDecimal(pag.valorPagamento,1,'POINT',2,'COMMA')}"></span>
-
+                                                <input type="text" class="form-input form-input-md"
+                                                    th:value="${conta.fornecedor != null ? conta.fornecedor.razaoSocial : 'SEM FORNECEDOR'}"
+                                                    disabled>
                                             </td>
 
+                                            <!-- VALOR -->
+                                            <td>
+                                                <span class="valor-texto">
+                                                    R$ <span
+                                                        th:text="${#numbers.formatDecimal(conta.valor,1,'POINT',2,'COMMA')}"></span>
+                                                </span>
+                                                <input type="number" step="0.01" name="valor" th:value="${conta.valor}"
+                                                    class="form-input form-input-sm editavel" disabled
+                                                    style="display:none;">
+                                            </td>
+
+                                            <!-- VALOR PAGO -->
+                                            <td>
+                                                <span class="valor-pago-texto">
+                                                    R$ <span
+                                                        th:text="${#numbers.formatDecimal(conta.valorPago,1,'POINT',2,'COMMA')}"></span>
+                                                </span>
+                                                <input type="number" step="0.01" name="valorPago"
+                                                    th:value="${conta.valorPago}"
+                                                    class="form-input form-input-sm editavel" disabled
+                                                    style="display:none;">
+                                            </td>
+
+                                            <!-- SALDO -->
+                                            <td>
+                                                R$ <span
+                                                    th:text="${#numbers.formatDecimal(conta.saldoDevedor,1,'POINT',2,'COMMA')}"></span>
+                                            </td>
+
+                                            <!-- STATUS -->
+                                            <td>
+                                                <span th:if="${conta.status.name() == 'PAGO'}"
+                                                    class="status-badge status-pago">PAGO</span>
+                                                <span th:if="${conta.status.name() == 'PENDENTE'}"
+                                                    class="status-badge status-pendente">PENDENTE</span>
+                                                <span th:if="${conta.status.name() == 'ATRASADO'}"
+                                                    class="status-badge status-atrasado">ATRASADO</span>
+                                                <span th:if="${conta.status.name() == 'PARCIAL'}"
+                                                    class="status-badge status-parcial">PARCIAL</span>
+                                            </td>
+
+                                            <!-- VENCIMENTO -->
+                                            <td>
+                                                <input type="date" name="dataVencimento"
+                                                    th:value="${conta.dataVencimento}"
+                                                    class="form-input form-input-sm editavel" disabled>
+                                            </td>
+
+                                            <!-- DATA PAGAMENTO -->
+                                            <td>
+                                                <span class="data-pagamento-texto"
+                                                    th:if="${conta.dataPagamento != null}"
+                                                    th:text="${#temporals.format(conta.dataPagamento, 'dd/MM/yyyy')}"></span>
+                                                <span class="data-pagamento-texto"
+                                                    th:if="${conta.dataPagamento == null}">-</span>
+                                                <input type="date" name="dataPagamento"
+                                                    th:value="${conta.dataPagamento}"
+                                                    class="form-input form-input-sm editavel" disabled
+                                                    style="display:none;">
+                                            </td>
+
+                                            <!-- PAGAMENTO -->
+                                            <td>
+                                                <form th:if="${conta.status.name() != 'PAGO'}"
+                                                    th:action="@{/contas-pagar/{id}/pagar(id=${conta.id})}"
+                                                    method="post" class="form-pagamento"
+                                                    style="display:flex; gap:var(--space-2); align-items:center;">
+                                                    <input type="number" step="0.01" min="0.01" name="valorPagamento"
+                                                        placeholder="Valor" class="form-input form-input-sm" required>
+                                                    <button type="submit" class="btn btn-success btn-sm">Pagar</button>
+                                                </form>
+                                                <span th:if="${conta.status.name() == 'PAGO'}"
+                                                    class="status-badge status-pago">QUITADO</span>
+                                            </td>
+
+                                            <!-- HISTORICO -->
+                                            <td>
+                                                <button type="button" class="btn btn-purple btn-sm historico-btn">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                        stroke-linejoin="round">
+                                                        <path
+                                                            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z">
+                                                        </path>
+                                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                                        <polyline points="10 9 9 9 8 9"></polyline>
+                                                    </svg>
+                                                    Histórico
+                                                </button>
+                                            </td>
+
+                                            <!-- AÇÕES -->
+                                            <td>
+                                                <div class="actions-cell">
+                                                    <!-- EDITAR -->
+                                                    <button type="button" class="btn btn-warning btn-sm btn-editar">
+                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <path
+                                                                d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7">
+                                                            </path>
+                                                            <path
+                                                                d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z">
+                                                            </path>
+                                                        </svg>
+                                                        Editar
+                                                    </button>
+
+                                                    <!-- SALVAR -->
+                                                    <form th:action="@{/contas-pagar/atualizar}" method="post"
+                                                        style="display:inline;">
+                                                        <input type="hidden" name="id" th:value="${conta.id}">
+                                                        <input type="hidden" class="hidden-descricao" name="descricao">
+                                                        <input type="hidden" class="hidden-valor" name="valor">
+                                                        <input type="hidden" class="hidden-data" name="dataVencimento">
+                                                        <input type="hidden" class="hidden-valorPago" name="valorPago">
+                                                        <input type="hidden" class="hidden-dataPagamento"
+                                                            name="dataPagamento">
+                                                        <button type="submit" class="btn btn-success btn-sm btn-salvar"
+                                                            style="display:none;">
+                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round">
+                                                                <path
+                                                                    d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z">
+                                                                </path>
+                                                                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                                                <polyline points="7 3 7 8 15 8"></polyline>
+                                                            </svg>
+                                                            Salvar
+                                                        </button>
+                                                    </form>
+
+                                                    <!-- CANCELAR -->
+                                                    <button type="button" class="btn btn-gray btn-sm btn-cancelar"
+                                                        style="display:none;">
+                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                        </svg>
+                                                        Cancelar
+                                                    </button>
+
+                                                    <!-- EXCLUIR -->
+                                                    <a th:href="@{/contas-pagar/excluir/{id}(id=${conta.id})}"
+                                                        class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Deseja realmente excluir esta conta?')">
+                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="2"
+                                                            stroke-linecap="round" stroke-linejoin="round">
+                                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                                            <path
+                                                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                                            </path>
+                                                        </svg>
+                                                        Excluir
+                                                    </a>
+                                                </div>
+                                            </td>
                                         </tr>
 
-                                    </tbody>
+                                        <!-- HISTORICO ROW -->
+                                        <tr class="historico-linha">
+                                            <td colspan="11">
+                                                <div class="historico-content">
+                                                    <h3 class="historico-title">Histórico de Pagamentos</h3>
+                                                    <table class="historico-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Data</th>
+                                                                <th>Valor</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr th:if="${#lists.isEmpty(conta.pagamentos)}">
+                                                                <td colspan="2" class="empty-state-text"
+                                                                    style="text-align:center; padding:var(--space-4);">
+                                                                    Nenhum pagamento registrado.
+                                                                </td>
+                                                            </tr>
+                                                            <tr th:each="pag : ${conta.pagamentos}">
+                                                                <td
+                                                                    th:text="${#temporals.format(pag.dataPagamento, 'dd/MM/yyyy HH:mm')}">
+                                                                </td>
+                                                                <td>
+                                                                    R$ <span
+                                                                        th:text="${#numbers.formatDecimal(pag.valorPagamento,1,'POINT',2,'COMMA')}"></span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-                                </table>
+                </div>
+            </div>
 
-                            </div>
-
-                        </td>
-
-                    </tr>
-
-                </th:block>
-
-            </tbody>
-
-        </table>
+            <!-- Footer -->
+            <footer class="app-footer">
+                <p> Sistema V - Todos os direitos reservados</p>
+            </footer>
+        </div>
 
     </div>
 
     <script>
-
+        // EDITAR
         document.querySelectorAll(".btn-editar").forEach(btn => {
-
             btn.addEventListener("click", function () {
-
                 let row = this.closest("tr");
-
                 row.querySelectorAll(".editavel").forEach(campo => {
-
                     campo.removeAttribute("disabled");
-
                     campo.style.display = "inline-block";
-
                     campo.style.background = "#fffde7";
-
                 });
-
-                // esconder textos formatados
-                row.querySelectorAll(".valor-texto").forEach(el => {
-                    el.style.display = "none";
-                });
-
-                row.querySelectorAll(".valor-pago-texto").forEach(el => {
-                    el.style.display = "none";
-                });
-
-                row.querySelectorAll(".data-pagamento-texto").forEach(el => {
-                    el.style.display = "none";
-                });
-
-                row.querySelector(".btn-salvar").style.display = "inline-block";
-
-                row.querySelector(".btn-cancelar").style.display = "inline-block";
-
+                row.querySelectorAll(".valor-texto").forEach(el => el.style.display = "none");
+                row.querySelectorAll(".valor-pago-texto").forEach(el => el.style.display = "none");
+                row.querySelectorAll(".data-pagamento-texto").forEach(el => el.style.display = "none");
+                row.querySelector(".btn-salvar").style.display = "inline-flex";
+                row.querySelector(".btn-cancelar").style.display = "inline-flex";
                 this.style.display = "none";
-
             });
-
         });
 
+        // VALIDAR PAGAMENTO
         document.querySelectorAll(".form-pagamento").forEach(form => {
-
             form.addEventListener("submit", function (e) {
-
-                const campo =
-                    form.querySelector('input[name="valorPagamento"]');
-
-                const valor =
-                    campo.value.trim();
-
+                const campo = form.querySelector('input[name="valorPagamento"]');
+                const valor = campo.value.trim();
                 if (valor === "" || parseFloat(valor) <= 0) {
-
                     e.preventDefault();
-
-                    alert(
-                        "😡 Informe um valor válido para realizar a baixa da conta."
-                    );
-
+                    alert("Informe um valor válido para realizar a baixa da conta.");
                     campo.focus();
-
                     return false;
                 }
-
             });
-
         });
 
+        // CANCELAR
         document.querySelectorAll(".btn-cancelar").forEach(btn => {
-
             btn.addEventListener("click", function () {
-
                 location.reload();
-
             });
-
         });
 
+        // SALVAR
         document.querySelectorAll(".btn-salvar").forEach(btn => {
-
             btn.addEventListener("click", function () {
-
                 let row = this.closest("tr");
-
-                row.querySelector(".hidden-descricao").value =
-                    row.querySelector('input[name="descricao"]').value;
-
-                row.querySelector(".hidden-valor").value =
-                    row.querySelector('input[name="valor"]').value;
-
-                row.querySelector(".hidden-data").value =
-                    row.querySelector('input[name="dataVencimento"]').value;
-
-                row.querySelector(".hidden-valorPago").value =
-                    row.querySelector('input[name="valorPago"]').value;
-
-                row.querySelector(".hidden-dataPagamento").value =
-                    row.querySelector('input[name="dataPagamento"]').value;
-
+                row.querySelector(".hidden-descricao").value = row.querySelector('input[name="descricao"]')?.value || '';
+                row.querySelector(".hidden-valor").value = row.querySelector('input[name="valor"]').value;
+                row.querySelector(".hidden-data").value = row.querySelector('input[name="dataVencimento"]').value;
+                row.querySelector(".hidden-valorPago").value = row.querySelector('input[name="valorPago"]').value;
+                row.querySelector(".hidden-dataPagamento").value = row.querySelector('input[name="dataPagamento"]').value;
             });
-
         });
 
+        // HISTORICO
         document.querySelectorAll(".historico-btn").forEach(btn => {
-
             btn.addEventListener("click", function () {
-
-                let row =
-                    this.closest("tr").nextElementSibling;
-
-                if (row.style.display === "none") {
-
+                let row = this.closest("tr").nextElementSibling;
+                if (row.style.display === "none" || row.style.display === "") {
                     row.style.display = "table-row";
-
                 } else {
-
                     row.style.display = "none";
                 }
-
             });
-
         });
-
     </script>
 
 </body>

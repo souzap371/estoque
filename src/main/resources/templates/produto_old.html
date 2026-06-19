@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Produto</title>
+
+    <!-- Fonte moderna e legível -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Inter', system-ui, Arial, sans-serif;
+            background: linear-gradient(135deg, #0d6efd, #1e40af);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 640px;
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 28px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            margin-bottom: 18px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 1px #2563eb;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        hr {
+            margin: 24px 0;
+            border: none;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 26px;
+        }
+
+        button {
+            padding: 12px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.2s ease, transform 0.15s ease;
+        }
+
+        .btn-save {
+            background-color: #16a34a;
+            color: #ffffff;
+        }
+
+        .btn-save:hover {
+            background-color: #15803d;
+        }
+
+        .btn-back {
+            background-color: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .btn-back:hover {
+            background-color: #cbd5e1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Cadastro de Produto</h2>
+
+        <form action="/produtos/salvar" method="post">
+
+            <div class="grid">
+                <div>
+                    <label>Código do Produto</label>
+                    <input type="text" name="codigo" required>
+                </div>
+
+                <div>
+                    <label>Nome do Produto</label>
+                    <input type="text" name="nome" required>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="actions">
+
+                <button onclick="window.location.href='/dashboard'">Voltar </button>
+                <button type="submit" class="btn-save">💾 Salvar Produto</button>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
+</html>

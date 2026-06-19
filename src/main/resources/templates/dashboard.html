@@ -3,216 +3,2091 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema V</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
+        :root {
+            --primary-500: #6366f1;
+            --primary-600: #4f46e5;
+            --primary-700: #4338ca;
+            --primary-50: #eef2ff;
+            --primary-100: #e0e7ff;
+            --primary-200: #c7d2fe;
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --sidebar-active: #4f46e5;
+            --sidebar-text: #94a3b8;
+            --sidebar-text-active: #ffffff;
+            --neutral-0: #ffffff;
+            --neutral-50: #f8fafc;
+            --neutral-100: #f1f5f9;
+            --neutral-200: #e2e8f0;
+            --neutral-300: #cbd5e1;
+            --neutral-400: #94a3b8;
+            --neutral-500: #64748b;
+            --neutral-600: #475569;
+            --neutral-700: #334155;
+            --neutral-800: #1e293b;
+            --neutral-900: #0f172a;
+            --success-500: #10b981;
+            --success-50: #ecfdf5;
+            --warning-500: #f59e0b;
+            --warning-50: #fffbeb;
+            --danger-500: #ef4444;
+            --danger-50: #fef2f2;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --sidebar-width: 260px;
+            --header-height: 72px;
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        .container {
-            width: 95%;
-            margin: 30px auto;
+        body {
+            font-family: var(--font-sans);
+            background: var(--neutral-50);
+            color: var(--neutral-800);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        h1 {
-            color: #1e88e5;
-            margin-bottom: 25px;
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
         }
 
-        .cards {
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            min-height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-brand {
+            padding: var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .sidebar-brand-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .sidebar-brand-text {
+            color: white;
+        }
+
+        .sidebar-brand-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+        }
+
+        .sidebar-brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--sidebar-text);
+            font-weight: 500;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: var(--space-4);
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: var(--space-2);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-lg);
+            color: var(--sidebar-text);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-bottom: var(--space-1);
+        }
+
+        .nav-item:hover {
+            background: var(--sidebar-hover);
+            color: var(--sidebar-text-active);
+        }
+
+        .nav-item.active {
+            background: var(--sidebar-active);
+            color: var(--sidebar-text-active);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .nav-item svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-user {
+            padding: var(--space-4);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: auto;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-email {
+            font-size: 0.75rem;
+            color: var(--sidebar-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-menu-btn {
+            background: none;
+            border: none;
+            color: var(--sidebar-text);
+            cursor: pointer;
+            padding: var(--space-1);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+
+        .user-menu-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-logout {
+            padding: var(--space-4);
+            padding-top: 0;
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font-sans);
+            text-decoration: none;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        /* MAIN CONTENT */
+        .main-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOP HEADER */
+        .top-header {
+            height: var(--header-height);
+            background: var(--neutral-0);
+            border-bottom: 1px solid var(--neutral-200);
+            padding: 0 var(--space-8);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-greeting {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .greeting-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            letter-spacing: -0.025em;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .greeting-subtitle {
+            font-size: 0.875rem;
+            color: var(--neutral-500);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 320px;
+            padding: var(--space-2) var(--space-4) var(--space-2) var(--space-10);
+            background: var(--neutral-100);
+            border: 1.5px solid transparent;
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            color: var(--neutral-700);
+            font-family: var(--font-sans);
+            transition: all 0.2s ease;
+        }
+
+        .search-input::placeholder {
+            color: var(--neutral-400);
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: var(--neutral-0);
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: var(--space-3);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--neutral-400);
+            pointer-events: none;
+        }
+
+        .search-kbd {
+            position: absolute;
+            right: var(--space-3);
+            top: 50%;
+            transform: translateY(-50%);
+            padding: var(--space-1) var(--space-2);
+            background: var(--neutral-200);
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            color: var(--neutral-500);
+            font-family: monospace;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--neutral-100);
+            border: none;
+            border-radius: var(--radius-lg);
+            color: var(--neutral-600);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .btn-icon:hover {
+            background: var(--neutral-200);
+            color: var(--neutral-800);
+        }
+
+        .btn-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 18px;
+            height: 18px;
+            background: var(--danger-500);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.625rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--neutral-0);
+        }
+
+        /* CONTENT AREA */
+        .content-area {
+            flex: 1;
+            padding: var(--space-8);
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr 360px;
+            gap: var(--space-8);
+            max-width: 1600px;
         }
 
-        .card {
-            background: #ffffff;
-            border-radius: 6px;
-            padding: 25px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+        .content-main {
+            min-width: 0;
+        }
+
+        .content-sidebar {
+            min-width: 0;
+        }
+
+        /* KPI CARDS */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-5);
+            margin-bottom: var(--space-8);
+        }
+
+        .kpi-card {
+            background: var(--neutral-0);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-5);
+            transition: all 0.2s ease;
+        }
+
+        .kpi-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--space-4);
+        }
+
+        .kpi-label {
+            font-size: 0.875rem;
+            color: var(--neutral-500);
+            font-weight: 500;
+        }
+
+        .kpi-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .kpi-icon.blue {
+            background: var(--primary-50);
+            color: var(--primary-600);
+        }
+
+        .kpi-icon.purple {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+
+        .kpi-icon.green {
+            background: var(--success-50);
+            color: var(--success-500);
+        }
+
+        .kpi-icon.orange {
+            background: #fff7ed;
+            color: #ea580c;
+        }
+
+        .kpi-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .kpi-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            letter-spacing: -0.025em;
+            margin-bottom: var(--space-2);
+        }
+
+        .kpi-trend {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-size: 0.8125rem;
+            font-weight: 500;
+        }
+
+        .kpi-trend.up {
+            color: var(--success-500);
+        }
+
+        .kpi-trend.down {
+            color: var(--danger-500);
+        }
+
+        .kpi-trend svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .sparkline {
+            margin-top: var(--space-3);
+            height: 40px;
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .sparkline-bar {
+            flex: 1;
+            border-radius: 2px;
+            opacity: 0.6;
+        }
+
+        .sparkline-bar:last-child {
+            opacity: 1;
+        }
+
+        /* SECTION TITLE */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-5);
+        }
+
+        .section-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            letter-spacing: -0.025em;
+        }
+
+        /* MODULES GRID */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-5);
+        }
+
+        .module-card {
+            background: var(--neutral-0);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-5);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .module-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+            border-color: var(--primary-200);
+        }
+
+        .module-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .module-icon.users {
+            background: #eff6ff;
+            color: #3b82f6;
+        }
+
+        .module-icon.clients {
+            background: #fdf4ff;
+            color: #a855f7;
+        }
+
+        .module-icon.products {
+            background: #f0fdf4;
+            color: #22c55e;
+        }
+
+        .module-icon.stock {
+            background: #fff7ed;
+            color: #f97316;
+        }
+
+        .module-icon.sales {
+            background: #fef2f2;
+            color: #ef4444;
+        }
+
+        .module-icon.finance {
+            background: #ecfeff;
+            color: #06b6d4;
+        }
+
+        .module-icon.reports {
+            background: #f5f3ff;
+            color: #8b5cf6;
+        }
+
+        .module-icon.settings {
+            background: #f8fafc;
+            color: #64748b;
+        }
+
+        .module-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .module-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .module-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--neutral-900);
+            margin-bottom: var(--space-1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .module-arrow {
+            width: 20px;
+            height: 20px;
+            color: var(--neutral-400);
+            transition: all 0.2s ease;
+        }
+
+        .module-card:hover .module-arrow {
+            color: var(--primary-500);
+            transform: translateX(4px);
+        }
+
+        .module-description {
+            font-size: 0.875rem;
+            color: var(--neutral-500);
+            line-height: 1.5;
+        }
+
+        /* RIGHT SIDEBAR */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+        }
+
+        .panel-card {
+            background: var(--neutral-0);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-5);
+        }
+
+        .panel-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+        }
+
+        .panel-action {
+            font-size: 0.875rem;
+            color: var(--primary-500);
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .panel-action:hover {
+            color: var(--primary-700);
+        }
+
+        .panel-action svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .finance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-3) 0;
+            border-bottom: 1px solid var(--neutral-100);
+        }
+
+        .finance-item:last-child {
+            border-bottom: none;
+        }
+
+        .finance-label {
+            font-size: 0.875rem;
+            color: var(--neutral-500);
+            font-weight: 500;
+        }
+
+        .finance-value {
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .finance-value.receita {
+            color: var(--success-500);
+        }
+
+        .finance-value.despesa {
+            color: var(--danger-500);
+        }
+
+        .finance-value.lucro {
+            color: var(--primary-600);
+        }
+
+        .chart-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: var(--space-5) 0;
+        }
+
+        .donut-chart {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary-500) 0deg 252deg, var(--neutral-200) 252deg 360deg);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .donut-chart::after {
+            content: '';
+            width: 100px;
+            height: 100px;
+            background: var(--neutral-0);
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .donut-label {
+            position: relative;
+            z-index: 1;
             text-align: center;
+        }
+
+        .donut-percent {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+        }
+
+        .donut-text {
+            font-size: 0.75rem;
+            color: var(--neutral-500);
+            font-weight: 500;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+
+        .activity-item {
+            display: flex;
+            gap: var(--space-3);
+            align-items: flex-start;
+        }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.blue {
+            background: var(--primary-50);
+            color: var(--primary-600);
+        }
+
+        .activity-icon.green {
+            background: var(--success-50);
+            color: var(--success-500);
+        }
+
+        .activity-icon.purple {
+            background: #f3e8ff;
+            color: #7c3aed;
+        }
+
+        .activity-icon.red {
+            background: var(--danger-50);
+            color: var(--danger-500);
+        }
+
+        .activity-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .activity-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .activity-text {
+            font-size: 0.875rem;
+            color: var(--neutral-700);
+            font-weight: 500;
+            margin-bottom: var(--space-1);
+        }
+
+        .activity-time {
+            font-size: 0.75rem;
+            color: var(--neutral-400);
+        }
+
+        /* FINANCE TOGGLE */
+        .finance-toggle {
+            background: var(--neutral-0);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .finance-toggle-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-5);
+        }
+
+        .finance-toggle-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .finance-toggle-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-50);
+            color: var(--primary-600);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .finance-toggle-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .toggle-group {
+            display: inline-flex;
+            background: var(--neutral-100);
+            border-radius: var(--radius-lg);
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .toggle-btn {
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: transparent;
+            color: var(--neutral-500);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .toggle-btn:hover {
+            color: var(--neutral-700);
+        }
+
+        .toggle-btn.active {
+            background: var(--neutral-0);
+            color: var(--primary-600);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .toggle-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .finance-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-4);
+        }
+
+        .finance-card {
+            padding: var(--space-5);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--neutral-200);
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .finance-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            border-color: var(--primary-200);
+        }
+
+        .finance-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-3);
+        }
+
+        .finance-card-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--neutral-600);
+        }
+
+        .finance-card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .finance-card-icon.pagar {
+            background: var(--danger-50);
+            color: var(--danger-500);
+        }
+
+        .finance-card-icon.receber {
+            background: var(--success-50);
+            color: var(--success-500);
+        }
+
+        .finance-card-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .finance-card-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            margin-bottom: var(--space-1);
+        }
+
+        .finance-card-meta {
+            font-size: 0.75rem;
+            color: var(--neutral-400);
+            font-weight: 500;
+        }
+
+        .finance-card-arrow {
+            margin-top: var(--space-3);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary-500);
+        }
+
+        .finance-card-arrow svg {
+            width: 16px;
+            height: 16px;
             transition: transform 0.2s ease;
         }
 
-        .card:hover {
-            transform: translateY(-4px);
+        .finance-card:hover .finance-card-arrow svg {
+            transform: translateX(4px);
         }
 
-        .card h2 {
-            color: #1e88e5;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        .card p {
-            color: #555;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .card a {
-            display: inline-block;
-            padding: 10px 15px;
-            background: #1e88e5;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .card a:hover {
-            background: #1565c0;
-        }
-
-        .footer {
+        /* FOOTER */
+        .app-footer {
+            border-top: 1px solid var(--neutral-200);
+            padding: var(--space-6) var(--space-8);
             text-align: center;
-            margin-top: 30px;
-            font-size: 12px;
-            color: #777;
+            color: var(--neutral-400);
+            font-size: 0.875rem;
+            background: var(--neutral-0);
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 1280px) {
+            .content-area {
+                grid-template-columns: 1fr;
+            }
+
+            .content-sidebar {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--space-5);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .content-sidebar {
+                grid-template-columns: 1fr;
+            }
+
+            .finance-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .top-header {
+                padding: 0 var(--space-4);
+            }
+
+            .search-input {
+                width: 200px;
+            }
+
+            .content-area {
+                padding: var(--space-4);
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-greeting {
+                display: none;
+            }
+
+            .finance-toggle-header {
+                flex-direction: column;
+                gap: var(--space-4);
+                align-items: flex-start;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .kpi-card,
+        .module-card,
+        .panel-card,
+        .finance-toggle,
+        .finance-card {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .kpi-card:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .kpi-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .kpi-card:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        .kpi-card:nth-child(4) {
+            animation-delay: 0.2s;
+        }
+
+        /* SUBMENU */
+        .nav-item-with-submenu {
+            position: relative;
+        }
+
+        .nav-item-with-submenu .nav-item {
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .submenu-arrow {
+            width: 16px;
+            height: 16px;
+            margin-left: auto;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-item-with-submenu.open .submenu-arrow {
+            transform: rotate(180deg);
+        }
+
+        .submenu {
+            padding-left: 0.75rem;
+            margin-top: 0.25rem;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .submenu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-bottom: 0.25rem;
+            opacity: 0.85;
+        }
+
+        .submenu-item:hover {
+            background: #334155;
+            color: #ffffff;
+            opacity: 1;
+        }
+
+        .submenu-item.active {
+            background: #4f46e5;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            opacity: 1;
+        }
+
+        .submenu-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
         }
     </style>
 </head>
 
 <body>
 
+    <div class="app-layout">
 
-    <div class="container">
 
-        <h1>📊 Dashboard</h1>
-        <div class="top-bar">
-            <form th:action="@{/logout}" method="post">
-                <button type="submit" class="btn-logout">🚪 Sair</button>
-            </form>
-        </div>
 
-        <div class="cards">
 
-            <div class="card" sec:authorize="hasRole('MASTER')">
-                <h2>👤 Usuários</h2>
-                <p>Gerenciamento de usuários e permissões do sistema</p>
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
 
-                <div class="card-actions">
-                    <a href="/usuarios">Cadastro</a>
+            <div class="sidebar-brand">
+                <div class="sidebar-brand-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                    </svg>
+                </div>
+                <div class="sidebar-brand-text">
+                    <div class="sidebar-brand-title">Sistema V</div>
+                    <div class="sidebar-brand-subtitle">Painel de Controle</div>
                 </div>
             </div>
 
-            <!-- CLIENTES -->
-            <div class="card" sec:authorize="hasAnyRole('CLIENTES','MASTER')">
-
-                <h2>👥 Clientes</h2>
-
-                <p>Cadastro e consulta de clientes</p>
-
-                <div class="card-actions">
-
-                    <a href="/clientes">
-                        Cadastro
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <a href="/dashboard" class="nav-item active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        Dashboard
                     </a>
 
-                    <a href="/clientes/relatorio" class="secondary">
-
-                        Relatórios
-
+                    <a href="/usuarios" class="nav-item" sec:authorize="hasRole('MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Usuarios
                     </a>
 
+                    <a href="/clientes" class="nav-item" sec:authorize="hasAnyRole('CLIENTES','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Clientes
+                    </a>
+
+                    <a href="/produtos" class="nav-item" sec:authorize="hasAnyRole('PRODUTO','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                            </path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                        Produto
+                    </a>
+
+                    <a href="/estoque" class="nav-item" sec:authorize="hasAnyRole('ESTOQUE','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14">
+                            </path>
+                            <path d="M16.5 9.4 7.55 4.24"></path>
+                            <polyline points="3.29 7 12 12 20.71 7"></polyline>
+                            <line x1="12" y1="22" x2="12" y2="12"></line>
+                            <path d="m17 13 3 3-3 3"></path>
+                        </svg>
+                        Estoque
+                    </a>
+
+                    <a href="/vendas" class="nav-item" sec:authorize="hasAnyRole('VENDAS','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        Vendas
+                    </a>
+
+                    <th:block sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                        <div class="nav-item-with-submenu">
+                            <a href="#" class="nav-item" onclick="toggleSubmenu(event)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                                Financeiro
+                                <svg class="submenu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </a>
+                            <div class="submenu" style="display:none;">
+                                <a href="/contas-pagar" class="submenu-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Contas a Pagar
+                                </a>
+                                <a href="/contas-receber" class="submenu-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Contas a Receber
+                                </a>
+                            </div>
+                        </div>
+                    </th:block>
+
+                    <a href="/relatorios" class="nav-item" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        Relatorios
+                    </a>
+
+                    <a href="/configuracoes" class="nav-item" sec:authorize="hasRole('MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.67 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.67a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                            </path>
+                        </svg>
+                        Configuracoes
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-user">
+                <div class="user-card">
+                    <div class="user-avatar">A</div>
+                    <div class="user-info">
+                        <div class="user-name">Administrador</div>
+                        <div class="user-email">admin@sistemav.com</div>
+                    </div>
+                    <button class="user-menu-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="12" r="1"></circle>
+                            <circle cx="5" cy="12" r="1"></circle>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="sidebar-logout">
+                <form th:action="@{/logout}" method="post" style="margin:0">
+                    <button type="submit" class="btn-logout">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        Sair do sistema
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-wrapper">
+
+            <header class="top-header">
+                <div class="header-greeting">
+                    <h1 class="greeting-title">
+                        Ola, Administrador
+                        <span style="font-size: 1.25rem;">👋</span>
+                    </h1>
+                    <p class="greeting-subtitle">Bem-vindo(a) ao Sistema V. Tenha um otimo dia!</p>
                 </div>
 
-            </div>
-            <div class="card" sec:authorize="hasAnyRole('PRODUTO','MASTER')">
-                <h2>🚬 Produto</h2>
-                <p>Cadastro de produtos</p>
-
-                <div class="card-actions">
-                    <a href="/produtos">Cadastro</a>
-                    <a href="/relatorios/produtos" class="secondary">Relatórios</a>
-                </div>
-            </div>
-
-            <div class="card" sec:authorize="hasAnyRole('ESTOQUE','MASTER')">
-                <h2>📦 Estoque</h2>
-                <p>Controle de entrada, saída e produtos em estoque</p>
-
-                <div class="card-actions">
-                    <a href="/estoque">Cadastro</a>
-                    <a href="/relatorios/estoque" class="secondary">Relatórios</a>
-                </div>
-            </div>
-
-            <div class="card" sec:authorize="hasAnyRole('VENDAS','MASTER')">
-                <h2>💵 Vendas</h2>
-                <p>Criação de pedido/venda</p>
-
-                <div class="card-actions">
-                    <a href="/vendas">Cadastro</a>
-                    <a href="/relatorios/vendas" class="secondary">Relatórios</a>
-                </div>
-            </div>
-
-
-
-            <div class="card" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
-                <h2>💰 Financeiro</h2>
-                <p>Gestão financeira</p>
-
-                <div style="margin-top:15px; text-align:left;">
-
-                    <!-- CONTAS A RECEBER -->
-                    <div style="text-align:center; margin-top:8px;">
-                        <strong>📥 Contas a Receber</strong><br>
-                        <a href="/financeiro">Cadastro</a>
-                        <a href="/financeiro/relatorio" class="secondary">Relatórios</a>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Buscar no sistema...">
+                        <span class="search-kbd">⌘K</span>
                     </div>
 
-                    <!-- CONTAS A PAGAR
-                    <div style="text-align:center; margin-top:8px;">
-                        <strong>📤 Contas a Pagar</strong><br>
-                        <span style="color:#c62828; font-weight:bold;">
-                            🚧 Em desenvolvimento
-                        </span>
-                    </div> -->
-                    <!-- CONTAS A PAGAR -->
-                    <div style="text-align:center; margin-top:8px;">
+                    <button class="btn-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+            </header>
 
-                        <strong>📤 Contas a Pagar</strong><br>
+            <div class="content-area">
 
-                        <a href="/contas-pagar/nova">
-                            Cadastro
-                        </a>
+                <div class="content-main">
 
-                        <a href="/contas-pagar" class="secondary">
-                            Baixa
-                        </a>
+                    <!-- KPIs -->
+                    <div class="kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Vendas (Mes)</span>
+                                <div class="kpi-icon blue">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="9" cy="21" r="1"></circle>
+                                        <circle cx="20" cy="21" r="1"></circle>
+                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6">
+                                        </path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value">R$ 128.430,50</div>
+                            <div class="kpi-trend up">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                </svg>
+                                12,5% vs mes anterior
+                            </div>
+                            <div class="sparkline">
+                                <div class="sparkline-bar" style="height: 30%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 45%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 35%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 40%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 60%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 70%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 65%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 80%; background: #3b82f6;"></div>
+                            </div>
+                        </div>
 
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Pedidos (Mes)</span>
+                                <div class="kpi-icon purple">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                        </path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value">342</div>
+                            <div class="kpi-trend up">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                </svg>
+                                8,2% vs mes anterior
+                            </div>
+                            <div class="sparkline">
+                                <div class="sparkline-bar" style="height: 25%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 40%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 30%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 45%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 60%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 70%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 75%; background: #7c3aed;"></div>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Clientes Ativos</span>
+                                <div class="kpi-icon green">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value">1.287</div>
+                            <div class="kpi-trend up">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
+                                </svg>
+                                15,3% vs mes anterior
+                            </div>
+                            <div class="sparkline">
+                                <div class="sparkline-bar" style="height: 20%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 35%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 30%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 45%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 40%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 65%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 70%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 85%; background: #10b981;"></div>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-header">
+                                <span class="kpi-label">Produtos</span>
+                                <div class="kpi-icon orange">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                        </path>
+                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="kpi-value">532</div>
+                            <div class="kpi-trend down">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
+                                    <polyline points="17 18 23 18 23 12"></polyline>
+                                </svg>
+                                2,1% vs mes anterior
+                            </div>
+                            <div class="sparkline">
+                                <div class="sparkline-bar" style="height: 60%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 70%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 65%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 45%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 40%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 35%; background: #ea580c;"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div style="text-align:center; margin-top:15px;">
 
-                        <strong>📊 BI CP</strong><br>
 
-                        <a href="/financeiro/relatorios">
-                            Relatórios
+
+
+
+                    <!-- FINANCE TOGGLE SECTION -->
+                    <div class="finance-toggle">
+                        <div class="finance-toggle-header">
+                            <div class="finance-toggle-title">
+                                <div class="finance-toggle-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                </div>
+                                Gestao Financeira
+                            </div>
+                            <div class="toggle-group">
+                                <button class="toggle-btn active" onclick="mostrarFinanceiro('pagar')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Contas a Pagar
+                                </button>
+                                <button class="toggle-btn" onclick="mostrarFinanceiro('receber')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Contas a Receber
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="finance-cards" id="finance-cards-pagar">
+                            <a href="/contas-pagar" class="finance-card">
+                                <div class="finance-card-header">
+                                    <span class="finance-card-label">Total a Pagar</span>
+                                    <div class="finance-card-icon pagar">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="finance-card-value">R$ 45.630,00</div>
+                                <div class="finance-card-meta">5 contas pendentes</div>
+                                <div class="finance-card-arrow">
+                                    Acessar
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </a>
+                            <a href="/contas-pagar/nova" class="finance-card">
+                                <div class="finance-card-header">
+                                    <span class="finance-card-label">Nova Conta</span>
+                                    <div class="finance-card-icon pagar">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="finance-card-value">Cadastrar</div>
+                                <div class="finance-card-meta">Registrar nova despesa</div>
+                                <div class="finance-card-arrow">
+                                    Cadastrar
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="finance-cards" id="finance-cards-receber" style="display:none;">
+                            <a href="/contas-receber" class="finance-card">
+                                <div class="finance-card-header">
+                                    <span class="finance-card-label">Total a Receber</span>
+                                    <div class="finance-card-icon receber">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="finance-card-value">R$ 78.240,00</div>
+                                <div class="finance-card-meta">12 contas pendentes</div>
+                                <div class="finance-card-arrow">
+                                    Acessar
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </a>
+                            <a href="/contas-receber/nova" class="finance-card">
+                                <div class="finance-card-header">
+                                    <span class="finance-card-label">Nova Conta</span>
+                                    <div class="finance-card-icon receber">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="finance-card-value">Cadastrar</div>
+                                <div class="finance-card-meta">Registrar nova receita</div>
+                                <div class="finance-card-arrow">
+                                    Cadastrar
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Modulos -->
+                    <div class="section-header">
+                        <h2 class="section-title">Modulos do Sistema</h2>
+                    </div>
+
+                    <div class="modules-grid">
+
+                        <a href="/usuarios" class="module-card" sec:authorize="hasRole('MASTER')">
+                            <div class="module-icon users">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div class="module-content">
+                                <div class="module-title">
+                                    Usuarios
+                                    <svg class="module-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                                <p class="module-description">Gerencie usuarios e permissoes do sistema</p>
+                            </div>
                         </a>
 
+                        <a href="/clientes" class="module-card" sec:authorize="hasAnyRole('CLIENTES','MASTER')">
+                            <div class="module-icon clients">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                            <div class="module-content">
+                                <div class="module-title">
+                                    Clientes
+                                    <svg class="module-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                                <p class="module-description">Cadastre e consulte clientes</p>
+                            </div>
+                        </a>
+
+                        <a href="/produtos" class="module-card" sec:authorize="hasAnyRole('PRODUTO','MASTER')">
+                            <div class="module-icon products">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                    </path>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                </svg>
+                            </div>
+                            <div class="module-content">
+                                <div class="module-title">
+                                    Produto
+                                    <svg class="module-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                                <p class="module-description">Cadastre e gerencie produtos</p>
+                            </div>
+                        </a>
+
+                        <a href="/estoque" class="module-card" sec:authorize="hasAnyRole('ESTOQUE','MASTER')">
+                            <div class="module-icon stock">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14">
+                                    </path>
+                                    <path d="M16.5 9.4 7.55 4.24"></path>
+                                    <polyline points="3.29 7 12 12 20.71 7"></polyline>
+                                    <line x1="12" y1="22" x2="12" y2="12"></line>
+                                    <path d="m17 13 3 3-3 3"></path>
+                                </svg>
+                            </div>
+                            <div class="module-content">
+                                <div class="module-title">
+                                    Estoque
+                                    <svg class="module-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                                <p class="module-description">Controle de entrada e saida</p>
+                            </div>
+                        </a>
+
+                        <a href="/vendas" class="module-card" sec:authorize="hasAnyRole('VENDAS','MASTER')">
+                            <div class="module-icon sales">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                            </div>
+                            <div class="module-content">
+                                <div class="module-title">
+                                    Vendas
+                                    <svg class="module-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                                <p class="module-description">Criacao de pedido/venda</p>
+                            </div>
+                        </a>
+
+                        <a href="/financeiro" class="module-card" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                            <div class="module-icon finance">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                            </div>
+                            <div class="module-content">
+                                <div class="module-title">
+                                    Financeiro
+                                    <svg class="module-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                                <p class="module-description">Gestao financeira completa</p>
+                            </div>
+                        </a>
+
+                        <a href="/relatorios" class="module-card" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                            <div class="module-icon reports">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    <polyline points="10 9 9 9 8 9"></polyline>
+                                </svg>
+                            </div>
+                            <div class="module-content">
+                                <div class="module-title">
+                                    Relatorios
+                                    <svg class="module-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                                <p class="module-description">Relatorios e analises</p>
+                            </div>
+                        </a>
+
+                        <a href="/configuracoes" class="module-card" sec:authorize="hasRole('MASTER')">
+                            <div class="module-icon settings">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path
+                                        d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.67 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.67a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="module-content">
+                                <div class="module-title">
+                                    Configuracoes
+                                    <svg class="module-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                                <p class="module-description">Ajustes do sistema</p>
+                            </div>
+                        </a>
                     </div>
 
                 </div>
+
+                <!-- RIGHT SIDEBAR -->
+                <div class="content-sidebar">
+                    <div class="right-panel">
+
+                        <!-- Resumo Financeiro -->
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3 class="panel-title">Resumo Financeiro</h3>
+                                <a href="/financeiro" class="panel-action">
+                                    Este mes
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </a>
+                            </div>
+
+                            <div class="finance-item">
+                                <span class="finance-label">Receitas</span>
+                                <span class="finance-value receita">R$ 152.340,00</span>
+                            </div>
+                            <div class="finance-item">
+                                <span class="finance-label">Despesas</span>
+                                <span class="finance-value despesa">R$ 45.630,00</span>
+                            </div>
+                            <div class="finance-item">
+                                <span class="finance-label">Lucro Liquido</span>
+                                <span class="finance-value lucro">R$ 106.710,00</span>
+                            </div>
+
+                            <div class="chart-container">
+                                <div class="donut-chart">
+                                    <div class="donut-label">
+                                        <div class="donut-percent">70%</div>
+                                        <div class="donut-text">Margem</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Atividades Recentes -->
+                        <div class="panel-card">
+                            <div class="panel-header">
+                                <h3 class="panel-title">Atividades Recentes</h3>
+                            </div>
+
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon blue">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">Novo pedido #1024 criado</div>
+                                        <div class="activity-time">Ha 5 minutos</div>
+                                    </div>
+                                </div>
+
+                                <div class="activity-item">
+                                    <div class="activity-icon green">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                            </path>
+                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">Produto "Teclado Gamer" atualizado</div>
+                                        <div class="activity-time">Ha 15 minutos</div>
+                                    </div>
+                                </div>
+
+                                <div class="activity-item">
+                                    <div class="activity-icon purple">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="9" cy="7" r="4"></circle>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">Cliente Joao Silva cadastrado</div>
+                                        <div class="activity-time">Ha 1 hora</div>
+                                    </div>
+                                </div>
+
+                                <div class="activity-item">
+                                    <div class="activity-icon red">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-text">Venda #1023 concluida</div>
+                                        <div class="activity-time">Ha 2 horas</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: var(--space-4); text-align: center;">
+                                <a href="/atividades"
+                                    style="color: var(--primary-500); font-size: 0.875rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: var(--space-2);">
+                                    Ver todas atividades
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
 
-
-        </div>
-
-        <div class="footer">
-            Anonymous
+            <!-- Footer -->
+            <footer class="app-footer">
+                <p> Sistema V - Todos os direitos reservados</p>
+            </footer>
         </div>
 
     </div>
 
+    <script>
+        function mostrarFinanceiro(tipo) {
+            const btnPagar = document.querySelector('.toggle-btn:nth-child(1)');
+            const btnReceber = document.querySelector('.toggle-btn:nth-child(2)');
+            const cardsPagar = document.getElementById('finance-cards-pagar');
+            const cardsReceber = document.getElementById('finance-cards-receber');
 
+            if (tipo === 'pagar') {
+                btnPagar.classList.add('active');
+                btnReceber.classList.remove('active');
+                cardsPagar.style.display = 'grid';
+                cardsReceber.style.display = 'none';
+            } else {
+                btnReceber.classList.add('active');
+                btnPagar.classList.remove('active');
+                cardsReceber.style.display = 'grid';
+                cardsPagar.style.display = 'none';
+            }
+        }
+    </script>
 
+    <script>
+        function toggleSubmenu(event) {
+            event.preventDefault();
+            const container = event.currentTarget.closest('.nav-item-with-submenu');
+            const submenu = container.querySelector('.submenu');
+
+            if (container.classList.contains('open')) {
+                container.classList.remove('open');
+                submenu.style.display = 'none';
+            } else {
+                // Fecha outros submenus abertos
+                document.querySelectorAll('.nav-item-with-submenu.open').forEach(el => {
+                    el.classList.remove('open');
+                    el.querySelector('.submenu').style.display = 'none';
+                });
+                container.classList.add('open');
+                submenu.style.display = 'block';
+            }
+        }
+    </script>
 
 </body>
 

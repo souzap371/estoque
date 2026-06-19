@@ -1,352 +1,1454 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <title>Contas a Pagar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contas a Pagar - Sistema V</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f6f9;
+        :root {
+            --primary-500: #6366f1;
+            --primary-600: #4f46e5;
+            --primary-700: #4338ca;
+            --primary-50: #eef2ff;
+            --primary-100: #e0e7ff;
+            --primary-200: #c7d2fe;
+            --sidebar-bg: #1e293b;
+            --sidebar-hover: #334155;
+            --sidebar-active: #4f46e5;
+            --sidebar-text: #94a3b8;
+            --sidebar-text-active: #ffffff;
+            --neutral-0: #ffffff;
+            --neutral-50: #f8fafc;
+            --neutral-100: #f1f5f9;
+            --neutral-200: #e2e8f0;
+            --neutral-300: #cbd5e1;
+            --neutral-400: #94a3b8;
+            --neutral-500: #64748b;
+            --neutral-600: #475569;
+            --neutral-700: #334155;
+            --neutral-800: #1e293b;
+            --neutral-900: #0f172a;
+            --success-500: #10b981;
+            --success-50: #ecfdf5;
+            --success-100: #d1fae5;
+            --success-600: #059669;
+            --warning-500: #f59e0b;
+            --warning-50: #fffbeb;
+            --warning-100: #fef3c7;
+            --danger-500: #ef4444;
+            --danger-50: #fef2f2;
+            --danger-100: #fee2e2;
+            --danger-600: #dc2626;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --sidebar-width: 260px;
+            --header-height: 72px;
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
-        .container {
-            width: 95%;
-            margin: 30px auto;
+        body {
+            font-family: var(--font-sans);
+            background: var(--neutral-50);
+            color: var(--neutral-800);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        h1 {
-            color: #1e88e5;
-            margin-bottom: 25px;
+        .app-layout {
+            display: flex;
+            min-height: 100vh;
         }
 
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            min-height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-brand {
+            padding: var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .sidebar-brand-icon svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .sidebar-brand-text {
+            color: white;
+        }
+
+        .sidebar-brand-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+        }
+
+        .sidebar-brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--sidebar-text);
+            font-weight: 500;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: var(--space-4);
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: var(--space-2);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-lg);
+            color: var(--sidebar-text);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-bottom: var(--space-1);
+        }
+
+        .nav-item:hover {
+            background: var(--sidebar-hover);
+            color: var(--sidebar-text-active);
+        }
+
+        .nav-item.active {
+            background: var(--sidebar-active);
+            color: var(--sidebar-text-active);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .nav-item svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-user {
+            padding: var(--space-4);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: auto;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .user-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-email {
+            font-size: 0.75rem;
+            color: var(--sidebar-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-menu-btn {
+            background: none;
+            border: none;
+            color: var(--sidebar-text);
+            cursor: pointer;
+            padding: var(--space-1);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+
+        .user-menu-btn:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-logout {
+            padding: var(--space-4);
+            padding-top: 0;
+        }
+
+        .btn-logout {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: var(--font-sans);
+            text-decoration: none;
+        }
+
+        .btn-logout:hover {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+        }
+
+        /* MAIN CONTENT */
+        .main-wrapper {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* TOP HEADER */
+        .top-header {
+            height: var(--header-height);
+            background: var(--neutral-0);
+            border-bottom: 1px solid var(--neutral-200);
+            padding: 0 var(--space-8);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-greeting {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .greeting-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            letter-spacing: -0.025em;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .greeting-subtitle {
+            font-size: 0.875rem;
+            color: var(--neutral-500);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 320px;
+            padding: var(--space-2) var(--space-4) var(--space-2) var(--space-10);
+            background: var(--neutral-100);
+            border: 1.5px solid transparent;
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            color: var(--neutral-700);
+            font-family: var(--font-sans);
+            transition: all 0.2s ease;
+        }
+
+        .search-input::placeholder {
+            color: var(--neutral-400);
+        }
+
+        .search-input:focus {
+            outline: none;
+            background: var(--neutral-0);
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: var(--space-3);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--neutral-400);
+            pointer-events: none;
+        }
+
+        .search-kbd {
+            position: absolute;
+            right: var(--space-3);
+            top: 50%;
+            transform: translateY(-50%);
+            padding: var(--space-1) var(--space-2);
+            background: var(--neutral-200);
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            color: var(--neutral-500);
+            font-family: monospace;
+        }
+
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--neutral-100);
+            border: none;
+            border-radius: var(--radius-lg);
+            color: var(--neutral-600);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .btn-icon:hover {
+            background: var(--neutral-200);
+            color: var(--neutral-800);
+        }
+
+        .btn-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 18px;
+            height: 18px;
+            background: var(--danger-500);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.625rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--neutral-0);
+        }
+
+        /* CONTENT AREA */
+        .content-area {
+            flex: 1;
+            padding: var(--space-8);
+            max-width: 1600px;
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-8);
+        }
+
+        .page-title-section {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .page-back-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--neutral-0);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-lg);
+            color: var(--neutral-600);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .page-back-btn:hover {
+            background: var(--neutral-100);
+            color: var(--neutral-900);
+            border-color: var(--neutral-300);
+        }
+
+        .page-back-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+            letter-spacing: -0.025em;
+        }
+
+        .page-subtitle {
+            font-size: 0.875rem;
+            color: var(--neutral-500);
+            margin-top: var(--space-1);
+        }
+
+        .page-actions {
+            display: flex;
+            gap: var(--space-3);
+        }
+
+        /* CARDS */
         .card {
-            background: white;
-            border-radius: 6px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+            background: var(--neutral-0);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            margin-bottom: var(--space-6);
+            transition: all 0.2s ease;
         }
 
-        .card h2 {
-            color: #1e88e5;
-            margin-top: 0;
+        .card:hover {
+            box-shadow: var(--shadow-lg);
         }
 
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
+            border-bottom: 1px solid var(--neutral-100);
+        }
+
+        .card-header-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-header-icon.danger {
+            background: var(--danger-50);
+            color: var(--danger-500);
+        }
+
+        .card-header-icon.success {
+            background: var(--success-50);
+            color: var(--success-500);
+        }
+
+        .card-header-icon.primary {
+            background: var(--primary-50);
+            color: var(--primary-600);
+        }
+
+        .card-header-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .card-header-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--neutral-900);
+        }
+
+        .card-header-subtitle {
+            font-size: 0.875rem;
+            color: var(--neutral-500);
+        }
+
+        /* FORM STYLES */
         .form-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-5);
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
+            gap: var(--space-2);
         }
 
-        .form-group label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #555;
+        .form-group.full-width {
+            grid-column: 1 / -1;
         }
 
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            font-size: 14px;
+        .form-group.half-width {
+            grid-column: span 2;
         }
 
-        textarea {
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--neutral-700);
+        }
+
+        .form-label-required::after {
+            content: ' *';
+            color: var(--danger-500);
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: var(--space-3) var(--space-4);
+            background: var(--neutral-50);
+            border: 1.5px solid var(--neutral-200);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            color: var(--neutral-800);
+            font-family: var(--font-sans);
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: var(--neutral-400);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            background: var(--neutral-0);
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .form-input:hover,
+        .form-select:hover,
+        .form-textarea:hover {
+            border-color: var(--neutral-300);
+        }
+
+        .form-textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 100px;
         }
 
-        .btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            font-weight: bold;
+        .form-select {
             cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: var(--space-10);
+        }
+
+        .form-hint {
+            font-size: 0.75rem;
+            color: var(--neutral-400);
+            margin-top: var(--space-1);
+        }
+
+        .form-error {
+            font-size: 0.75rem;
+            color: var(--danger-500);
+            margin-top: var(--space-1);
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
+        }
+
+        .form-error svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-5);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
             text-decoration: none;
         }
 
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
         .btn-primary {
-            background: #1e88e5;
+            background: var(--primary-600);
+            color: white;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
 
         .btn-primary:hover {
-            background: #1565c0;
+            background: var(--primary-700);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.4);
         }
 
         .btn-success {
-            background: #2e7d32;
+            background: var(--success-600);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
 
         .btn-success:hover {
-            background: #1b5e20;
+            background: #047857;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
         }
 
-        .btn-warning {
-            background: #f9a825;
+        .btn-secondary {
+            background: var(--neutral-100);
+            color: var(--neutral-700);
+            border: 1.5px solid var(--neutral-200);
         }
 
-        .btn-warning:hover {
-            background: #f57f17;
+        .btn-secondary:hover {
+            background: var(--neutral-200);
+            color: var(--neutral-900);
+            border-color: var(--neutral-300);
         }
 
-        .search-box {
-            width: 100%;
-            padding: 12px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-        }
-
-        th {
-            background: #1e88e5;
+        .btn-danger {
+            background: var(--danger-600);
             color: white;
-            padding: 12px;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
-        td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            text-align: center;
+        .btn-danger:hover {
+            background: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
         }
 
-        tr:hover {
-            background: #f5f5f5;
+        .btn-lg {
+            padding: var(--space-4) var(--space-6);
+            font-size: 1rem;
+        }
+
+        /* STATUS BADGES */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 600;
         }
 
         .status-pago {
-            color: #2e7d32;
-            font-weight: bold;
+            background: var(--success-50);
+            color: var(--success-600);
         }
 
         .status-pendente {
-            color: #ef6c00;
-            font-weight: bold;
+            background: var(--warning-50);
+            color: #d97706;
         }
 
         .status-atrasado {
-            color: #c62828;
-            font-weight: bold;
+            background: var(--danger-50);
+            color: var(--danger-600);
         }
 
         .status-parcial {
-            color: #f9a825;
-            font-weight: bold;
+            background: #fef3c7;
+            color: #b45309;
         }
 
-        .pagamento-form {
+        /* TABLE STYLES */
+        .table-container {
+            overflow-x: auto;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--neutral-200);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--neutral-0);
+            font-size: 0.875rem;
+        }
+
+        .data-table thead {
+            background: var(--neutral-50);
+        }
+
+        .data-table th {
+            padding: var(--space-4) var(--space-5);
+            text-align: left;
+            font-weight: 600;
+            color: var(--neutral-600);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .data-table td {
+            padding: var(--space-4) var(--space-5);
+            border-bottom: 1px solid var(--neutral-100);
+            color: var(--neutral-700);
+        }
+
+        .data-table tbody tr:hover {
+            background: var(--neutral-50);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .table-actions {
             display: flex;
-            gap: 5px;
-            justify-content: center;
+            gap: var(--space-2);
         }
 
-        .pagamento-form input {
-            width: 90px;
+        .table-action-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .table-action-btn.edit {
+            background: var(--primary-50);
+            color: var(--primary-600);
+        }
+
+        .table-action-btn.edit:hover {
+            background: var(--primary-100);
+        }
+
+        .table-action-btn.delete {
+            background: var(--danger-50);
+            color: var(--danger-500);
+        }
+
+        .table-action-btn.delete:hover {
+            background: var(--danger-100);
+        }
+
+        .table-action-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* SEARCH BOX */
+        .search-container {
+            position: relative;
+            margin-bottom: var(--space-5);
+        }
+
+        .search-input-table {
+            width: 100%;
+            max-width: 400px;
+            padding: var(--space-3) var(--space-4) var(--space-3) var(--space-10);
+            background: var(--neutral-0);
+            border: 1.5px solid var(--neutral-200);
+            border-radius: var(--radius-lg);
+            font-size: 0.875rem;
+            color: var(--neutral-700);
+            font-family: var(--font-sans);
+            transition: all 0.2s ease;
+        }
+
+        .search-input-table:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .search-icon-table {
+            position: absolute;
+            left: var(--space-3);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--neutral-400);
+            pointer-events: none;
+        }
+
+        /* FOOTER */
+        .app-footer {
+            border-top: 1px solid var(--neutral-200);
+            padding: var(--space-6) var(--space-8);
+            text-align: center;
+            color: var(--neutral-400);
+            font-size: 0.875rem;
+            background: var(--neutral-0);
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 1280px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-group.half-width {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.half-width {
+                grid-column: span 1;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-4);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-wrapper {
+                margin-left: 0;
+            }
+
+            .top-header {
+                padding: 0 var(--space-4);
+            }
+
+            .search-input {
+                width: 200px;
+            }
+
+            .content-area {
+                padding: var(--space-4);
+            }
+
+            .header-greeting {
+                display: none;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .card:nth-child(1) {
+            animation-delay: 0.05s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.15s;
+        }
+
+        /* SUBMENU */
+        .nav-item-with-submenu {
+            position: relative;
+        }
+
+        .nav-item-with-submenu .nav-item {
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .submenu-arrow {
+            width: 16px;
+            height: 16px;
+            margin-left: auto;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-item-with-submenu.open .submenu-arrow {
+            transform: rotate(180deg);
+        }
+
+        .submenu {
+            padding-left: 0.75rem;
+            margin-top: 0.25rem;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .submenu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-bottom: 0.25rem;
+            opacity: 0.85;
+        }
+
+        .submenu-item:hover {
+            background: #334155;
+            color: #ffffff;
+            opacity: 1;
+        }
+
+        .submenu-item.active {
+            background: #4f46e5;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            opacity: 1;
+        }
+
+        .submenu-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: var(--space-12) var(--space-8);
+        }
+
+        .empty-state-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto var(--space-4);
+            background: var(--neutral-100);
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--neutral-400);
+        }
+
+        .empty-state-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .empty-state-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--neutral-700);
+            margin-bottom: var(--space-2);
+        }
+
+        .empty-state-text {
+            font-size: 0.875rem;
+            color: var(--neutral-500);
         }
     </style>
-
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="app-layout">
 
-        <h1>📤 Contas a Pagar</h1>
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
 
-        <a href="/dashboard" class="btn btn-primary">
-            ⬅ Voltar Menu inicial
-        </a>
+            <div class="sidebar-brand">
+                <div class="sidebar-brand-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                    </svg>
+                </div>
+                <div class="sidebar-brand-text">
+                    <div class="sidebar-brand-title">Sistema V</div>
+                    <div class="sidebar-brand-subtitle">Painel de Controle</div>
+                </div>
+            </div>
 
-        <br><br>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <a href="/dashboard" class="nav-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        Dashboard
+                    </a>
 
-        <!-- FORMULÁRIO -->
+                    <a href="/usuarios" class="nav-item" sec:authorize="hasRole('MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Usuarios
+                    </a>
 
-        <div class="card">
+                    <a href="/clientes" class="nav-item" sec:authorize="hasAnyRole('CLIENTES','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        Clientes
+                    </a>
 
-            <h2>
-                <span th:if="${conta.id == null}">
-                    ➕ Nova Conta
-                </span>
+                    <a href="/produtos" class="nav-item" sec:authorize="hasAnyRole('PRODUTO','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                            </path>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                        </svg>
+                        Produto
+                    </a>
 
-                <span th:if="${conta.id != null}">
-                    ✏ Editar Conta
-                </span>
-            </h2>
+                    <a href="/estoque" class="nav-item" sec:authorize="hasAnyRole('ESTOQUE','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l2-1.14">
+                            </path>
+                            <path d="M16.5 9.4 7.55 4.24"></path>
+                            <polyline points="3.29 7 12 12 20.71 7"></polyline>
+                            <line x1="12" y1="22" x2="12" y2="12"></line>
+                            <path d="m17 13 3 3-3 3"></path>
+                        </svg>
+                        Estoque
+                    </a>
 
-            <form th:action="@{/contas-pagar/salvar}" th:object="${conta}" method="post">
+                    <a href="/vendas" class="nav-item" sec:authorize="hasAnyRole('VENDAS','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                        Vendas
+                    </a>
 
-                <input type="hidden" th:field="*{id}">
+                    <th:block sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                        <div class="nav-item-with-submenu open">
+                            <a href="#" class="nav-item active" onclick="toggleSubmenu(event)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                                Financeiro
+                                <svg class="submenu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </a>
+                            <div class="submenu" style="display:block;">
+                                <a href="/contas-pagar" class="submenu-item active">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Contas a Pagar
+                                </a>
+                                <a href="/contas-receber" class="submenu-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Contas a Receber
+                                </a>
+                            </div>
+                        </div>
+                    </th:block>
 
-                <div class="form-grid">
+                    <a href="/relatorios" class="nav-item" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                        Relatorios
+                    </a>
 
-                    <div class="form-group">
+                    <a href="/configuracoes" class="nav-item" sec:authorize="hasRole('MASTER')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.67 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.67a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                            </path>
+                        </svg>
+                        Configuracoes
+                    </a>
+                </div>
+            </nav>
 
-                        <label>Descrição</label>
-
-                        <input type="text" th:field="*{descricao}" required>
-
+            <div class="sidebar-user">
+                <div class="user-card">
+                    <div class="user-avatar">A</div>
+                    <div class="user-info">
+                        <div class="user-name">Administrador</div>
+                        <div class="user-email">admin@sistemav.com</div>
                     </div>
+                    <button class="user-menu-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="12" r="1"></circle>
+                            <circle cx="5" cy="12" r="1"></circle>
+                        </svg>
+                    </button>
+                </div>
+            </div>
 
-                    <div class="form-group">
+            <div class="sidebar-logout">
+                <form th:action="@{/logout}" method="post" style="margin:0">
+                    <button type="submit" class="btn-logout">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        Sair do sistema
+                    </button>
+                </form>
+            </div>
+        </aside>
 
-                        <label>Fornecedor</label>
+        <!-- MAIN CONTENT -->
+        <div class="main-wrapper">
 
-                        <input type="text" name="razaoSocialFornecedor" placeholder="Razão Social" required>
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>CNPJ</label>
-
-                        <input type="text" name="cnpjFornecedor" placeholder="00.000.000/0000-00">
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>Telefone</label>
-
-                        <input type="text" name="telefoneFornecedor" placeholder="(00) 00000-0000">
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>Email</label>
-
-                        <input type="email" name="emailFornecedor" placeholder="email@empresa.com">
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>Valor</label>
-
-                        <input type="number" step="0.01" th:field="*{valor}" required>
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>Data Vencimento</label>
-
-                        <input type="date" th:field="*{dataVencimento}" required>
-
-                    </div>
-
+            <header class="top-header">
+                <div class="header-greeting">
+                    <h1 class="greeting-title">
+                        Ola, Administrador
+                        <span style="font-size: 1.25rem;">👋</span>
+                    </h1>
+                    <p class="greeting-subtitle">Bem-vindo(a) ao Sistema V. Tenha um otimo dia!</p>
                 </div>
 
-                <br>
+                <div class="header-actions">
+                    <div class="search-box">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" class="search-input" placeholder="Buscar no sistema...">
+                        <span class="search-kbd">⌘K</span>
+                    </div>
 
-                <div class="form-group">
+                    <button class="btn-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span class="notification-badge">3</span>
+                    </button>
+                </div>
+            </header>
 
-                    <label>Observação</label>
+            <div class="content-area">
 
-                    <textarea th:field="*{observacao}"></textarea>
-
+                <!-- PAGE HEADER -->
+                <div class="page-header">
+                    <div class="page-title-section">
+                        <a href="/dashboard" class="page-back-btn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                        </a>
+                        <div>
+                            <h1 class="page-title">Contas a Pagar</h1>
+                            <p class="page-subtitle">Gerencie suas despesas e contas pendentes</p>
+                        </div>
+                    </div>
+                    <div class="page-actions">
+                        <a href="/contas-pagar" class="btn btn-secondary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
+                            Ver Lista
+                        </a>
+                    </div>
                 </div>
 
-                <br>
+                <!-- FORM CARD -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-icon danger">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="card-header-title">
+                                <span th:if="${conta.id == null}">Nova Conta a Pagar</span>
+                                <span th:if="${conta.id != null}">Editar Conta a Pagar</span>
+                            </div>
+                            <div class="card-header-subtitle">
+                                <span th:if="${conta.id == null}">Preencha os dados para cadastrar uma nova
+                                    despesa</span>
+                                <span th:if="${conta.id != null}">Atualize os dados da conta selecionada</span>
+                            </div>
+                        </div>
+                    </div>
 
-                <button type="submit" class="btn btn-success">
+                    <form th:action="@{/contas-pagar/salvar}" th:object="${conta}" method="post">
+                        <input type="hidden" th:field="*{id}">
 
-                    💾 Salvar Conta
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label form-label-required">Descricao</label>
+                                <input type="text" class="form-input" th:field="*{descricao}"
+                                    placeholder="Ex: Aluguel do escritorio" required>
+                            </div>
 
-                </button>
+                            <div class="form-group">
+                                <label class="form-label form-label-required">Fornecedor</label>
+                                <input type="text" class="form-input" name="razaoSocialFornecedor"
+                                    placeholder="Razao Social do fornecedor" required>
+                            </div>
 
-            </form>
+                            <div class="form-group">
+                                <label class="form-label">CNPJ</label>
+                                <input type="text" class="form-input" name="cnpjFornecedor"
+                                    placeholder="00.000.000/0000-00">
+                                <span class="form-hint">Formato: 00.000.000/0000-00</span>
+                            </div>
 
+                            <div class="form-group">
+                                <label class="form-label">Telefone</label>
+                                <input type="text" class="form-input" name="telefoneFornecedor"
+                                    placeholder="(00) 00000-0000">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" name="emailFornecedor"
+                                    placeholder="email@empresa.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label form-label-required">Valor</label>
+                                <input type="number" step="0.01" class="form-input" th:field="*{valor}"
+                                    placeholder="0,00" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label form-label-required">Data de Vencimento</label>
+                                <input type="date" class="form-input" th:field="*{dataVencimento}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" th:field="*{status}">
+                                    <option value="PENDENTE">Pendente</option>
+                                    <option value="PAGO">Pago</option>
+                                    <option value="ATRASADO">Atrasado</option>
+                                    <option value="PARCIAL">Parcial</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="form-label">Observacao</label>
+                                <textarea class="form-textarea" th:field="*{observacao}"
+                                    placeholder="Informacoes adicionais sobre esta conta..."></textarea>
+                            </div>
+                        </div>
+
+                        <div
+                            style="display: flex; gap: var(--space-3); margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--neutral-100);">
+                            <a href="/contas-pagar" class="btn btn-secondary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                                    <polyline points="12 19 5 12 12 5"></polyline>
+                                </svg>
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                                    <polyline points="7 3 7 8 15 8"></polyline>
+                                </svg>
+                                Salvar Conta
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <p> Sistema V - Todos os direitos reservados</p>
+            </footer>
         </div>
 
+    </div>
 
+    <script>
+        function toggleSubmenu(event) {
+            event.preventDefault();
+            const container = event.currentTarget.closest('.nav-item-with-submenu');
+            const submenu = container.querySelector('.submenu');
 
-
-        <!-- <script>
-
-        const pesquisa =
-            document.getElementById('pesquisa');
-
-        pesquisa.addEventListener('keyup', function () {
-
-            let termo =
-                pesquisa.value.toLowerCase();
-
-            let linhas =
-                document.querySelectorAll('#tabelaContas tbody tr');
-
-            linhas.forEach(function (linha) {
-
-                let textoLinha =
-                    linha.innerText.toLowerCase();
-
-                linha.style.display =
-                    textoLinha.includes(termo)
-                        ? ''
-                        : 'none';
-
-            });
-
-        });
-
-    </script> -->
-
-        <script>
-
-            document.addEventListener('DOMContentLoaded', function () {
-
-                const pesquisa =
-                    document.getElementById('pesquisa');
-
-                const linhas =
-                    document.querySelectorAll('#tabelaContas tbody tr');
-
-                pesquisa.addEventListener('input', function () {
-
-                    let termo =
-                        pesquisa.value.toLowerCase().trim();
-
-                    linhas.forEach(function (linha) {
-
-                        let textoLinha =
-                            linha.textContent.toLowerCase();
-
-                        if (textoLinha.includes(termo)) {
-
-                            linha.style.display = '';
-
-                        } else {
-
-                            linha.style.display = 'none';
-
-                        }
-
-                    });
-
+            if (container.classList.contains('open')) {
+                container.classList.remove('open');
+                submenu.style.display = 'none';
+            } else {
+                document.querySelectorAll('.nav-item-with-submenu.open').forEach(el => {
+                    el.classList.remove('open');
+                    el.querySelector('.submenu').style.display = 'none';
                 });
-
-            });
-
-        </script>
+                container.classList.add('open');
+                submenu.style.display = 'block';
+            }
+        }
+    </script>
 
 </body>
 

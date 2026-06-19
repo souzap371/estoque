@@ -1001,6 +1001,67 @@
         .table-card {
             animation: fadeIn 0.4s ease-out forwards;
         }
+
+        /* SUBMENU */
+        .nav-item-with-submenu {
+            position: relative;
+        }
+
+        .nav-item-with-submenu .nav-item {
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .submenu-arrow {
+            width: 16px;
+            height: 16px;
+            margin-left: auto;
+            transition: transform 0.2s ease;
+        }
+
+        .nav-item-with-submenu.open .submenu-arrow {
+            transform: rotate(180deg);
+        }
+
+        .submenu {
+            padding-left: 0.75rem;
+            margin-top: 0.25rem;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        .submenu-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            margin-bottom: 0.25rem;
+            opacity: 0.85;
+        }
+
+        .submenu-item:hover {
+            background: #334155;
+            color: #ffffff;
+            opacity: 1;
+        }
+
+        .submenu-item.active {
+            background: #4f46e5;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            opacity: 1;
+        }
+
+        .submenu-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 
@@ -1092,14 +1153,40 @@
                         Vendas
                     </a>
 
-                    <a href="/financeiro" class="nav-item" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                        </svg>
-                        Financeiro
-                    </a>
+                    <th:block sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                        <div class="nav-item-with-submenu">
+                            <a href="#" class="nav-item" onclick="toggleSubmenu(event)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                                Financeiro
+                                <svg class="submenu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </a>
+                            <div class="submenu" style="display:none;">
+                                <a href="/contas-pagar" class="submenu-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Contas a Pagar
+                                </a>
+                                <a href="/contas-receber" class="submenu-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Contas a Receber
+                                </a>
+                            </div>
+                        </div>
+                    </th:block>
 
                     <a href="/relatorios" class="nav-item" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -1619,6 +1706,27 @@
             if (!confirm("Deseja remover este item?")) return;
             itens.splice(index, 1);
             renderTabela();
+        }
+    </script>
+
+    <script>
+        function toggleSubmenu(event) {
+            event.preventDefault();
+            const container = event.currentTarget.closest('.nav-item-with-submenu');
+            const submenu = container.querySelector('.submenu');
+
+            if (container.classList.contains('open')) {
+                container.classList.remove('open');
+                submenu.style.display = 'none';
+            } else {
+                // Fecha outros submenus abertos
+                document.querySelectorAll('.nav-item-with-submenu.open').forEach(el => {
+                    el.classList.remove('open');
+                    el.querySelector('.submenu').style.display = 'none';
+                });
+                container.classList.add('open');
+                submenu.style.display = 'block';
+            }
         }
     </script>
 

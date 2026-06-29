@@ -44,6 +44,11 @@ public class FinanceiroController {
         return "financeiro";
     }
 
+    @GetMapping("/dashboardFinanceiro")
+    public String dashboardFinanceiro() {
+        return "dashboardFinanceiro";
+    }
+
     @GetMapping("/relatorio")
     public String relatorioFinanceiroTela() {
         return "relatorio-financeiro";

@@ -111,6 +111,8 @@ public class FinanceiroService {
                 .collect(Collectors.toList());
     }
 
+    
+
     // =========================
     // BUSCAR PAGAMENTO
     // =========================

@@ -15,9 +15,14 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     Optional<Produto> findByNome(String nome);
 
     @Query("""
-        SELECT p FROM Produto p
-        WHERE p.codigo = :valor OR p.nome = :valor
-    """)
+                SELECT p FROM Produto p
+                WHERE p.codigo = :valor OR p.nome = :valor
+            """)
     Optional<Produto> findByCodigoOuNome(@Param("valor") String valor);
-}
 
+    @Query("""
+                SELECT COUNT(p)
+                FROM Produto p
+            """)
+    Long totalProdutos();
+}

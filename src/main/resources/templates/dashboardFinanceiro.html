@@ -1408,7 +1408,7 @@
             <header class="top-header">
                 <div class="header-greeting">
                     <h1 class="greeting-title">
-                        Ola, Administrador
+                        Dashboard Financeiro
                         <span style="font-size: 1.25rem;">👋</span>
                     </h1>
                     <p class="greeting-subtitle">Bem-vindo(a) ao Sistema V. Tenha um otimo dia!</p>
@@ -1440,12 +1440,11 @@
 
                 <div class="content-main">
 
-                    <!-- KPIs -->
+                    <!-- KPIs
                     <div class="kpi-grid">
-
                         <div class="kpi-card">
                             <div class="kpi-header">
-                                <span class="kpi-label">Vendas (Mês)</span>
+                                <span class="kpi-label">Vendas (Mes)</span>
                                 <div class="kpi-icon blue">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -1456,31 +1455,32 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="kpi-value"
-                                th:text="${#numbers.formatDecimal(kpiVendasValor, 1, 'POINT', 2, 'COMMA')}">R$ 0,00
-                            </div>
-                            <div class="kpi-trend" th:classappend="${kpiVendasPositiva} ? ' up' : ' down'">
+                            <div class="kpi-value">R$ 128.430,50</div>
+                            <div class="kpi-trend up">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline
-                                        th:points="${kpiVendasPositiva} ? '23 6 13.5 15.5 8.5 10.5 1 18' : '23 18 13.5 8.5 8.5 13.5 1 6'">
-                                    </polyline>
-                                    <polyline
-                                        th:points="${kpiVendasPositiva} ? '17 6 23 6 23 12' : '17 18 23 18 23 12'">
-                                    </polyline>
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
                                 </svg>
-                                <span th:text="${kpiVendasVariacao} + '% vs mês anterior'">0% vs mês anterior</span>
+                                12,5% vs mes anterior
                             </div>
                             <div class="sparkline">
-                                <div class="sparkline-bar" th:each="h : ${sparklineVendas}"
-                                    th:style="'height:' + ${h} + '%; background: #3b82f6;'"></div>
+                                <div class="sparkline-bar" style="height: 30%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 45%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 35%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 40%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 60%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 70%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 65%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 80%; background: #3b82f6;"></div>
                             </div>
                         </div>
 
-
                         <div class="kpi-card">
                             <div class="kpi-header">
-                                <span class="kpi-label">Pedidos (Mês)</span>
+                                <span class="kpi-label">Pedidos (Mes)</span>
                                 <div class="kpi-icon purple">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -1490,26 +1490,28 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="kpi-value" th:text="${kpiPedidosValor}">0</div>
-                            <div class="kpi-trend" th:classappend="${kpiPedidosPositiva} ? ' up' : ' down'">
+                            <div class="kpi-value">342</div>
+                            <div class="kpi-trend up">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline
-                                        th:points="${kpiPedidosPositiva} ? '23 6 13.5 15.5 8.5 10.5 1 18' : '23 18 13.5 8.5 8.5 13.5 1 6'">
-                                    </polyline>
-                                    <polyline
-                                        th:points="${kpiPedidosPositiva} ? '17 6 23 6 23 12' : '17 18 23 18 23 12'">
-                                    </polyline>
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
                                 </svg>
-                                <span th:text="${kpiPedidosVariacao} + '% vs mês anterior'">0% vs mês anterior</span>
+                                8,2% vs mes anterior
                             </div>
                             <div class="sparkline">
-                                <div class="sparkline-bar" th:each="h : ${sparklinePedidos}"
-                                    th:style="'height:' + ${h} + '%; background: #7c3aed;'"></div>
+                                <div class="sparkline-bar" style="height: 25%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 40%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 30%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 45%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 60%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 70%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 75%; background: #7c3aed;"></div>
                             </div>
                         </div>
-
-
 
                         <div class="kpi-card">
                             <div class="kpi-header">
@@ -1524,29 +1526,32 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="kpi-value" th:text="${kpiClientesValor}">0</div>
-                            <div class="kpi-trend" th:classappend="${kpiClientesPositiva} ? ' up' : ' down'">
+                            <div class="kpi-value">1.287</div>
+                            <div class="kpi-trend up">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline
-                                        th:points="${kpiClientesPositiva} ? '23 6 13.5 15.5 8.5 10.5 1 18' : '23 18 13.5 8.5 8.5 13.5 1 6'">
-                                    </polyline>
-                                    <polyline
-                                        th:points="${kpiClientesPositiva} ? '17 6 23 6 23 12' : '17 18 23 18 23 12'">
-                                    </polyline>
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
                                 </svg>
-                                <span th:text="${kpiClientesVariacao} + '% vs mês anterior'">0% vs mês anterior</span>
+                                15,3% vs mes anterior
                             </div>
                             <div class="sparkline">
-                                <div class="sparkline-bar" th:each="h : ${sparklineClientes}"
-                                    th:style="'height:' + ${h} + '%; background: #10b981;'"></div>
+                                <div class="sparkline-bar" style="height: 20%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 35%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 30%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 45%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 40%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 65%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 70%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 85%; background: #10b981;"></div>
                             </div>
                         </div>
 
-
                         <div class="kpi-card">
                             <div class="kpi-header">
-                                <span class="kpi-label">Produtos Vendidos</span>
+                                <span class="kpi-label">Produtos</span>
                                 <div class="kpi-icon orange">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -1558,31 +1563,163 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="kpi-value" th:text="${kpiProdutosValor}">0</div>
-                            <div class="kpi-trend" th:classappend="${kpiProdutosPositiva} ? ' up' : ' down'">
+                            <div class="kpi-value">532</div>
+                            <div class="kpi-trend down">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline
-                                        th:points="${kpiProdutosPositiva} ? '23 6 13.5 15.5 8.5 10.5 1 18' : '23 18 13.5 8.5 8.5 13.5 1 6'">
-                                    </polyline>
-                                    <polyline
-                                        th:points="${kpiProdutosPositiva} ? '17 6 23 6 23 12' : '17 18 23 18 23 12'">
-                                    </polyline>
+                                    <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
+                                    <polyline points="17 18 23 18 23 12"></polyline>
                                 </svg>
-                                <span th:text="${kpiProdutosVariacao} + '% vs mês anterior'">0% vs mês anterior</span>
+                                2,1% vs mes anterior
                             </div>
                             <div class="sparkline">
-                                <div class="sparkline-bar" th:each="h : ${sparklineProdutos}"
-                                    th:style="'height:' + ${h} + '%; background: #ea580c;'"></div>
+                                <div class="sparkline-bar" style="height: 60%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 70%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 65%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 45%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 40%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 35%; background: #ea580c;"></div>
+                            </div>
+                        </div>
+                    </div> -->
+
+
+
+
+
+                    <!-- FINANCE TOGGLE SECTION -->
+                    <div class="finance-toggle">
+                        <div class="finance-toggle-header">
+                            <div class="finance-toggle-title">
+                                <div class="finance-toggle-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                </div>
+                                Gestao Financeira
+                            </div>
+                            <div class="toggle-group">
+                                <button class="toggle-btn active" onclick="mostrarFinanceiro('pagar')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Contas a Pagar
+                                </button>
+                                <button class="toggle-btn" onclick="mostrarFinanceiro('receber')">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Contas a Receber
+                                </button>
                             </div>
                         </div>
 
+                        <div class="finance-cards" id="finance-cards-pagar">
+                            <a href="/contas-pagar" class="finance-card">
+                                <div class="finance-card-header">
+                                    <span class="finance-card-label">Total a Pagar</span>
+                                    <div class="finance-card-icon pagar">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="finance-card-value">R$ 45.630,00</div>
+                                <div class="finance-card-meta">5 contas pendentes</div>
+                                <div class="finance-card-arrow">
+                                    Acessar
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </a>
+                            <a href="/contas-pagar/nova" class="finance-card">
+                                <div class="finance-card-header">
+                                    <span class="finance-card-label">Nova Conta</span>
+                                    <div class="finance-card-icon pagar">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="finance-card-value">Cadastrar</div>
+                                <div class="finance-card-meta">Registrar nova despesa</div>
+                                <div class="finance-card-arrow">
+                                    Cadastrar
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </a>
+                        </div>
 
-                    </div> <!-- fecha .kpi-grid -->
+                        <div class="finance-cards" id="finance-cards-receber" style="display:none;">
+                            <a href="/financeiro" class="finance-card">
+                                <div class="finance-card-header">
+                                    <span class="finance-card-label">Total a Receber</span>
+                                    <div class="finance-card-icon receber">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="1" x2="12" y2="23"></line>
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="finance-card-value">R$ 78.240,00</div>
+                                <div class="finance-card-meta">12 contas pendentes</div>
+                                <div class="finance-card-arrow">
+                                    Acessar
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </a>
+                            <!-- <a href="/contas-receber/nova" class="finance-card">
+                                <div class="finance-card-header">
+                                    <span class="finance-card-label">Nova Conta</span>
+                                    <div class="finance-card-icon receber">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="finance-card-value">Cadastrar</div>
+                                <div class="finance-card-meta">Registrar nova receita</div>
+                                <div class="finance-card-arrow">
+                                    Cadastrar
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </div>
+                            </a> -->
+                        </div>
+                    </div>
 
-
-
-                    <!-- Modulos -->
+                    <!-- Modulos
                     <div class="section-header">
                         <h2 class="section-title">Modulos do Sistema</h2>
                     </div>
@@ -1704,8 +1841,7 @@
                             </div>
                         </a>
 
-                        <a href="/financeiro/dashboardFinanceiro" class="module-card"
-                            sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                        <a href="/financeiro" class="module-card" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
                             <div class="module-icon finance">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
@@ -1750,7 +1886,7 @@
                             </div>
                         </a>
 
-                        <!-- <a href="/configuracoes" class="module-card" sec:authorize="hasRole('MASTER')">
+                        <a href="/configuracoes" class="module-card" sec:authorize="hasRole('MASTER')">
                             <div class="module-icon settings">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
@@ -1771,8 +1907,8 @@
                                 </div>
                                 <p class="module-description">Ajustes do sistema</p>
                             </div>
-                        </a> -->
-                    </div>
+                        </a>
+                    </div> -->
 
                 </div>
 
@@ -1827,7 +1963,7 @@
                             </div>
                         </div>
 
-                        <!-- Atividades Recentes -->
+                        <!-- Atividades Recentes
                         <div class="panel-card">
                             <div class="panel-header">
                                 <h3 class="panel-title">Atividades Recentes</h3>
@@ -1907,7 +2043,7 @@
                                     </svg>
                                 </a>
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>

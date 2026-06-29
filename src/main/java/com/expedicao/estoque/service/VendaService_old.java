@@ -15,14 +15,14 @@ import com.expedicao.estoque.model.*;
 import com.expedicao.estoque.repositorie.*;
 
 @Service
-public class VendaService {
+public class VendaService_old {
 
     private final VendaRepository vendaRepository;
     private final ProdutoRepository produtoRepository;
     private final EstoqueService estoqueService;
     private final ContaReceberRepository contaReceberRepository;
 
-    public VendaService(
+    public VendaService_old(
             VendaRepository vendaRepository,
             ProdutoRepository produtoRepository,
             EstoqueService estoqueService,
@@ -212,8 +212,8 @@ public class VendaService {
                     ? new BigDecimal("100")
                     : BigDecimal.ZERO;
         }
-        if (atual == null)
-            return BigDecimal.ZERO;
+        if (atual == null) return BigDecimal.ZERO;
+
         return atual.subtract(anterior)
                 .divide(anterior, 4, RoundingMode.HALF_UP)
                 .multiply(new BigDecimal("100"))
@@ -262,3 +262,4 @@ public class VendaService {
         return dados;
     }
 }
+

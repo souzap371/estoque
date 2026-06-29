@@ -956,14 +956,49 @@
                         Vendas
                     </a>
 
-                    <a href="/financeiro" class="nav-item active" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                    <!-- <a href="/financeiro" class="nav-item active" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
                             <line x1="12" y1="1" x2="12" y2="23"></line>
                             <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                         </svg>
                         Financeiro
-                    </a>
+                    </a> -->
+
+                    <th:block sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                        <div class="nav-item-with-submenu">
+                            <a href="#" class="nav-item" onclick="toggleSubmenu(event)">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                                Financeiro
+                                <svg class="submenu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </a>
+                            <div class="submenu" style="display:none;">
+                                <a href="/contas-pagar" class="submenu-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Contas a Pagar
+                                </a>
+                                <a href="/financeiro" class="submenu-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    Contas a Receber
+                                </a>
+                            </div>
+                        </div>
+                    </th:block>
 
                     <a href="/relatorios" class="nav-item" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -977,7 +1012,7 @@
                         Relatórios
                     </a>
 
-                    <a href="/configuracoes" class="nav-item" sec:authorize="hasRole('MASTER')">
+                    <!-- <a href="/configuracoes" class="nav-item" sec:authorize="hasRole('MASTER')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="3"></circle>
@@ -986,7 +1021,7 @@
                             </path>
                         </svg>
                         Configurações
-                    </a>
+                    </a> -->
                 </div>
             </nav>
 

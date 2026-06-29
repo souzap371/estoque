@@ -1442,10 +1442,9 @@
 
                     <!-- KPIs -->
                     <div class="kpi-grid">
-
                         <div class="kpi-card">
                             <div class="kpi-header">
-                                <span class="kpi-label">Vendas (Mês)</span>
+                                <span class="kpi-label">Vendas (Mes)</span>
                                 <div class="kpi-icon blue">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -1456,31 +1455,32 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="kpi-value"
-                                th:text="${#numbers.formatDecimal(kpiVendasValor, 1, 'POINT', 2, 'COMMA')}">R$ 0,00
-                            </div>
-                            <div class="kpi-trend" th:classappend="${kpiVendasPositiva} ? ' up' : ' down'">
+                            <div class="kpi-value">R$ 128.430,50</div>
+                            <div class="kpi-trend up">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline
-                                        th:points="${kpiVendasPositiva} ? '23 6 13.5 15.5 8.5 10.5 1 18' : '23 18 13.5 8.5 8.5 13.5 1 6'">
-                                    </polyline>
-                                    <polyline
-                                        th:points="${kpiVendasPositiva} ? '17 6 23 6 23 12' : '17 18 23 18 23 12'">
-                                    </polyline>
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
                                 </svg>
-                                <span th:text="${kpiVendasVariacao} + '% vs mês anterior'">0% vs mês anterior</span>
+                                12,5% vs mes anterior
                             </div>
                             <div class="sparkline">
-                                <div class="sparkline-bar" th:each="h : ${sparklineVendas}"
-                                    th:style="'height:' + ${h} + '%; background: #3b82f6;'"></div>
+                                <div class="sparkline-bar" style="height: 30%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 45%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 35%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 40%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 60%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 70%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 65%; background: #3b82f6;"></div>
+                                <div class="sparkline-bar" style="height: 80%; background: #3b82f6;"></div>
                             </div>
                         </div>
 
-
                         <div class="kpi-card">
                             <div class="kpi-header">
-                                <span class="kpi-label">Pedidos (Mês)</span>
+                                <span class="kpi-label">Pedidos (Mes)</span>
                                 <div class="kpi-icon purple">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -1490,26 +1490,28 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="kpi-value" th:text="${kpiPedidosValor}">0</div>
-                            <div class="kpi-trend" th:classappend="${kpiPedidosPositiva} ? ' up' : ' down'">
+                            <div class="kpi-value">342</div>
+                            <div class="kpi-trend up">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline
-                                        th:points="${kpiPedidosPositiva} ? '23 6 13.5 15.5 8.5 10.5 1 18' : '23 18 13.5 8.5 8.5 13.5 1 6'">
-                                    </polyline>
-                                    <polyline
-                                        th:points="${kpiPedidosPositiva} ? '17 6 23 6 23 12' : '17 18 23 18 23 12'">
-                                    </polyline>
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
                                 </svg>
-                                <span th:text="${kpiPedidosVariacao} + '% vs mês anterior'">0% vs mês anterior</span>
+                                8,2% vs mes anterior
                             </div>
                             <div class="sparkline">
-                                <div class="sparkline-bar" th:each="h : ${sparklinePedidos}"
-                                    th:style="'height:' + ${h} + '%; background: #7c3aed;'"></div>
+                                <div class="sparkline-bar" style="height: 25%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 40%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 30%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 45%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 60%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 70%; background: #7c3aed;"></div>
+                                <div class="sparkline-bar" style="height: 75%; background: #7c3aed;"></div>
                             </div>
                         </div>
-
-
 
                         <div class="kpi-card">
                             <div class="kpi-header">
@@ -1524,29 +1526,32 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="kpi-value" th:text="${kpiClientesValor}">0</div>
-                            <div class="kpi-trend" th:classappend="${kpiClientesPositiva} ? ' up' : ' down'">
+                            <div class="kpi-value">1.287</div>
+                            <div class="kpi-trend up">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline
-                                        th:points="${kpiClientesPositiva} ? '23 6 13.5 15.5 8.5 10.5 1 18' : '23 18 13.5 8.5 8.5 13.5 1 6'">
-                                    </polyline>
-                                    <polyline
-                                        th:points="${kpiClientesPositiva} ? '17 6 23 6 23 12' : '17 18 23 18 23 12'">
-                                    </polyline>
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                    <polyline points="17 6 23 6 23 12"></polyline>
                                 </svg>
-                                <span th:text="${kpiClientesVariacao} + '% vs mês anterior'">0% vs mês anterior</span>
+                                15,3% vs mes anterior
                             </div>
                             <div class="sparkline">
-                                <div class="sparkline-bar" th:each="h : ${sparklineClientes}"
-                                    th:style="'height:' + ${h} + '%; background: #10b981;'"></div>
+                                <div class="sparkline-bar" style="height: 20%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 35%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 30%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 45%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 40%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 65%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 70%; background: #10b981;"></div>
+                                <div class="sparkline-bar" style="height: 85%; background: #10b981;"></div>
                             </div>
                         </div>
 
-
                         <div class="kpi-card">
                             <div class="kpi-header">
-                                <span class="kpi-label">Produtos Vendidos</span>
+                                <span class="kpi-label">Produtos</span>
                                 <div class="kpi-icon orange">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round">
@@ -1558,27 +1563,33 @@
                                     </svg>
                                 </div>
                             </div>
-                            <div class="kpi-value" th:text="${kpiProdutosValor}">0</div>
-                            <div class="kpi-trend" th:classappend="${kpiProdutosPositiva} ? ' up' : ' down'">
+                            <div class="kpi-value">532</div>
+                            <div class="kpi-trend down">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline
-                                        th:points="${kpiProdutosPositiva} ? '23 6 13.5 15.5 8.5 10.5 1 18' : '23 18 13.5 8.5 8.5 13.5 1 6'">
-                                    </polyline>
-                                    <polyline
-                                        th:points="${kpiProdutosPositiva} ? '17 6 23 6 23 12' : '17 18 23 18 23 12'">
-                                    </polyline>
+                                    <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
+                                    <polyline points="17 18 23 18 23 12"></polyline>
                                 </svg>
-                                <span th:text="${kpiProdutosVariacao} + '% vs mês anterior'">0% vs mês anterior</span>
+                                2,1% vs mes anterior
                             </div>
                             <div class="sparkline">
-                                <div class="sparkline-bar" th:each="h : ${sparklineProdutos}"
-                                    th:style="'height:' + ${h} + '%; background: #ea580c;'"></div>
+                                <div class="sparkline-bar" style="height: 60%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 70%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 65%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 45%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 55%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 40%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 50%; background: #ea580c;"></div>
+                                <div class="sparkline-bar" style="height: 35%; background: #ea580c;"></div>
                             </div>
                         </div>
+                    </div>
 
 
-                    </div> <!-- fecha .kpi-grid -->
+
+
 
 
 

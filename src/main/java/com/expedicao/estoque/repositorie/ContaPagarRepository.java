@@ -12,21 +12,21 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ContaPagarRepository
-        extends JpaRepository<ContaPagar, Long> {
+                extends JpaRepository<ContaPagar, Long> {
 
-    // buscar por status
-    List<ContaPagar> findByStatus(StatusContaPagar status);
+        // buscar por status
+        List<ContaPagar> findByStatus(StatusContaPagar status);
 
-    // buscar vencimento
-    List<ContaPagar> findByDataVencimentoBefore(LocalDate data);
+        // buscar vencimento
+        List<ContaPagar> findByDataVencimentoBefore(LocalDate data);
 
-    @Query("""
-                SELECT COALESCE(SUM(c.valorPago),0)
-                FROM ContaPagar c
-                WHERE c.dataPagamento BETWEEN :inicio AND :fim
-            """)
-    BigDecimal totalDespesas(
-            @Param("inicio") LocalDate inicio,
-            @Param("fim") LocalDate fim);
+        @Query("""
+                            SELECT COALESCE(SUM(c.valor),0)
+                            FROM ContaPagar c
+                            WHERE c.dataVencimento BETWEEN :inicio AND :fim
+                        """)
+        BigDecimal totalDespesas(
+                        @Param("inicio") LocalDate inicio,
+                        @Param("fim") LocalDate fim);
 
 }

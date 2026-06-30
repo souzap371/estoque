@@ -3,6 +3,7 @@ package com.expedicao.estoque.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.expedicao.estoque.dto.VendaDTO;
 import com.expedicao.estoque.dto.VendaItemEdicaoDTO;
+import com.expedicao.estoque.model.Cliente;
 import com.expedicao.estoque.model.Venda;
+import com.expedicao.estoque.repositorie.ClienteRepository;
 import com.expedicao.estoque.repositorie.ProdutoRepository;
 import com.expedicao.estoque.service.VendaService;
 
@@ -21,12 +24,15 @@ public class VendaController {
 
     private final VendaService vendaService;
     private final ProdutoRepository produtoRepository;
+    private final ClienteRepository clienteRepository;
 
     public VendaController(
             VendaService vendaService,
-            ProdutoRepository produtoRepository) {
+            ProdutoRepository produtoRepository,
+            ClienteRepository clienteRepository) {
         this.vendaService = vendaService;
         this.produtoRepository = produtoRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     // =============================
@@ -34,7 +40,7 @@ public class VendaController {
     // =============================
     @GetMapping
     public String novaVenda(Model model) {
-        prepararTela(model, null, "", "", List.of(), null);
+        prepararTela(model, null, null, List.of(), null);
         return "Venda";
     }
 
@@ -54,11 +60,9 @@ public class VendaController {
         prepararTela(
                 model,
                 venda.getId(),
-                venda.getClienteNome(),
-                venda.getClienteEstado(),
+                venda.getCliente(),
                 itens,
-                venda.getDataSaida()
-        );
+                venda.getDataSaida());
 
         return "Venda";
     }
@@ -75,7 +79,7 @@ public class VendaController {
             return ResponseEntity.ok().build();
 
         } catch (Exception e) {
-            e.printStackTrace(); // 🔥 isso vai mostrar o erro REAL no console
+            e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erro ao salvar venda: " + e.getMessage());
@@ -97,16 +101,15 @@ public class VendaController {
     private void prepararTela(
             Model model,
             Long vendaId,
-            String clienteNome,
-            String clienteEstado,
+            Cliente cliente,
             List<VendaItemEdicaoDTO> itens,
             LocalDate dataPedido) {
 
         model.addAttribute("vendaId", vendaId);
-        model.addAttribute("clienteNomeEdicao", clienteNome);
-        model.addAttribute("clienteEstadoEdicao", clienteEstado);
+        model.addAttribute("clienteEdicao", cliente);
         model.addAttribute("itensEdicao", itens);
-        model.addAttribute("dataPedidoEdicao", dataPedido); // 🔥 NOVO
+        model.addAttribute("dataPedidoEdicao", dataPedido);
         model.addAttribute("produtos", produtoRepository.findAll());
+        model.addAttribute("clientes", clienteRepository.findAll(Sort.by(Sort.Direction.ASC, "nomeCompleto")));
     }
 }

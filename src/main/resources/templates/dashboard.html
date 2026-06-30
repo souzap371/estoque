@@ -1781,23 +1781,15 @@
                     <div class="right-panel">
 
                         <!-- Resumo Financeiro -->
+                        <!-- Resumo Financeiro -->
+                        <!-- Resumo Financeiro -->
                         <div class="panel-card">
-                            <!-- <div class="panel-header">
-                                <h3 class="panel-title">Resumo Financeiro</h3>
-                                <a href="/financeiro" class="panel-action">
-                                    Este mes
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </a>
-                            </div> -->
-
                             <div class="panel-header">
                                 <h3 class="panel-title">Resumo Financeiro</h3>
-
-                                <select id="filtroPeriodo" class="panel-action">
-                                    <option value="mes">Este mês</option>
+                                <select id="filtroPeriodo" class="panel-action"
+                                    onchange="atualizarResumoFinanceiro(this.value)"
+                                    style="border: none; background: transparent; color: var(--primary-500); font-weight: 600; cursor: pointer; font-size: 0.875rem; font-family: var(--font-sans);">
+                                    <option value="mes" selected>Este mês</option>
                                     <option value="semana">Esta semana</option>
                                     <option value="ano">Este ano</option>
                                     <option value="todos">Todo período</option>
@@ -1806,21 +1798,29 @@
 
                             <div class="finance-item">
                                 <span class="finance-label">Receitas</span>
-                                <span class="finance-value receita">R$ 152.340,00</span>
+                                <span class="finance-value receita" id="rf-receitas"
+                                    th:text="'R$ ' + ${#numbers.formatDecimal(resumo.receitas, 1, 'POINT', 2, 'COMMA')}">R$
+                                    0,00</span>
                             </div>
                             <div class="finance-item">
                                 <span class="finance-label">Despesas</span>
-                                <span class="finance-value despesa">R$ 45.630,00</span>
+                                <span class="finance-value despesa" id="rf-despesas"
+                                    th:text="'R$ ' + ${#numbers.formatDecimal(resumo.despesas, 1, 'POINT', 2, 'COMMA')}">R$
+                                    0,00</span>
                             </div>
                             <div class="finance-item">
-                                <span class="finance-label">Lucro Liquido</span>
-                                <span class="finance-value lucro">R$ 106.710,00</span>
+                                <span class="finance-label">Lucro Líquido</span>
+                                <span class="finance-value lucro" id="rf-lucro"
+                                    th:text="'R$ ' + ${#numbers.formatDecimal(resumo.lucroLiquido, 1, 'POINT', 2, 'COMMA')}">R$
+                                    0,00</span>
                             </div>
 
                             <div class="chart-container">
-                                <div class="donut-chart">
+                                <div class="donut-chart" id="donut-chart"
+                                    th:style="'background: conic-gradient(var(--primary-500) 0deg ' + ${resumo.margemPercentual * 3.6} + 'deg, var(--neutral-200) ' + ${resumo.margemPercentual * 3.6} + 'deg 360deg);'">
                                     <div class="donut-label">
-                                        <div class="donut-percent">70%</div>
+                                        <div class="donut-percent" id="rf-margem"
+                                            th:text="${resumo.margemPercentual} + '%'">0%</div>
                                         <div class="donut-text">Margem</div>
                                     </div>
                                 </div>
@@ -1962,6 +1962,48 @@
                 submenu.style.display = 'block';
             }
         }
+    </script>
+
+    <script>
+        function atualizarResumoFinanceiro(periodo) {
+            fetch('/api/resumo-financeiro?periodo=' + encodeURIComponent(periodo))
+                .then(response => {
+                    if (!response.ok) throw new Error('Erro na requisição: ' + response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    // Formata valores no padrão brasileiro
+                    const fmt = (val) => {
+                        const num = parseFloat(val) || 0;
+                        return 'R$ ' + num.toLocaleString('pt-BR', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+                    };
+
+                    document.getElementById('rf-receitas').textContent = fmt(data.receitas);
+                    document.getElementById('rf-despesas').textContent = fmt(data.despesas);
+                    document.getElementById('rf-lucro').textContent = fmt(data.lucroLiquido);
+                    document.getElementById('rf-margem').textContent = data.margemPercentual.toFixed(1).replace('.', ',') + '%';
+
+                    // Atualiza donut chart
+                    const graus = Math.max(0, Math.min(360, data.margemPercentual * 3.6));
+                    document.getElementById('donut-chart').style.background =
+                        `conic-gradient(var(--primary-500) 0deg ${graus}deg, var(--neutral-200) ${graus}deg 360deg)`;
+                })
+                .catch(err => {
+                    console.error('Erro ao buscar resumo financeiro:', err);
+                });
+        }
+
+        // Inicializa o select com o valor correto ao carregar a página
+        document.addEventListener('DOMContentLoaded', function () {
+            const select = document.getElementById('filtroPeriodo');
+            if (select) {
+                // O valor padrão já está no HTML como "mes"
+                atualizarResumoFinanceiro(select.value);
+            }
+        });
     </script>
 
 </body>

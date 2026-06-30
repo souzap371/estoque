@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pedido / Venda - Sistema V</title>
+
     <style>
         :root {
             --primary-500: #6366f1;
@@ -13,11 +14,13 @@
             --primary-50: #eef2ff;
             --primary-100: #e0e7ff;
             --primary-200: #c7d2fe;
+
             --sidebar-bg: #1e293b;
             --sidebar-hover: #334155;
             --sidebar-active: #4f46e5;
             --sidebar-text: #94a3b8;
             --sidebar-text-active: #ffffff;
+
             --neutral-0: #ffffff;
             --neutral-50: #f8fafc;
             --neutral-100: #f1f5f9;
@@ -29,18 +32,23 @@
             --neutral-700: #334155;
             --neutral-800: #1e293b;
             --neutral-900: #0f172a;
+
             --success-500: #10b981;
             --success-50: #ecfdf5;
+            --success-100: #d1fae5;
             --warning-500: #f59e0b;
             --warning-50: #fffbeb;
             --danger-500: #ef4444;
             --danger-50: #fef2f2;
             --danger-100: #fee2e2;
+
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
             --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
             --space-1: 0.25rem;
             --space-2: 0.5rem;
             --space-3: 0.75rem;
@@ -50,11 +58,13 @@
             --space-8: 2rem;
             --space-10: 2.5rem;
             --space-12: 3rem;
+
             --radius-sm: 0.375rem;
             --radius-md: 0.5rem;
             --radius-lg: 0.75rem;
             --radius-xl: 1rem;
             --radius-2xl: 1.5rem;
+
             --sidebar-width: 260px;
             --header-height: 72px;
         }
@@ -79,6 +89,7 @@
             min-height: 100vh;
         }
 
+        /* SIDEBAR */
         .sidebar {
             width: var(--sidebar-width);
             background: var(--sidebar-bg);
@@ -270,6 +281,7 @@
             color: #fca5a5;
         }
 
+        /* MAIN CONTENT */
         .main-wrapper {
             flex: 1;
             margin-left: var(--sidebar-width);
@@ -278,6 +290,7 @@
             flex-direction: column;
         }
 
+        /* TOP HEADER */
         .top-header {
             height: var(--header-height);
             background: var(--neutral-0);
@@ -410,12 +423,14 @@
             border: 2px solid var(--neutral-0);
         }
 
+        /* CONTENT AREA */
         .content-area {
             flex: 1;
             padding: var(--space-8);
             max-width: 1200px;
         }
 
+        /* PAGE HEADER */
         .page-header {
             display: flex;
             justify-content: space-between;
@@ -554,6 +569,7 @@
             height: 14px;
         }
 
+        /* FORM CARD */
         .form-card {
             background: var(--neutral-0);
             border: 1px solid var(--neutral-200);
@@ -648,12 +664,6 @@
             padding-right: var(--space-10);
         }
 
-        .form-input[readonly] {
-            background: var(--neutral-100);
-            color: var(--neutral-500);
-            cursor: default;
-        }
-
         .form-hint {
             font-size: 0.75rem;
             color: var(--neutral-500);
@@ -699,6 +709,7 @@
             border-top: 1px solid var(--neutral-200);
         }
 
+        /* TABLE CARD */
         .table-card {
             background: var(--neutral-0);
             border: 1px solid var(--neutral-200);
@@ -870,6 +881,7 @@
             height: 16px;
         }
 
+        /* TOTAL SECTION */
         .total-section {
             display: flex;
             justify-content: flex-end;
@@ -894,6 +906,7 @@
             letter-spacing: -0.025em;
         }
 
+        /* FOOTER */
         .app-footer {
             border-top: 1px solid var(--neutral-200);
             padding: var(--space-6) var(--space-8);
@@ -903,6 +916,7 @@
             background: var(--neutral-0);
         }
 
+        /* RESPONSIVIDADE */
         @media (max-width: 1024px) {
             .form-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -988,6 +1002,7 @@
             animation: fadeIn 0.4s ease-out forwards;
         }
 
+        /* SUBMENU */
         .nav-item-with-submenu {
             position: relative;
         }
@@ -1050,10 +1065,13 @@
     </style>
 </head>
 
-
 <body>
+
     <div class="app-layout">
+
+        <!-- SIDEBAR -->
         <aside class="sidebar">
+
             <div class="sidebar-brand">
                 <div class="sidebar-brand-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -1068,6 +1086,7 @@
                     <div class="sidebar-brand-subtitle">Painel de Controle</div>
                 </div>
             </div>
+
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <a href="/dashboard" class="nav-item">
@@ -1078,6 +1097,7 @@
                         </svg>
                         Dashboard
                     </a>
+
                     <a href="/usuarios" class="nav-item" sec:authorize="hasRole('MASTER')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -1086,6 +1106,7 @@
                         </svg>
                         Usuários
                     </a>
+
                     <a href="/clientes" class="nav-item" sec:authorize="hasAnyRole('CLIENTES','MASTER')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -1096,6 +1117,7 @@
                         </svg>
                         Clientes
                     </a>
+
                     <a href="/produtos" class="nav-item" sec:authorize="hasAnyRole('PRODUTO','MASTER')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -1107,6 +1129,7 @@
                         </svg>
                         Produto
                     </a>
+
                     <a href="/estoque" class="nav-item" sec:authorize="hasAnyRole('ESTOQUE','MASTER')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -1120,6 +1143,7 @@
                         </svg>
                         Estoque
                     </a>
+
                     <a href="/vendas" class="nav-item active" sec:authorize="hasAnyRole('VENDAS','MASTER')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -1128,6 +1152,7 @@
                         </svg>
                         Vendas
                     </a>
+
                     <th:block sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
                         <div class="nav-item-with-submenu">
                             <a href="#" class="nav-item" onclick="toggleSubmenu(event)">
@@ -1162,6 +1187,7 @@
                             </div>
                         </div>
                     </th:block>
+
                     <a href="/relatorios" class="nav-item" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -1173,8 +1199,11 @@
                         </svg>
                         Relatórios
                     </a>
+
+
                 </div>
             </nav>
+
             <div class="sidebar-user">
                 <div class="user-card">
                     <div class="user-avatar">A</div>
@@ -1192,6 +1221,7 @@
                     </button>
                 </div>
             </div>
+
             <div class="sidebar-logout">
                 <form th:action="@{/logout}" method="post" style="margin:0">
                     <button type="submit" class="btn-logout">
@@ -1207,13 +1237,17 @@
             </div>
         </aside>
 
+        <!-- MAIN CONTENT -->
         <div class="main-wrapper">
+
             <header class="top-header">
                 <div class="header-greeting">
-                    <h1 class="greeting-title" th:text="${vendaId != null} ? '✏ Editar Venda' : '🛒 Nova Venda'">🛒 Nova
-                        Venda</h1>
+                    <h1 class="greeting-title" th:text="${vendaId != null} ? '✏ Editar Venda' : '🛒 Nova Venda'">
+                        🛒 Nova Venda
+                    </h1>
                     <p class="greeting-subtitle">Preencha os dados do cliente e adicione os produtos</p>
                 </div>
+
                 <div class="header-actions">
                     <div class="search-box">
                         <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -1224,6 +1258,7 @@
                         <input type="text" class="search-input" placeholder="Buscar no sistema...">
                         <span class="search-kbd">⌘K</span>
                     </div>
+
                     <button class="btn-icon">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -1236,6 +1271,7 @@
             </header>
 
             <div class="content-area">
+
                 <div class="page-header">
                     <div>
                         <h1 class="page-title" th:text="${vendaId != null} ? 'Editar Venda' : 'Nova Venda'">Nova Venda
@@ -1264,34 +1300,42 @@
                         </svg>
                         Dados do Cliente
                     </h3>
+
                     <div class="form-grid">
                         <div class="form-group">
-                            <label class="form-label">Cliente <span class="required">*</span></label>
-                            <select id="clienteSelect" class="form-select" onchange="onClienteChange()">
-                                <option value="">Selecione um cliente</option>
-                                <option th:each="c : ${clientes}" th:value="${c.id}"
-                                    th:text="${c.nomeCompleto + ' (' + c.uf + ')' }" th:data-uf="${c.uf}"
-                                    th:data-referencia="${c.referencia}" th:selected="${c.id == clienteIdEdicao}">
+                            <label class="form-label">Nome do Cliente</label>
+                            <input id="clienteNome" class="form-input" placeholder="Nome completo do cliente"
+                                th:value="${clienteNomeEdicao}">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Estado do Cliente</label>
+                            <select id="clienteEstado" class="form-select">
+                                <option value="">Selecione</option>
+                                <option
+                                    th:each="uf : ${T(java.util.List).of('AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO')}"
+                                    th:value="${uf}" th:text="${uf}" th:selected="${uf == clienteEstadoEdicao}">
                                 </option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Referência</label>
-                            <input type="text" id="clienteReferencia" class="form-input" readonly
-                                placeholder="Referência do cliente selecionado">
-                        </div>
+
                         <div class="form-group">
                             <label class="form-label">Data do Pedido</label>
                             <input type="date" id="dataPedido" class="form-input"
                                 th:value="${#temporals.format(dataPedidoEdicao, 'yyyy-MM-dd')}">
                         </div>
+
                         <div class="form-group">
                             <label class="form-label">Nota Fiscal</label>
                             <div class="radio-group">
-                                <label class="radio-label"><input type="radio" name="notaFiscal" value="true" checked>
-                                    Com NF</label>
-                                <label class="radio-label"><input type="radio" name="notaFiscal" value="false"> Sem
-                                    NF</label>
+                                <label class="radio-label">
+                                    <input type="radio" name="notaFiscal" value="true" checked>
+                                    Com NF
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="notaFiscal" value="false">
+                                    Sem NF
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -1310,6 +1354,7 @@
                         </svg>
                         Adicionar Produto
                     </h3>
+
                     <div class="form-grid">
                         <div class="form-group">
                             <label class="form-label">Produto</label>
@@ -1318,25 +1363,33 @@
                                 <option th:each="p : ${produtos}" th:value="${p.codigo}" th:text="${p.nome}"></option>
                             </select>
                         </div>
+
                         <div class="form-group">
                             <label class="form-label">Quantidade</label>
                             <input type="number" id="quantidade" class="form-input" placeholder="0" min="1">
                         </div>
+
                         <div class="form-group">
                             <label class="form-label">Valor por Caixa</label>
                             <input type="number" step="0.01" id="valor" class="form-input" placeholder="0,00">
                         </div>
                     </div>
+
                     <div class="form-grid-2" style="margin-top: var(--space-5);">
                         <div class="form-group">
                             <label class="form-label">Tipo do Item</label>
                             <div class="radio-group">
-                                <label class="radio-label"><input type="radio" name="tipoItem" value="V" checked>
-                                    Venda</label>
-                                <label class="radio-label"><input type="radio" name="tipoItem" value="T">
-                                    Transferência</label>
+                                <label class="radio-label">
+                                    <input type="radio" name="tipoItem" value="V" checked>
+                                    Venda
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="tipoItem" value="T">
+                                    Transferência
+                                </label>
                             </div>
                         </div>
+
                         <div class="form-group" id="estadoDestinoDiv" style="display:none;">
                             <label class="form-label">Estado Destino</label>
                             <select id="estadoDestino" class="form-select">
@@ -1346,6 +1399,7 @@
                             </select>
                         </div>
                     </div>
+
                     <div style="margin-top: var(--space-5);">
                         <button type="button" class="btn-primary" onclick="adicionarItem()">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -1366,6 +1420,7 @@
                             <p class="table-subtitle">Produtos adicionados à venda</p>
                         </div>
                     </div>
+
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -1375,11 +1430,12 @@
                                 <th>Tipo</th>
                                 <th>Destino</th>
                                 <th>Subtotal</th>
-                                <th style="text-align:right;">Ações</th>
+                                <th style="text-align: right;">Ações</th>
                             </tr>
                         </thead>
                         <tbody id="itens"></tbody>
                     </table>
+
                     <div class="total-section">
                         <span class="total-label">TOTAL:</span>
                         <span class="total-value" id="total">R$ 0,00</span>
@@ -1404,19 +1460,25 @@
                         Concluir Pedido
                     </button>
                 </div>
+
             </div>
 
+            <!-- Footer -->
             <footer class="app-footer">
                 <p> Sistema V - Todos os direitos reservados</p>
             </footer>
         </div>
+
     </div>
 
     <script th:inline="javascript">
         const vendaId = /*[[${vendaId}]]*/ null;
         const vendaEdicao = vendaId !== null;
-        const clienteIdBackend = /*[[${clienteIdEdicao}]]*/ null;
+
+        const clienteNomeBackend = /*[[${clienteNomeEdicao}]]*/ "";
+        const clienteEstadoBackend = /*[[${clienteEstadoEdicao}]]*/ "";
         const itensBackend = /*[[${itensEdicao}]]*/[];
+
         const salvarUrl = /*[[@{/vendas/salvar}]]*/ "/vendas/salvar";
 
         let itens = [];
@@ -1424,26 +1486,14 @@
 
         const moedaBR = v => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(v);
 
-        const clienteSelect = document.getElementById("clienteSelect");
-        const clienteReferencia = document.getElementById("clienteReferencia");
         const produtoInput = document.getElementById("produto");
         const quantidade = document.getElementById("quantidade");
         const valorInput = document.getElementById("valor");
         const estadoDestinoSelect = document.getElementById("estadoDestino");
         const totalLabel = document.getElementById("total");
+        const clienteNome = document.getElementById("clienteNome");
+        const clienteEstado = document.getElementById("clienteEstado");
 
-        // ========== SELECAO DE CLIENTE ==========
-        function onClienteChange() {
-            const option = clienteSelect.options[clienteSelect.selectedIndex];
-            if (!option || !option.value) {
-                clienteReferencia.value = "";
-                return;
-            }
-            const referencia = option.getAttribute("data-referencia") || "";
-            clienteReferencia.value = referencia;
-        }
-
-        // ========== ADICIONAR ITEM ==========
         window.adicionarItem = function () {
             const produto = produtoInput.value;
             const qtd = parseInt(quantidade.value);
@@ -1466,14 +1516,19 @@
             });
 
             renderTabela();
+
             produtoInput.value = quantidade.value = valorInput.value = "";
         };
 
-        // ========== TIPO ITEM (mostrar/esconder destino) ==========
         function atualizarCampoDestino() {
             const selecionado = document.querySelector("input[name='tipoItem']:checked");
             const divDestino = document.getElementById("estadoDestinoDiv");
-            if (!selecionado) { divDestino.style.display = "none"; return; }
+
+            if (!selecionado) {
+                divDestino.style.display = "none";
+                return;
+            }
+
             divDestino.style.display = selecionado.value === "T" ? "block" : "none";
         }
 
@@ -1481,15 +1536,10 @@
             document.querySelectorAll("input[name='tipoItem']").forEach(radio => {
                 radio.addEventListener("change", atualizarCampoDestino);
             });
-            atualizarCampoDestino();
 
-            // Preenche referência se estiver em edição
-            if (vendaEdicao && clienteIdBackend) {
-                onClienteChange();
-            }
+            atualizarCampoDestino();
         });
 
-        // ========== RENDER TABELA ==========
         function renderTabela() {
             const tbody = document.getElementById("itens");
             tbody.innerHTML = "";
@@ -1498,90 +1548,99 @@
             itens.forEach((item, index) => {
                 const subtotal = item.quantidade * item.valorPorCaixa;
                 total += subtotal;
+
                 const tr = document.createElement("tr");
+
                 tr.innerHTML = `
-            <td class="cell-product">${item.codigoOuNome}</td>
-            <td class="cell-quantity">${item.quantidade}</td>
-            <td class="cell-value">${moedaBR(item.valorPorCaixa)}</td>
-            <td><span class="cell-type ${item.tipoMovimentacao === 'V' ? 'venda' : 'transferencia'}">${item.tipoMovimentacao === 'V' ? 'Venda' : 'Transferência'}</span></td>
-            <td>${item.tipoMovimentacao === 'T' ? item.estadoDestino : '-'}</td>
-            <td class="cell-subtotal">${moedaBR(subtotal)}</td>
-            <td>
-                <div class="cell-actions">
-                    <button class="btn-action edit" onclick="editarItem(${index})" title="Editar">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                    </button>
-                    <button class="btn-action delete" onclick="excluirItem(${index})" title="Excluir">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                    </button>
-                </div>
-            </td>`;
+                    <td class="cell-product">${item.codigoOuNome}</td>
+                    <td class="cell-quantity">${item.quantidade}</td>
+                    <td class="cell-value">${moedaBR(item.valorPorCaixa)}</td>
+                    <td>
+                        <span class="cell-type ${item.tipoMovimentacao === 'V' ? 'venda' : 'transferencia'}">
+                            ${item.tipoMovimentacao === 'V' ? 'Venda' : 'Transferência'}
+                        </span>
+                    </td>
+                    <td>${item.tipoMovimentacao === 'T' ? item.estadoDestino : '-'}</td>
+                    <td class="cell-subtotal">${moedaBR(subtotal)}</td>
+                    <td>
+                        <div class="cell-actions">
+                            <button class="btn-action edit" onclick="editarItem(${index})" title="Editar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                            </button>
+                            <button class="btn-action delete" onclick="excluirItem(${index})" title="Excluir">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                `;
+
                 tbody.appendChild(tr);
             });
+
             totalLabel.innerText = moedaBR(total);
         }
 
-        // ========== EDITAR ITEM ==========
         function editarItem(index) {
             const item = itens[index];
             const tbody = document.getElementById("itens");
             const tr = tbody.children[index];
+
             tr.innerHTML = `
-        <td><input value="${item.codigoOuNome}" disabled class="form-input" style="width:100%;"></td>
-        <td><input type="number" id="qtdEdit" value="${item.quantidade}" class="form-input" style="width:80px;"></td>
-        <td><input type="number" step="0.01" id="valorEdit" value="${item.valorPorCaixa}" class="form-input" style="width:100px;"></td>
-        <td>
-            <select id="tipoEdit" class="form-select" style="width:120px;">
-                <option value="V" ${item.tipoMovimentacao === 'V' ? 'selected' : ''}>Venda</option>
-                <option value="T" ${item.tipoMovimentacao === 'T' ? 'selected' : ''}>Transferência</option>
-            </select>
-        </td>
-        <td><input id="destinoEdit" value="${item.estadoDestino || ''}" class="form-input" style="width:80px;"></td>
-        <td>-</td>
-        <td>
-            <div class="cell-actions">
-                <button class="btn-action edit" onclick="salvarEdicao(${index})" title="Salvar">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                </button>
-                <button class="btn-action delete" onclick="renderTabela()" title="Cancelar">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-            </div>
-        </td>`;
+                <td><input value="${item.codigoOuNome}" disabled class="form-input" style="width: 100%;"></td>
+                <td><input type="number" id="qtdEdit" value="${item.quantidade}" class="form-input" style="width: 80px;"></td>
+                <td><input type="number" step="0.01" id="valorEdit" value="${item.valorPorCaixa}" class="form-input" style="width: 100px;"></td>
+                <td>
+                    <select id="tipoEdit" class="form-select" style="width: 120px;">
+                        <option value="V" ${item.tipoMovimentacao === 'V' ? 'selected' : ''}>Venda</option>
+                        <option value="T" ${item.tipoMovimentacao === 'T' ? 'selected' : ''}>Transferência</option>
+                    </select>
+                </td>
+                <td>
+                    <input id="destinoEdit" value="${item.estadoDestino || ''}" class="form-input" style="width: 80px;">
+                </td>
+                <td>-</td>
+                <td>
+                    <div class="cell-actions">
+                        <button class="btn-action edit" onclick="salvarEdicao(${index})" title="Salvar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </button>
+                        <button class="btn-action delete" onclick="renderTabela()" title="Cancelar">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </td>
+            `;
         }
 
-        function salvarEdicao(index) {
-            itens[index].quantidade = parseInt(document.getElementById("qtdEdit").value);
-            itens[index].valorPorCaixa = parseFloat(document.getElementById("valorEdit").value);
-            itens[index].tipoMovimentacao = document.getElementById("tipoEdit").value;
-            itens[index].estadoDestino = document.getElementById("destinoEdit").value;
-            renderTabela();
-        }
-
-        function excluirItem(index) {
-            if (!confirm("Deseja remover este item?")) return;
-            itens.splice(index, 1);
-            renderTabela();
-        }
-
-        // ========== CONCLUIR PEDIDO ==========
         function concluirPedido() {
-            const clienteId = clienteSelect.value;
-            if (!clienteId) {
-                alert("Selecione um cliente");
-                clienteSelect.focus();
-                return;
-            }
             if (!Array.isArray(itens) || itens.length === 0) {
                 alert("Nenhum item adicionado ao pedido");
                 return;
             }
-            const comNotaFiscal = document.querySelector("input[name='notaFiscal']:checked").value === "true";
+            const comNotaFiscal =
+                document.querySelector("input[name='notaFiscal']:checked").value === "true";
+
             const dataPedido = document.getElementById("dataPedido");
 
             const payload = {
                 id: vendaId,
-                clienteId: parseInt(clienteId),
+                clienteNome: clienteNome.value,
+                clienteEstado: clienteEstado.value,
                 comNotaFiscal: comNotaFiscal,
                 dataPedido: dataPedido.value,
                 itens: itens
@@ -1608,8 +1667,10 @@
                 });
         }
 
-        // ========== CARREGAR EDICAO ==========
         if (vendaEdicao) {
+            clienteNome.value = clienteNomeBackend;
+            clienteEstado.value = clienteEstadoBackend;
+
             itensBackend.forEach(i => {
                 itens.push({
                     codigoOuNome: i.produtoCodigo,
@@ -1619,6 +1680,22 @@
                     estadoDestino: i.estadoDestino
                 });
             });
+
+            renderTabela();
+        }
+
+        function salvarEdicao(index) {
+            itens[index].quantidade = parseInt(document.getElementById("qtdEdit").value);
+            itens[index].valorPorCaixa = parseFloat(document.getElementById("valorEdit").value);
+            itens[index].tipoMovimentacao = document.getElementById("tipoEdit").value;
+            itens[index].estadoDestino = document.getElementById("destinoEdit").value;
+
+            renderTabela();
+        }
+
+        function excluirItem(index) {
+            if (!confirm("Deseja remover este item?")) return;
+            itens.splice(index, 1);
             renderTabela();
         }
     </script>
@@ -1628,10 +1705,12 @@
             event.preventDefault();
             const container = event.currentTarget.closest('.nav-item-with-submenu');
             const submenu = container.querySelector('.submenu');
+
             if (container.classList.contains('open')) {
                 container.classList.remove('open');
                 submenu.style.display = 'none';
             } else {
+                // Fecha outros submenus abertos
                 document.querySelectorAll('.nav-item-with-submenu.open').forEach(el => {
                     el.classList.remove('open');
                     el.querySelector('.submenu').style.display = 'none';
@@ -1641,6 +1720,7 @@
             }
         }
     </script>
+
 </body>
 
 </html>

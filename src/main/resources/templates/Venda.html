@@ -1285,6 +1285,12 @@
                             <input type="date" id="dataPedido" class="form-input"
                                 th:value="${#temporals.format(dataPedidoEdicao, 'yyyy-MM-dd')}">
                         </div>
+                        <div class="form-group full-width">
+                            <label class="form-label">Observação</label>
+                            <textarea id="observacao" class="form-input" rows="3"
+                                placeholder="Digite uma observação sobre o pedido..."
+                                th:text="${observacaoEdicao}"></textarea>
+                        </div>
                         <div class="form-group">
                             <label class="form-label">Nota Fiscal</label>
                             <div class="radio-group">

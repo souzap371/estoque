@@ -13,5 +13,7 @@ public enum FormaPagamento {
     GNRE,
     CARRO,
     MOTO,
-    IMOVEL
+    IMOVEL,
+    FRETE,
+    OUTROS
 }

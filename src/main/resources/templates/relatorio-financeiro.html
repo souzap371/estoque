@@ -848,6 +848,80 @@
       height: 14px;
     }
 
+    /* HISTORICO ROW */
+    .historico-linha {
+      display: none;
+      background: var(--neutral-50);
+    }
+
+    .historico-linha td {
+      padding: 0;
+      border-bottom: none;
+    }
+
+    .historico-content {
+      padding: var(--space-6);
+    }
+
+    .historico-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--neutral-900);
+      margin-bottom: var(--space-4);
+    }
+
+    .historico-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .historico-table th {
+      background: var(--neutral-100);
+      padding: var(--space-3) var(--space-4);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--neutral-600);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: left;
+    }
+
+    .historico-table td {
+      padding: var(--space-3) var(--space-4);
+      border-bottom: 1px solid var(--neutral-200);
+      font-size: 0.875rem;
+      color: var(--neutral-700);
+    }
+
+    .historico-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .btn-historico {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: var(--space-2) var(--space-3);
+      background: #7c3aed;
+      color: white;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-sans);
+    }
+
+    .btn-historico:hover {
+      background: #6d28d9;
+    }
+
+    .btn-historico svg {
+      width: 14px;
+      height: 14px;
+    }
+
     /* FOOTER */
     .app-footer {
       border-top: 1px solid var(--neutral-200);
@@ -1194,6 +1268,7 @@
                 <th>Data Pagamento</th>
                 <th>Forma</th>
                 <th>Anexo</th>
+                <th>Histórico</th>
                 <th style="text-align: right;">Ações</th>
               </tr>
             </thead>
@@ -1324,6 +1399,20 @@
                                             </a>`
                     : '-'}
                                     </td>
+                                                                                                      <td>
+                                    <button class="btn-historico" onclick="toggleHistorico(this)" disabled style="opacity:0.5;cursor:not-allowed;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                            <polyline points="14 2 14 8 20 8"></polyline>
+                                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                                            <polyline points="10 9 9 9 8 9"></polyline>
+                                        </svg>
+                                        Histórico
+                                    </button>
+                                </td>
+                                <td>-</td>
+                                    </td>
                                     <td>
                                         <div class="cell-actions">
                                             <button class="btn-action delete" onclick="excluirBaixa(${p.id})">
@@ -1339,6 +1428,52 @@
                                 `;
 
                 tbody.appendChild(tr);
+
+                // Linha do histórico (expandida)
+                const trHist = document.createElement('tr');
+                trHist.className = 'historico-linha';
+
+                let pagamentosHtml = '';
+                if (c.pagamentos && c.pagamentos.length > 0) {
+                  pagamentosHtml = c.pagamentos.map(pg => `
+                  <tr>
+                    <td>${formatarDataBR(pg.dataPagamento)}</td>
+                    <td class="cell-value pago">${formatarMoeda(pg.valorPago)}</td>
+                    <td class="cell-forma">${pg.formaPagamento || '-'}</td>
+                    <td>${pg.anexoPath ? '<span style="color:var(--success-500);font-weight:600;">✓ Com anexo</span>' : '<span style="color:var(--neutral-400);">-</span>'}</td>
+                  </tr>
+                `).join('');
+                } else {
+                  pagamentosHtml = `
+                  <tr>
+                    <td colspan="4" style="text-align:center;padding:var(--space-4);color:var(--neutral-400);">
+                      Nenhum pagamento registrado.
+                    </td>
+                  </tr>
+                `;
+                }
+
+                trHist.innerHTML = `
+                <td colspan="12">
+                  <div class="historico-content">
+                    <h3 class="historico-title">📋 Histórico de Pagamentos - ${c.clienteNome}</h3>
+                    <table class="historico-table">
+                      <thead>
+                        <tr>
+                          <th>Data Pagamento</th>
+                          <th>Valor Pago</th>
+                          <th>Forma</th>
+                          <th>Anexo</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        ${pagamentosHtml}
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              `;
+                tbody.appendChild(trHist);
               });
             } else {
               const tr = document.createElement('tr');
@@ -1361,6 +1496,52 @@
                             `;
 
               tbody.appendChild(tr);
+
+              // Linha do histórico (expandida)
+              const trHist = document.createElement('tr');
+              trHist.className = 'historico-linha';
+
+              let pagamentosHtml = '';
+              if (c.pagamentos && c.pagamentos.length > 0) {
+                pagamentosHtml = c.pagamentos.map(pg => `
+                  <tr>
+                    <td>${formatarDataBR(pg.dataPagamento)}</td>
+                    <td class="cell-value pago">${formatarMoeda(pg.valorPago)}</td>
+                    <td class="cell-forma">${pg.formaPagamento || '-'}</td>
+                    <td>${pg.anexoPath ? '<span style="color:var(--success-500);font-weight:600;">✓ Com anexo</span>' : '<span style="color:var(--neutral-400);">-</span>'}</td>
+                  </tr>
+                `).join('');
+              } else {
+                pagamentosHtml = `
+                  <tr>
+                    <td colspan="4" style="text-align:center;padding:var(--space-4);color:var(--neutral-400);">
+                      Nenhum pagamento registrado.
+                    </td>
+                  </tr>
+                `;
+              }
+
+              trHist.innerHTML = `
+                <td colspan="12">
+                  <div class="historico-content">
+                    <h3 class="historico-title">📋 Histórico de Pagamentos - ${c.clienteNome}</h3>
+                    <table class="historico-table">
+                      <thead>
+                        <tr>
+                          <th>Data Pagamento</th>
+                          <th>Valor Pago</th>
+                          <th>Forma</th>
+                          <th>Anexo</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        ${pagamentosHtml}
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              `;
+              tbody.appendChild(trHist);
             }
           });
         })
@@ -1385,6 +1566,35 @@
           console.error(err);
           alert("Erro ao excluir baixa.");
         });
+    }
+
+    function toggleHistorico(btn) {
+      const row = btn.closest('tr');
+      const historicoRow = row.nextElementSibling;
+      if (historicoRow && historicoRow.classList.contains('historico-linha')) {
+        if (historicoRow.style.display === 'none' || historicoRow.style.display === '') {
+          historicoRow.style.display = 'table-row';
+          btn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            Fechar
+          `;
+        } else {
+          historicoRow.style.display = 'none';
+          btn.innerHTML = `
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            Histórico
+          `;
+        }
+      }
     }
 
     window.onload = function () {

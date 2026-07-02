@@ -1342,6 +1342,12 @@
                                 <label class="radio-label"><input type="radio" name="tipoItem" value="T">
                                     Transferência</label>
                             </div>
+                            <div class="checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="bonificacao">
+                                    Produto de Bonificação
+                                </label>
+                            </div>
                         </div>
                         <div class="form-group" id="estadoDestinoDiv" style="display:none;">
                             <label class="form-label">Estado Destino</label>
@@ -1457,18 +1463,24 @@
             const tipo = document.querySelector("input[name='tipoItem']:checked").value;
             const estadoDestino = estadoDestinoSelect.value;
 
-            if (!produto || !qtd || !valor) return alert("Preencha os dados do produto");
-            if (tipo === "T" && !estadoDestino) return alert("Informe o estado de destino");
+            const bonificacao = chkBonificacao.checked;
 
-            const subtotal = qtd * valor;
+            if (!produto || !qtd)
+                return alert("Preencha os dados do produto");
+
+            if (!bonificacao && !valor)
+                return alert("Informe o valor do produto");
+
+            const subtotal = bonificacao ? 0 : qtd * valor;
             total += subtotal;
 
             itens.push({
                 codigoOuNome: produto,
                 quantidade: qtd,
-                valorPorCaixa: valor,
+                valorPorCaixa: chkBonificacao.checked ? 0 : valor,
                 tipoMovimentacao: tipo,
-                estadoDestino
+                estadoDestino,
+                bonificacao: chkBonificacao.checked
             });
 
             renderTabela();
@@ -1495,6 +1507,19 @@
             }
         });
 
+        const chkBonificacao = document.getElementById("bonificacao");
+
+        chkBonificacao.addEventListener("change", function () {
+
+            if (this.checked) {
+                valorInput.value = "0,00";
+                valorInput.disabled = true;
+            } else {
+                valorInput.disabled = false;
+            }
+
+        });
+
         // ========== RENDER TABELA ==========
         function renderTabela() {
             const tbody = document.getElementById("itens");
@@ -1502,7 +1527,9 @@
             total = 0;
 
             itens.forEach((item, index) => {
-                const subtotal = item.quantidade * item.valorPorCaixa;
+                const subtotal = item.bonificacao
+                    ? 0
+                    : item.quantidade * item.valorPorCaixa;
                 total += subtotal;
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
@@ -1584,12 +1611,14 @@
             }
             const comNotaFiscal = document.querySelector("input[name='notaFiscal']:checked").value === "true";
             const dataPedido = document.getElementById("dataPedido");
+            const observacao = document.getElementById("observacao").value;
 
             const payload = {
                 id: vendaId,
                 clienteId: parseInt(clienteId),
                 comNotaFiscal: comNotaFiscal,
                 dataPedido: dataPedido.value,
+                observacao: observacao,
                 itens: itens
             };
 
@@ -1622,6 +1651,7 @@
                     quantidade: i.quantidade,
                     valorPorCaixa: i.valorPorCaixa,
                     tipoMovimentacao: i.tipoMovimentacao,
+                    bonificacao: i.bonificacao,
                     estadoDestino: i.estadoDestino
                 });
             });

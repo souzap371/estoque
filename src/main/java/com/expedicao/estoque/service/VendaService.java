@@ -67,7 +67,7 @@ public class VendaService {
             venda = new Venda();
         }
 
-        // Busca o cliente pelo ID
+        // Busca o cliente
         Cliente cliente = clienteRepository.findById(dto.getClienteId())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
@@ -94,17 +94,31 @@ public class VendaService {
 
             TipoMovimentacao tipo = TipoMovimentacao.valueOf(itemDTO.getTipoMovimentacao());
 
+            // Baixa do estoque sempre ocorre
             estoqueService.baixarEstoque(produto, itemDTO.getQuantidade());
 
             String estadoDestino = null;
 
             if (tipo == TipoMovimentacao.T) {
                 Filial filial = Filial.valueOf(itemDTO.getEstadoDestino());
-                estoqueService.entradaEstoque(produto, filial, itemDTO.getQuantidade());
+
+                estoqueService.entradaEstoque(
+                        produto,
+                        filial,
+                        itemDTO.getQuantidade());
+
                 estadoDestino = filial.name();
             }
 
-            BigDecimal valorUnit = BigDecimal.valueOf(itemDTO.getValorPorCaixa());
+            // ===========================
+            // BONIFICAÇÃO
+            // ===========================
+            boolean bonificacao = Boolean.TRUE.equals(itemDTO.getBonificacao());
+
+            BigDecimal valorUnit = bonificacao
+                    ? BigDecimal.ZERO
+                    : BigDecimal.valueOf(itemDTO.getValorPorCaixa());
+
             BigDecimal subtotal = valorUnit.multiply(
                     BigDecimal.valueOf(itemDTO.getQuantidade()));
 
@@ -115,12 +129,16 @@ public class VendaService {
             item.setSubtotal(subtotal);
             item.setTipoMovimentacao(tipo);
             item.setEstadoDestino(estadoDestino);
+            item.setBonificacao(bonificacao);
 
             venda.adicionarItem(item);
+
+            // Soma somente itens pagos
             total = total.add(subtotal);
         }
 
         venda.setValorTotal(total);
+
         vendaRepository.save(venda);
 
         salvarFinanceiro(venda);
@@ -202,6 +220,25 @@ public class VendaService {
 
     public Long getPedidosMesAtual() {
         return vendaRepository.totalPedidosMesAtual();
+    }
+
+    public Long getBonificacaoMesAtual() {
+        Long result = vendaRepository.totalBonificacaoMesAtual();
+        return result != null ? result : 0L;
+    }
+
+    public Long getBonificacaoMesAnterior() {
+        Long result = vendaRepository.totalBonificacaoMesAnterior();
+        return result != null ? result : 0L;
+    }
+
+    public List<Long> getSparklineBonificacao() {
+        List<Long> lista = new ArrayList<>();
+        for (int i = 9; i >= 0; i--) {
+            Long qtd = vendaRepository.totalBonificacaoPorDia(i);
+            lista.add(qtd != null ? qtd : 0L);
+        }
+        return lista;
     }
 
     public Long getPedidosMesAnterior() {

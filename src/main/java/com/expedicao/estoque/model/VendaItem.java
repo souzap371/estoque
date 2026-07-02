@@ -32,6 +32,17 @@ public class VendaItem {
 
     private String estadoDestino;
 
+    @Column(nullable = false)
+    private Boolean bonificacao = false;
+
+    public Boolean getBonificacao() {
+        return bonificacao;
+    }
+
+    public void setBonificacao(Boolean bonificacao) {
+        this.bonificacao = bonificacao;
+    }
+
     // GETTERS & SETTERS
     public Long getId() {
         return id;

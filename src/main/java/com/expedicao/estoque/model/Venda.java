@@ -16,6 +16,8 @@ public class Venda {
     private String clienteNome;
     private String clienteEstado;
     private LocalDate dataSaida;
+
+    @Column(columnDefinition = "BOOLEAN")
     private Boolean comNotaFiscal;
 
     @Column(length = 2000)

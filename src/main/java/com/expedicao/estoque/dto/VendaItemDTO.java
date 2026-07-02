@@ -8,6 +8,16 @@ public class VendaItemDTO {
     private String tipoMovimentacao;
     private String estadoDestino;
 
+    private Boolean bonificacao = false;
+
+    public Boolean getBonificacao() {
+        return bonificacao;
+    }
+
+    public void setBonificacao(Boolean bonificacao) {
+        this.bonificacao = bonificacao;
+    }
+
     public String getCodigoOuNome() {
         return codigoOuNome;
     }

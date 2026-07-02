@@ -65,9 +65,19 @@ public class RelatorioController {
         if (tipo != null && !tipo.isBlank()) {
             tipoEnum = TipoMovimentacao.valueOf(tipo);
         }
+        // ==========================================
+        // AJUSTE DAS DATAS
+        // ==========================================
+        if (dataInicio == null) {
+            dataInicio = LocalDate.of(1900, 1, 1);
+        }
+
+        if (dataFim == null) {
+            dataFim = LocalDate.of(2999, 12, 31);
+        }
 
         Page<VendaItem> pagina = vendaItemRepository.filtrar(
-                pedidoId, produto, cliente, estado, tipoEnum, notaFiscal, dataInicio, dataFim, pageable);
+                pedidoId, produto, cliente, estado, tipoEnum != null ? tipoEnum.name() : null, notaFiscal, dataInicio, dataFim, pageable);
 
         model.addAttribute("pagina", pagina);
         model.addAttribute("itens", pagina.getContent());
@@ -162,14 +172,16 @@ public class RelatorioController {
     private List<Integer> calcularAlturasSparklineBigDecimal(List<BigDecimal> valores) {
         List<Integer> alturas = new ArrayList<>();
         if (valores == null || valores.isEmpty()) {
-            for (int i = 0; i < 10; i++) alturas.add(10);
+            for (int i = 0; i < 10; i++)
+                alturas.add(10);
             return alturas;
         }
         BigDecimal max = valores.stream()
                 .filter(v -> v != null)
                 .max(BigDecimal::compareTo)
                 .orElse(BigDecimal.ONE);
-        if (max.compareTo(BigDecimal.ZERO) == 0) max = BigDecimal.ONE;
+        if (max.compareTo(BigDecimal.ZERO) == 0)
+            max = BigDecimal.ONE;
 
         for (BigDecimal val : valores) {
             BigDecimal v = val != null ? val : BigDecimal.ZERO;
@@ -184,14 +196,16 @@ public class RelatorioController {
     private List<Integer> calcularAlturasSparklineLong(List<Long> valores) {
         List<Integer> alturas = new ArrayList<>();
         if (valores == null || valores.isEmpty()) {
-            for (int i = 0; i < 10; i++) alturas.add(10);
+            for (int i = 0; i < 10; i++)
+                alturas.add(10);
             return alturas;
         }
         long max = valores.stream()
                 .filter(v -> v != null)
                 .max(Long::compareTo)
                 .orElse(1L);
-        if (max == 0) max = 1;
+        if (max == 0)
+            max = 1;
 
         for (Long val : valores) {
             long v = val != null ? val : 0L;

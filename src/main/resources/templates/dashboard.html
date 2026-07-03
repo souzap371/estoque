@@ -676,6 +676,368 @@
             line-height: 1.5;
         }
 
+        /*==============================
+        IA JARVIT
+===============================*/
+
+        .jarvit-card {
+
+            overflow: hidden;
+            position: relative;
+
+            background:
+                radial-gradient(circle at top, #132846, #09111d);
+
+            color: white;
+        }
+
+        .jarvit-status {
+
+            font-size: 11px;
+
+            background: #1f6bff20;
+
+            color: #49b5ff;
+
+            padding: 5px 12px;
+
+            border-radius: 30px;
+
+            border: 1px solid #2b83ff55;
+        }
+
+        .jarvit-container {
+
+            position: relative;
+
+            width: 210px;
+
+            height: 210px;
+
+            margin: 15px auto;
+        }
+
+        .jarvit-core {
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: 170px;
+            height: 170px;
+        }
+
+        .ring {
+
+            position: absolute;
+
+            border-radius: 50%;
+
+            border: 2px solid #25b4ff;
+
+            inset: 0;
+
+            box-shadow:
+                0 0 20px #25b4ff,
+                inset 0 0 15px #25b4ff;
+
+            animation: rotate 10s linear infinite;
+        }
+
+        .ring2 {
+
+            inset: 15px;
+
+            animation-direction: reverse;
+
+            animation-duration: 7s;
+
+            opacity: .8;
+        }
+
+        .ring3 {
+
+            inset: 35px;
+
+            animation-duration: 4s;
+
+            border-style: dashed;
+        }
+
+        .center {
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: 70px;
+            height: 70px;
+
+            border-radius: 50%;
+
+            background: #0d1624;
+
+            border: 2px solid #38c5ff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: #68d9ff;
+
+            box-shadow:
+                0 0 20px #38c5ff;
+        }
+
+        .pulse {
+
+            position: absolute;
+
+            inset: 60px;
+
+            border-radius: 50%;
+
+            background: #25b4ff33;
+
+            animation: pulse 2s infinite;
+        }
+
+        .scan-line {
+
+            position: absolute;
+
+            width: 100%;
+
+            height: 2px;
+
+            background: #5ed7ff;
+
+            box-shadow: 0 0 15px #5ed7ff;
+
+            animation: scan 3s linear infinite;
+        }
+
+        .jarvit-info {
+
+            text-align: center;
+
+            margin-top: 15px;
+        }
+
+        .jarvit-info h4 {
+
+            color: #58d2ff;
+
+            margin-bottom: 10px;
+
+            letter-spacing: 2px;
+        }
+
+        .jarvit-info p {
+
+            font-size: 13px;
+
+            color: #5E9FD6;
+
+            line-height: 1.6;
+            font-weight:500
+        }
+
+        .jarvit-loading {
+
+            margin-top: 20px;
+        }
+
+        .jarvit-loading span {
+
+            font-size: 12px;
+
+            color: #59c7ff;
+        }
+
+        .progress {
+
+            margin-top: 10px;
+
+            height: 6px;
+
+            border-radius: 30px;
+
+            background: #14304f;
+
+            overflow: hidden;
+        }
+
+        .progress-bar {
+
+            width: 40%;
+
+            height: 100%;
+
+            background: linear-gradient(90deg, #00c6ff, #009dff, #00c6ff);
+
+            animation: loading 2s infinite;
+        }
+
+        .jarvit-footer {
+
+            margin-top: 18px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #71d4ff;
+
+            font-size: 13px;
+        }
+
+        .dot {
+
+            width: 10px;
+
+            height: 10px;
+
+            border-radius: 50%;
+
+            background: #00ff88;
+
+            animation: blink 1s infinite;
+        }
+
+        /*==============================
+ANIMAÇÕES
+===============================*/
+
+        @keyframes rotate {
+
+            from {
+
+                transform: rotate(0deg);
+
+            }
+
+            to {
+
+                transform: rotate(360deg);
+
+            }
+
+        }
+
+        @keyframes pulse {
+
+            0% {
+
+                transform: scale(.6);
+
+                opacity: .2;
+
+            }
+
+            50% {
+
+                transform: scale(1.2);
+
+                opacity: .8;
+
+            }
+
+            100% {
+
+                transform: scale(.6);
+
+                opacity: .2;
+
+            }
+
+        }
+
+        @keyframes scan {
+
+            0% {
+
+                top: 0;
+
+                opacity: 0;
+
+            }
+
+            10% {
+
+                opacity: 1;
+
+            }
+
+            50% {
+
+                top: 50%;
+
+            }
+
+            100% {
+
+                top: 100%;
+
+                opacity: 0;
+
+            }
+
+        }
+
+        @keyframes loading {
+
+            0% {
+
+                margin-left: -40%;
+
+            }
+
+            100% {
+
+                margin-left: 100%;
+
+            }
+
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+
+                opacity: 1;
+
+                box-shadow: 0 0 15px #00ff88;
+
+            }
+
+            50% {
+
+                opacity: .2;
+
+                box-shadow: none;
+
+            }
+
+        }
+
         /* RIGHT SIDEBAR */
         .right-panel {
             display: flex;
@@ -1896,86 +2258,72 @@
                             </div>
                         </div>
 
-                        <!-- Atividades Recentes -->
-                        <div class="panel-card">
+                        <!-- IA JARVIT -->
+                        <div class="panel-card jarvit-card">
+
                             <div class="panel-header">
-                                <h3 class="panel-title">Atividades Recentes</h3>
+                                <h3 class="panel-title">
+                                    🤖 IA JARVIT
+                                </h3>
+                                <span class="jarvit-status">
+                                    EM DESENVOLVIMENTO
+                                </span>
                             </div>
 
-                            <div class="activity-list">
-                                <div class="activity-item">
-                                    <div class="activity-icon blue">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                        </svg>
+                            <div class="jarvit-container">
+
+                                <!-- Núcleo -->
+                                <div class="jarvit-core">
+
+                                    <div class="ring ring1"></div>
+                                    <div class="ring ring2"></div>
+                                    <div class="ring ring3"></div>
+
+                                    <div class="pulse"></div>
+
+                                    <div class="center">
+                                        IA
                                     </div>
-                                    <div class="activity-content">
-                                        <div class="activity-text">Novo pedido #1024 criado</div>
-                                        <div class="activity-time">Ha 5 minutos</div>
-                                    </div>
+
                                 </div>
 
-                                <div class="activity-item">
-                                    <div class="activity-icon green">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path
-                                                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
-                                            </path>
-                                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                                        </svg>
-                                    </div>
-                                    <div class="activity-content">
-                                        <div class="activity-text">Produto "Teclado Gamer" atualizado</div>
-                                        <div class="activity-time">Ha 15 minutos</div>
-                                    </div>
-                                </div>
+                                <!-- Linhas -->
+                                <div class="scan-line"></div>
 
-                                <div class="activity-item">
-                                    <div class="activity-icon purple">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="9" cy="7" r="4"></circle>
-                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="activity-content">
-                                        <div class="activity-text">Cliente Joao Silva cadastrado</div>
-                                        <div class="activity-time">Ha 1 hora</div>
-                                    </div>
-                                </div>
-
-                                <div class="activity-item">
-                                    <div class="activity-icon red">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="activity-content">
-                                        <div class="activity-text">Venda #1023 concluida</div>
-                                        <div class="activity-time">Ha 2 horas</div>
-                                    </div>
-                                </div>
                             </div>
 
-                            <div style="margin-top: var(--space-4); text-align: center;">
-                                <a href="/atividades"
-                                    style="color: var(--primary-500); font-size: 0.875rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: var(--space-2);">
-                                    Ver todas atividades
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                        <polyline points="12 5 19 12 12 19"></polyline>
-                                    </svg>
-                                </a>
+                            <div class="jarvit-info">
+
+                                <h4>IA JARVIT</h4>
+
+                                <p>
+                                    Estamos desenvolvendo um assistente inteligente que irá automatizar
+                                    tarefas, gerar relatórios, interpretar dados financeiros,
+                                    responder perguntas e auxiliar na tomada de decisões.
+                                </p>
+
+                                <div class="jarvit-loading">
+
+                                    <span>Inicializando módulos...</span>
+
+                                    <div class="progress">
+                                        <div class="progress-bar"></div>
+                                    </div>
+
+                                </div>
+
+                                <div class="jarvit-footer">
+
+                                    <span class="dot"></span>
+
+                                    <span>
+                                        Disponível em breve...
+                                    </span>
+
+                                </div>
+
                             </div>
+
                         </div>
 
                     </div>

@@ -55,6 +55,32 @@ public interface VendaItemRepository extends JpaRepository<VendaItem, Long> {
                         @Param("dataFim") LocalDate dataFim,
                         Pageable pageable);
 
+        @Query(value = """
+                        SELECT vi.*
+                        FROM venda_item vi
+                        JOIN venda v ON v.id = vi.venda_id
+                        JOIN produto p ON p.id = vi.produto_id
+                        WHERE
+                              (:pedido IS NULL OR v.id = :pedido)
+                          AND (:produto IS NULL OR LOWER(p.nome) LIKE LOWER(CONCAT('%', :produto, '%')))
+                          AND (:cliente IS NULL OR LOWER(v.cliente_nome) LIKE LOWER(CONCAT('%', :cliente, '%')))
+                          AND (:estado IS NULL OR LOWER(v.cliente_estado) LIKE LOWER(CONCAT('%', :estado, '%')))
+                          AND (:tipo IS NULL OR vi.tipo_movimentacao = :tipo)
+                          AND (:notaFiscal IS NULL OR v.com_nota_fiscal = CAST(:notaFiscal AS BOOLEAN))
+                          AND v.data_saida >= :dataInicio
+                          AND v.data_saida <= :dataFim
+                        ORDER BY v.data_saida DESC, v.id DESC, vi.id
+                        """, nativeQuery = true)
+        List<VendaItem> filtrarTodos(
+                        @Param("pedido") Long pedido,
+                        @Param("produto") String produto,
+                        @Param("cliente") String cliente,
+                        @Param("estado") String estado,
+                        @Param("tipo") String tipo,
+                        @Param("notaFiscal") Boolean notaFiscal,
+                        @Param("dataInicio") LocalDate dataInicio,
+                        @Param("dataFim") LocalDate dataFim);
+
         // ==========================================================
         // LISTAS PARA OS FILTROS
         // ==========================================================

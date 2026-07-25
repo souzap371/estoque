@@ -4,16 +4,18 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.expedicao.estoque.dto.VendaClienteResumoDTO;
 import com.expedicao.estoque.model.TipoMovimentacao;
 import com.expedicao.estoque.model.VendaItem;
 import com.expedicao.estoque.repositorie.EstoqueRepository;
@@ -49,10 +51,7 @@ public class RelatorioController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim,
             @RequestParam(required = false) Boolean notaFiscal,
-            @RequestParam(defaultValue = "0") int page,
             Model model) {
-
-        var pageable = PageRequest.of(page, 10);
 
         // Conversão segura do Pedido
         Long pedidoId = null;
@@ -76,23 +75,24 @@ public class RelatorioController {
             dataFim = LocalDate.of(2999, 12, 31);
         }
 
-        Page<VendaItem> pagina = vendaItemRepository.filtrar(
-                pedidoId, produto, cliente, estado, tipoEnum != null ? tipoEnum.name() : null, notaFiscal, dataInicio, dataFim, pageable);
+        List<VendaItem> itens = vendaItemRepository.filtrarTodos(
+                pedidoId, produto, cliente, estado, tipoEnum != null ? tipoEnum.name() : null,
+                notaFiscal, dataInicio, dataFim);
+        List<VendaClienteResumoDTO> clientes = agruparVendasPorCliente(itens);
 
-        model.addAttribute("pagina", pagina);
-        model.addAttribute("itens", pagina.getContent());
+        model.addAttribute("clientesVendas", clientes);
 
         // TOTAIS
         model.addAttribute("totalPedidos",
-                pagina.getContent().stream()
+                itens.stream()
                         .map(i -> i.getVenda().getId())
                         .distinct()
                         .count());
 
-        model.addAttribute("totalItens", pagina.getTotalElements());
+        model.addAttribute("totalItens", itens.size());
 
         model.addAttribute("totalQuantidade",
-                pagina.getContent().stream()
+                itens.stream()
                         .mapToInt(VendaItem::getQuantidade)
                         .sum());
 
@@ -152,6 +152,25 @@ public class RelatorioController {
         model.addAttribute("sparklineProdutos", calcularAlturasSparklineLong(sparklineProdutos));
 
         return "relatorio-vendas";
+    }
+
+    private List<VendaClienteResumoDTO> agruparVendasPorCliente(List<VendaItem> itens) {
+        Map<String, List<VendaItem>> grupos = new LinkedHashMap<>();
+        Map<String, String> nomes = new LinkedHashMap<>();
+
+        for (VendaItem item : itens) {
+            String nome = item.getVenda().getClienteNome();
+            if (nome == null || nome.isBlank()) {
+                nome = "Cliente não informado";
+            }
+            String chave = nome.trim().toLowerCase(Locale.ROOT);
+            nomes.putIfAbsent(chave, nome);
+            grupos.computeIfAbsent(chave, ignorada -> new ArrayList<>()).add(item);
+        }
+
+        return grupos.entrySet().stream()
+                .map(grupo -> new VendaClienteResumoDTO(nomes.get(grupo.getKey()), grupo.getValue()))
+                .toList();
     }
 
     @GetMapping("/produtos")

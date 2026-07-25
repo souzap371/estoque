@@ -755,9 +755,61 @@
             gap: var(--space-2);
         }
 
+        .export-wrapper {
+            position: relative;
+        }
+
+        .export-menu {
+            display: none;
+            position: absolute;
+            z-index: 30;
+            top: calc(100% + 8px);
+            right: 0;
+            min-width: 190px;
+            padding: var(--space-2);
+            background: var(--neutral-0);
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .export-menu.active {
+            display: grid;
+            gap: var(--space-1);
+        }
+
+        .export-option {
+            width: 100%;
+            padding: var(--space-3);
+            border: 0;
+            border-radius: var(--radius-md);
+            background: transparent;
+            color: var(--neutral-700);
+            cursor: pointer;
+            font: inherit;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .export-option:hover {
+            background: var(--primary-50);
+            color: var(--primary-600);
+        }
+
         .data-table {
             width: 100%;
             border-collapse: collapse;
+        }
+
+        .table-scroll {
+            width: 100%;
+            overflow-x: auto;
+            overscroll-behavior-inline: contain;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .table-scroll > table {
+            min-width: max-content;
         }
 
         .data-table thead {
@@ -941,6 +993,69 @@
         }
 
         .btn-action svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .historico-linha {
+            display: none;
+            background: var(--neutral-50);
+        }
+
+        .historico-linha > td {
+            padding: 0;
+        }
+
+        .historico-content {
+            padding: var(--space-6);
+        }
+
+        .historico-title {
+            margin: 0 0 var(--space-4);
+            color: var(--neutral-900);
+            font-size: 1rem;
+        }
+
+        .historico-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--neutral-0);
+        }
+
+        .historico-table th,
+        .historico-table td {
+            padding: var(--space-3);
+            border-bottom: 1px solid var(--neutral-100);
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .historico-table th {
+            background: var(--neutral-100);
+            color: var(--neutral-600);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .btn-historico {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-2) var(--space-3);
+            border: 0;
+            border-radius: var(--radius-md);
+            background: #7c3aed;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8125rem;
+            font-weight: 600;
+        }
+
+        .btn-historico:hover {
+            background: #6d28d9;
+        }
+
+        .btn-historico svg {
             width: 14px;
             height: 14px;
         }
@@ -1464,7 +1579,7 @@
                         Filtros
                     </h3>
 
-                    <form method="get" th:action="@{/relatorios/vendas}">
+                    <form id="filtrosVendas" method="get" th:action="@{/relatorios/vendas}">
                         <div class="filter-grid">
                             <div class="filter-group">
                                 <label class="filter-label">Pedido</label>
@@ -1558,7 +1673,10 @@
                             <p class="table-subtitle">Pedidos e itens vendidos</p>
                         </div>
                         <div class="table-actions">
-                            <button class="btn-secondary btn-sm">
+                            <div class="export-wrapper">
+                            <button type="button" class="btn-secondary btn-sm"
+                                onclick="toggleMenuExportacao(event, 'menuExportarVendas')"
+                                aria-haspopup="true" aria-expanded="false">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -1567,122 +1685,150 @@
                                 </svg>
                                 Exportar
                             </button>
+                            <div id="menuExportarVendas" class="export-menu">
+                                <button type="button" class="export-option" onclick="exportarVendas('excel')">
+                                    📊 Excel formatado (.xlsx)
+                                </button>
+                                <button type="button" class="export-option" onclick="exportarVendas('pdf')">
+                                    📄 PDF profissional
+                                </button>
+                            </div>
+                            </div>
                         </div>
                     </div>
 
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Pedido</th>
-                                <th>Produto</th>
-                                <th>Qtd</th>
-                                <th>Valor Unit.</th>
-                                <th>Subtotal</th>
-                                <th>Cliente</th>
-                                <th>Estado</th>
-                                <th>Data</th>
-                                <th>Tipo</th>
-                                <th>NF</th>
-                                <th style="text-align: right;">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="item : ${itens}">
-                                <td class="cell-pedido" th:text="${item.venda.id}">1024</td>
-                                <td class="cell-product" th:text="${item.produto.nome}">Teclado Gamer</td>
-                                <td class="cell-quantity" th:text="${item.quantidade}">10</td>
-                                <td class="cell-value" th:text="${#numbers.formatCurrency(item.valorPorCaixa)}">R$
-                                    150,00</td>
-                                <td class="cell-subtotal" th:text="${#numbers.formatCurrency(item.subtotal)}">R$
-                                    1.500,00</td>
-                                <td class="cell-client" th:text="${item.venda.clienteNome}">João Silva</td>
-                                <td>
-                                    <span class="cell-estado" th:text="${item.venda.clienteEstado}">SP</span>
-                                </td>
-                                <td class="cell-date"
-                                    th:text="${#temporals.format(item.venda.dataSaida, 'dd/MM/yyyy')}">18/06/2026</td>
-                                <td>
-                                    <span class="cell-type venda" th:if="${item.tipoMovimentacao == 'V'}">
-                                        Venda
-                                    </span>
-                                    <span class="cell-type transferencia" th:if="${item.tipoMovimentacao == 'T'}">
-                                        Transferência
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="cell-nf sim" th:if="${item.venda.comNotaFiscal}">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <polyline points="20 6 9 17 4 12"></polyline>
-                                        </svg>
-                                        Sim
-                                    </span>
-                                    <span class="cell-nf nao" th:unless="${item.venda.comNotaFiscal}">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                                        </svg>
-                                        Não
-                                    </span>
-                                </td>
-                                <td>
-                                    <div class="cell-actions">
-                                        <a class="btn-action edit"
-                                            th:href="@{/vendas/editar/{id}(id=${item.venda.id})}">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7">
-                                                </path>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z">
-                                                </path>
-                                            </svg>
-                                            Editar
-                                        </a>
-                                        <a class="btn-action delete"
-                                            th:href="@{/vendas/excluir/{id}(id=${item.venda.id})}"
-                                            onclick="return confirm('Tem certeza que deseja excluir esta venda?');">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path
-                                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                                </path>
-                                            </svg>
-                                            Excluir
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="pagination-container">
-                        <div class="pagination-info">
-                            Página <strong th:text="${pagina.number + 1}">1</strong> de <strong
-                                th:text="${pagina.totalPages}">10</strong>
-                        </div>
-                        <div class="pagination">
-                            <a class="pagination-btn" th:if="${pagina.hasPrevious()}"
-                                th:href="@{/relatorios/vendas(page=${pagina.number-1},pedido=${param.pedido},produto=${param.produto},cliente=${param.cliente},estado=${param.estado},tipo=${param.tipo},dataInicio=${param.dataInicio},dataFim=${param.dataFim})}">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="15 18 9 12 15 6"></polyline>
-                                </svg>
-                                Anterior
-                            </a>
-                            <span class="pagination-btn active" th:text="${pagina.number + 1}">1</span>
-                            <a class="pagination-btn" th:if="${pagina.hasNext()}"
-                                th:href="@{/relatorios/vendas(page=${pagina.number+1},pedido=${param.pedido},produto=${param.produto},cliente=${param.cliente},estado=${param.estado},tipo=${param.tipo},dataInicio=${param.dataInicio},dataFim=${param.dataFim})}">
-                                Próxima
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg>
-                            </a>
-                        </div>
+                    <div class="table-scroll" role="region" aria-label="Vendas consolidadas por cliente" tabindex="0">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Pedidos</th>
+                                    <th>Itens</th>
+                                    <th>Qtd Total</th>
+                                    <th>Valor Total</th>
+                                    <th>Estado</th>
+                                    <th>Última Venda</th>
+                                    <th>Tipo</th>
+                                    <th>NF</th>
+                                    <th>Histórico</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <th:block th:each="clienteVenda : ${clientesVendas}">
+                                    <tr>
+                                        <td class="cell-client" th:text="${clienteVenda.clienteNome}">Cliente</td>
+                                        <td class="cell-pedido" th:text="${clienteVenda.totalPedidos}">1</td>
+                                        <td class="cell-quantity" th:text="${clienteVenda.totalItens}">1</td>
+                                        <td class="cell-quantity" th:text="${clienteVenda.quantidadeTotal}">10</td>
+                                        <td class="cell-subtotal"
+                                            th:text="${#numbers.formatCurrency(clienteVenda.valorTotal)}">R$ 1.500,00</td>
+                                        <td><span class="cell-estado" th:text="${clienteVenda.clienteEstado}">SP</span></td>
+                                        <td class="cell-date"
+                                            th:text="${clienteVenda.ultimaVenda != null ? #temporals.format(clienteVenda.ultimaVenda, 'dd/MM/yyyy') : '-'}">
+                                            18/06/2026
+                                        </td>
+                                        <td>
+                                            <span class="cell-type"
+                                                th:classappend="${clienteVenda.tipo == 'Venda' ? ' venda' : ' transferencia'}"
+                                                th:text="${clienteVenda.tipo}">Venda</span>
+                                        </td>
+                                        <td>
+                                            <span class="cell-nf"
+                                                th:classappend="${clienteVenda.notaFiscal == 'Sim' ? ' sim' : ' nao'}"
+                                                th:text="${clienteVenda.notaFiscal}">Sim</span>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn-historico"
+                                                onclick="toggleHistoricoVenda(this)" aria-expanded="false">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                                                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                                                </svg>
+                                                <span>Histórico</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr class="historico-linha">
+                                        <td colspan="10">
+                                            <div class="historico-content">
+                                                <h3 class="historico-title"
+                                                    th:text="${'📋 Histórico de pedidos e itens - ' + clienteVenda.clienteNome}">
+                                                    Histórico de pedidos e itens
+                                                </h3>
+                                                <div class="table-scroll" role="region"
+                                                    th:attr="aria-label=${'Histórico detalhado de ' + clienteVenda.clienteNome}"
+                                                    tabindex="0">
+                                                    <table class="historico-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Pedido</th>
+                                                                <th>Produto</th>
+                                                                <th>Qtd</th>
+                                                                <th>Valor Unit.</th>
+                                                                <th>Subtotal</th>
+                                                                <th>Estado</th>
+                                                                <th>Data</th>
+                                                                <th>Tipo</th>
+                                                                <th>NF</th>
+                                                                <th>Ações</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr th:each="item : ${clienteVenda.itens}">
+                                                                <td class="cell-pedido" th:text="${item.venda.id}">1024</td>
+                                                                <td class="cell-product" th:text="${item.produto.nome}">Produto</td>
+                                                                <td class="cell-quantity" th:text="${item.quantidade}">10</td>
+                                                                <td class="cell-value"
+                                                                    th:text="${#numbers.formatCurrency(item.valorPorCaixa)}">R$ 150,00</td>
+                                                                <td class="cell-subtotal"
+                                                                    th:text="${#numbers.formatCurrency(item.subtotal)}">R$ 1.500,00</td>
+                                                                <td><span class="cell-estado"
+                                                                        th:text="${item.venda.clienteEstado}">SP</span></td>
+                                                                <td class="cell-date"
+                                                                    th:text="${#temporals.format(item.venda.dataSaida, 'dd/MM/yyyy')}">
+                                                                    18/06/2026
+                                                                </td>
+                                                                <td>
+                                                                    <span class="cell-type venda"
+                                                                        th:if="${item.tipoMovimentacao.name() == 'V'}">Venda</span>
+                                                                    <span class="cell-type transferencia"
+                                                                        th:if="${item.tipoMovimentacao.name() == 'T'}">Transferência</span>
+                                                                </td>
+                                                                <td>
+                                                                    <span class="cell-nf sim"
+                                                                        th:if="${item.venda.comNotaFiscal}">✓ Sim</span>
+                                                                    <span class="cell-nf nao"
+                                                                        th:unless="${item.venda.comNotaFiscal}">× Não</span>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="cell-actions">
+                                                                        <a class="btn-action edit"
+                                                                            th:href="@{/vendas/editar/{id}(id=${item.venda.id})}">Editar</a>
+                                                                        <a class="btn-action delete"
+                                                                            th:href="@{/vendas/excluir/{id}(id=${item.venda.id})}"
+                                                                            onclick="return confirm('Tem certeza que deseja excluir esta venda?');">
+                                                                            Excluir
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                <tr th:if="${#lists.isEmpty(clientesVendas)}">
+                                    <td colspan="10" style="text-align:center;padding:var(--space-8);">
+                                        Nenhuma venda encontrada para os filtros selecionados.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -1715,8 +1861,42 @@
                 submenu.style.display = 'block';
             }
         }
+
+        function toggleHistoricoVenda(botao) {
+            const linha = botao.closest('tr');
+            const historico = linha.nextElementSibling;
+            if (!historico || !historico.classList.contains('historico-linha')) return;
+
+            const abrir = historico.style.display === '' || historico.style.display === 'none';
+            historico.style.display = abrir ? 'table-row' : 'none';
+            botao.setAttribute('aria-expanded', String(abrir));
+            botao.querySelector('span').textContent = abrir ? 'Fechar' : 'Histórico';
+        }
+
+        function toggleMenuExportacao(event, menuId) {
+            event.stopPropagation();
+            const menu = document.getElementById(menuId);
+            const abrir = !menu.classList.contains('active');
+            document.querySelectorAll('.export-menu.active').forEach(item => item.classList.remove('active'));
+            menu.classList.toggle('active', abrir);
+            event.currentTarget.setAttribute('aria-expanded', String(abrir));
+        }
+
+        function exportarVendas(formato) {
+            const parametros = new URLSearchParams(new FormData(document.getElementById('filtrosVendas')));
+            for (const [chave, valor] of [...parametros.entries()]) {
+                if (!valor) parametros.delete(chave);
+            }
+            window.location.href = `/relatorios/vendas/exportar/${formato}?${parametros}`;
+            document.getElementById('menuExportarVendas').classList.remove('active');
+        }
+
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.export-menu.active').forEach(menu => menu.classList.remove('active'));
+        });
     </script>
 
+    <script src="/js/sistema-global.js"></script>
 </body>
 
 </html>

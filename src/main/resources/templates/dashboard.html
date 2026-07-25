@@ -921,6 +921,231 @@
             animation: blink 1s infinite;
         }
 
+        .jarvit-card {
+            padding-bottom: 18px;
+        }
+
+        .jarvit-status.online {
+            color: #7fffc0;
+            border-color: #00ff8866;
+            background: #00ff8818;
+        }
+
+        .jarvit-tabs {
+            display: flex;
+            gap: 8px;
+            padding: 0 20px 14px;
+            flex-wrap: wrap;
+        }
+
+        .jarvit-tab {
+            border: 1px solid #2b83ff55;
+            background: #10243d;
+            color: #8bdcff;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .jarvit-tab.active,
+        .jarvit-tab:hover {
+            color: white;
+            background: #176dcc;
+        }
+
+        .jarvit-panel {
+            display: none;
+            padding: 0 20px;
+        }
+
+        .jarvit-panel.active {
+            display: block;
+        }
+
+        .jarvit-summary {
+            color: #334155;
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 1.55;
+            margin-bottom: 12px;
+        }
+
+        .jarvit-alerts {
+            display: grid;
+            gap: 9px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .jarvit-alert {
+            display: block;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #f8fafc;
+            border-left: 3px solid #38c5ff;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .jarvit-alert.alta {
+            border-left-color: #dc2626;
+            background: #fef2f2;
+        }
+
+        .jarvit-alert.media {
+            border-left-color: #d97706;
+            background: #fffbeb;
+        }
+
+        .jarvit-alert strong {
+            display: block;
+            color: #0f172a;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+
+        .jarvit-alert span {
+            display: block;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.45;
+        }
+
+        .jarvit-forecast-list {
+            display: grid;
+            gap: 8px;
+            max-height: 270px;
+            overflow-y: auto;
+        }
+
+        .jarvit-forecast-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 4px 12px;
+            padding: 9px 11px;
+            border-radius: 9px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            font-size: 12px;
+        }
+
+        .jarvit-forecast-item strong {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .jarvit-forecast-item span {
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .jarvit-forecast-item .critical {
+            color: #b91c1c;
+            font-weight: 700;
+        }
+
+        .jarvit-chat-form {
+            display: flex;
+            gap: 8px;
+        }
+
+        .jarvit-chat-input {
+            min-width: 0;
+            flex: 1;
+            border: 1px solid #2b83ff55;
+            background: #0b1b2e;
+            color: white;
+            border-radius: 9px;
+            padding: 10px 12px;
+            font: inherit;
+            font-size: 13px;
+        }
+
+        .jarvit-chat-input::placeholder { color: #7397b4; }
+
+        .jarvit-send {
+            border: 0;
+            border-radius: 9px;
+            background: #1688ed;
+            color: white;
+            padding: 0 14px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .jarvit-answer {
+            min-height: 105px;
+            max-height: 230px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 9px;
+            background: #071422;
+            color: #cdeeff;
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .jarvit-message {
+            padding: 9px 11px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+        }
+
+        .jarvit-message.user {
+            margin-left: 22px;
+            background: #dbeafe;
+            color: #1e3a8a;
+        }
+
+        .jarvit-message.assistant {
+            margin-right: 22px;
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        .jarvit-confirmation {
+            margin-top: 10px;
+            padding: 11px;
+            border: 1px solid #f59e0b;
+            border-radius: 9px;
+            background: #fffbeb;
+            color: #78350f;
+            font-size: 12px;
+        }
+
+        .jarvit-confirmation-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 9px;
+        }
+
+        .jarvit-confirm,
+        .jarvit-cancel {
+            border: 0;
+            border-radius: 7px;
+            padding: 7px 11px;
+            color: white;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .jarvit-confirm { background: #15803d; }
+        .jarvit-cancel { background: #64748b; }
+
+        .jarvit-source {
+            display: block;
+            color: #6fa4c9;
+            font-size: 10px;
+            margin-top: 7px;
+        }
+
         /*==============================
 ANIMAÇÕES
 ===============================*/
@@ -2259,69 +2484,44 @@ ANIMAÇÕES
                         </div>
 
                         <!-- IA JARVIT -->
-                        <div class="panel-card jarvit-card">
+                        <div class="panel-card jarvit-card" id="jarvit-card">
 
                             <div class="panel-header">
                                 <h3 class="panel-title">
                                     🤖 IA JARVIT
                                 </h3>
-                                <span class="jarvit-status">
-                                    EM DESENVOLVIMENTO
+                                <span class="jarvit-status online" id="jarvit-status">
+                                    ANALISANDO
                                 </span>
                             </div>
 
-                            <div class="jarvit-container">
-
-                                <!-- Núcleo -->
-                                <div class="jarvit-core">
-
-                                    <div class="ring ring1"></div>
-                                    <div class="ring ring2"></div>
-                                    <div class="ring ring3"></div>
-
-                                    <div class="pulse"></div>
-
-                                    <div class="center">
-                                        IA
-                                    </div>
-
-                                </div>
-
-                                <!-- Linhas -->
-                                <div class="scan-line"></div>
-
+                            <div class="jarvit-tabs" role="tablist" aria-label="Módulos JARVIT">
+                                <button class="jarvit-tab active" type="button" data-panel="insights">Insights</button>
+                                <button class="jarvit-tab" type="button" data-panel="previsoes">Previsões</button>
+                                <button class="jarvit-tab" type="button" data-panel="chat">Conversar</button>
                             </div>
 
-                            <div class="jarvit-info">
+                            <div class="jarvit-panel active" id="jarvit-panel-insights">
+                                <p class="jarvit-summary" id="jarvit-summary">Analisando os dados atuais...</p>
+                                <div class="jarvit-alerts" id="jarvit-alerts"></div>
+                            </div>
 
-                                <h4>IA JARVIT</h4>
+                            <div class="jarvit-panel" id="jarvit-panel-previsoes">
+                                <p class="jarvit-summary" id="jarvit-forecast-summary">Calculando projeções...</p>
+                                <div class="jarvit-forecast-list" id="jarvit-forecast-list"></div>
+                            </div>
 
-                                <p>
-                                    Estamos desenvolvendo um assistente inteligente que irá automatizar
-                                    tarefas, gerar relatórios, interpretar dados financeiros,
-                                    responder perguntas e auxiliar na tomada de decisões.
-                                </p>
-
-                                <div class="jarvit-loading">
-
-                                    <span>Inicializando módulos...</span>
-
-                                    <div class="progress">
-                                        <div class="progress-bar"></div>
-                                    </div>
-
+                            <div class="jarvit-panel" id="jarvit-panel-chat">
+                                <form class="jarvit-chat-form" id="jarvit-chat-form">
+                                    <input class="jarvit-chat-input" id="jarvit-question" maxlength="1000"
+                                        placeholder="Ex.: Crie um pedido para o cliente..." autocomplete="off">
+                                    <button class="jarvit-send" type="submit">Enviar</button>
+                                </form>
+                                <div class="jarvit-answer" id="jarvit-answer">
+                                    <div class="jarvit-message assistant">Olá! Posso consultar dados, preparar pedidos e registrar baixas. Operações que alteram o sistema sempre pedirão sua confirmação.</div>
                                 </div>
-
-                                <div class="jarvit-footer">
-
-                                    <span class="dot"></span>
-
-                                    <span>
-                                        Disponível em breve...
-                                    </span>
-
-                                </div>
-
+                                <div id="jarvit-confirmation"></div>
+                                <small class="jarvit-source" id="jarvit-source"></small>
                             </div>
 
                         </div>
@@ -2338,6 +2538,145 @@ ANIMAÇÕES
         </div>
 
     </div>
+
+    <script>
+        const jarvitMoney = value => Number(value || 0).toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        });
+        const jarvitEscape = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+        })[character]);
+
+        document.querySelectorAll('.jarvit-tab').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.jarvit-tab').forEach(item => item.classList.remove('active'));
+                document.querySelectorAll('.jarvit-panel').forEach(item => item.classList.remove('active'));
+                button.classList.add('active');
+                document.getElementById('jarvit-panel-' + button.dataset.panel).classList.add('active');
+            });
+        });
+
+        async function carregarJarvit() {
+            const status = document.getElementById('jarvit-status');
+            try {
+                const [insightsResponse, previsoesResponse] = await Promise.all([
+                    fetch('/api/jarvit/insights'),
+                    fetch('/api/jarvit/previsoes')
+                ]);
+                if (!insightsResponse.ok || !previsoesResponse.ok) throw new Error('Falha ao consultar JARVIT');
+                const insights = await insightsResponse.json();
+                const previsoes = await previsoesResponse.json();
+
+                document.getElementById('jarvit-summary').textContent = insights.resumo;
+                document.getElementById('jarvit-alerts').innerHTML = insights.alertas.map(alerta => `
+                    <a class="jarvit-alert ${jarvitEscape(alerta.severidade.toLowerCase())}" href="${jarvitEscape(alerta.link)}">
+                        <strong>${jarvitEscape(alerta.titulo)}</strong>
+                        <span>${jarvitEscape(alerta.descricao)}</span>
+                        <span>${jarvitEscape(alerta.acao)}</span>
+                    </a>`).join('');
+
+                document.getElementById('jarvit-forecast-summary').textContent =
+                    `Vendas projetadas: ${jarvitMoney(previsoes.vendasProjetadas30Dias)} · Saldo projetado: ${jarvitMoney(previsoes.saldoFinanceiroProjetado)}`;
+                document.getElementById('jarvit-forecast-list').innerHTML = previsoes.produtos.map(item => `
+                    <div class="jarvit-forecast-item">
+                        <strong>${jarvitEscape(item.produto)}</strong>
+                        <span class="${item.nivel === 'CRITICO' ? 'critical' : ''}">${jarvitEscape(item.nivel.replace('_', ' '))}</span>
+                        <span>Estoque: ${jarvitEscape(item.estoqueAtual)} · Cobertura: ${item.diasCobertura == null ? 'sem histórico' : jarvitEscape(item.diasCobertura) + ' dias'}</span>
+                        <span>Repor: ${jarvitEscape(item.reposicaoSugerida)}</span>
+                    </div>`).join('') || '<p class="jarvit-summary">Ainda não há dados suficientes para previsão.</p>';
+                status.textContent = 'ONLINE';
+            } catch (error) {
+                status.textContent = 'INDISPONÍVEL';
+                status.classList.remove('online');
+                document.getElementById('jarvit-summary').textContent =
+                    'Não foi possível carregar os indicadores agora. Atualize a página para tentar novamente.';
+                console.error(error);
+            }
+        }
+
+        let jarvitConversationId = sessionStorage.getItem('jarvitConversationId');
+
+        function addJarvitMessage(type, text) {
+            const answer = document.getElementById('jarvit-answer');
+            const message = document.createElement('div');
+            message.className = 'jarvit-message ' + type;
+            message.textContent = text;
+            answer.appendChild(message);
+            answer.scrollTop = answer.scrollHeight;
+            return message;
+        }
+
+        function showJarvitConfirmation(action) {
+            const container = document.getElementById('jarvit-confirmation');
+            if (!action) {
+                container.innerHTML = '';
+                return;
+            }
+            container.innerHTML = `
+                <div class="jarvit-confirmation">
+                    <strong>Confirmação necessária</strong>
+                    <div>${jarvitEscape(action.resumo)}</div>
+                    <div class="jarvit-confirmation-actions">
+                        <button type="button" class="jarvit-confirm">Confirmar operação</button>
+                        <button type="button" class="jarvit-cancel">Cancelar</button>
+                    </div>
+                </div>`;
+            container.querySelector('.jarvit-confirm').addEventListener('click',
+                () => respondJarvitAction(action.token, 'confirmar'));
+            container.querySelector('.jarvit-cancel').addEventListener('click',
+                () => respondJarvitAction(action.token, 'cancelar'));
+        }
+
+        async function respondJarvitAction(token, action) {
+            const buttons = document.querySelectorAll('.jarvit-confirmation button');
+            buttons.forEach(button => button.disabled = true);
+            try {
+                const response = await fetch(`/api/jarvit/acoes/${encodeURIComponent(token)}/${action}`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.erro || 'Não foi possível concluir a operação');
+                addJarvitMessage('assistant', data.mensagem);
+                showJarvitConfirmation(null);
+            } catch (error) {
+                addJarvitMessage('assistant', error.message);
+                buttons.forEach(button => button.disabled = false);
+            }
+        }
+
+        document.getElementById('jarvit-chat-form').addEventListener('submit', async event => {
+            event.preventDefault();
+            const input = document.getElementById('jarvit-question');
+            const source = document.getElementById('jarvit-source');
+            const mensagem = input.value.trim();
+            if (!mensagem) return;
+            addJarvitMessage('user', mensagem);
+            input.value = '';
+            const loading = addJarvitMessage('assistant', 'Analisando e consultando o sistema...');
+            source.textContent = '';
+            try {
+                const response = await fetch('/api/jarvit/conversar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mensagem, conversaId: jarvitConversationId })
+                });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.erro || 'Falha ao conversar com o JARVIT');
+                loading.textContent = data.resposta;
+                jarvitConversationId = data.conversaId;
+                sessionStorage.setItem('jarvitConversationId', jarvitConversationId);
+                showJarvitConfirmation(data.acaoPendente);
+                source.textContent = data.iaConfigurada
+                    ? 'JARVIT conectado à OpenAI e às ferramentas do Sistema V'
+                    : 'Configure OPENAI_API_KEY para ativar o agente';
+            } catch (error) {
+                loading.textContent = error.message;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', carregarJarvit);
+    </script>
 
     <script>
         function mostrarFinanceiro(tipo) {
@@ -2423,6 +2762,7 @@ ANIMAÇÕES
         });
     </script>
 
+    <script src="/js/sistema-global.js"></script>
 </body>
 
 </html>

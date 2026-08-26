@@ -1321,7 +1321,8 @@
                             <label class="form-label">Produto</label>
                             <select id="produto" class="form-select">
                                 <option value="">Selecione</option>
-                                <option th:each="p : ${produtos}" th:value="${p.codigo}" th:text="${p.nome}"></option>
+                                <option th:each="p : ${produtos}" th:value="${p.codigo}" th:text="${p.nome}"
+                                    th:data-nome="${p.nome}"></option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -1458,6 +1459,8 @@
         // ========== ADICIONAR ITEM ==========
         window.adicionarItem = function () {
             const produto = produtoInput.value;
+            const produtoSelecionado = produtoInput.options[produtoInput.selectedIndex];
+            const produtoNome = produtoSelecionado?.dataset.nome || produtoSelecionado?.textContent?.trim() || produto;
             const qtd = parseInt(quantidade.value);
             const valor = parseFloat(valorInput.value);
             const tipo = document.querySelector("input[name='tipoItem']:checked").value;
@@ -1476,6 +1479,7 @@
 
             itens.push({
                 codigoOuNome: produto,
+                produtoNome: produtoNome,
                 quantidade: qtd,
                 valorPorCaixa: chkBonificacao.checked ? 0 : valor,
                 tipoMovimentacao: tipo,
@@ -1533,7 +1537,7 @@
                 total += subtotal;
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
-            <td class="cell-product">${item.codigoOuNome}</td>
+            <td class="cell-product">${item.produtoNome || item.codigoOuNome}</td>
             <td class="cell-quantity">${item.quantidade}</td>
             <td class="cell-value">${moedaBR(item.valorPorCaixa)}</td>
             <td><span class="cell-type ${item.tipoMovimentacao === 'V' ? 'venda' : 'transferencia'}">${item.tipoMovimentacao === 'V' ? 'Venda' : 'Transferência'}</span></td>
@@ -1560,7 +1564,7 @@
             const tbody = document.getElementById("itens");
             const tr = tbody.children[index];
             tr.innerHTML = `
-        <td><input value="${item.codigoOuNome}" disabled class="form-input" style="width:100%;"></td>
+        <td><input value="${item.produtoNome || item.codigoOuNome}" disabled class="form-input" style="width:100%;"></td>
         <td><input type="number" id="qtdEdit" value="${item.quantidade}" class="form-input" style="width:80px;"></td>
         <td><input type="number" step="0.01" id="valorEdit" value="${item.valorPorCaixa}" class="form-input" style="width:100px;"></td>
         <td>
@@ -1619,7 +1623,9 @@
                 comNotaFiscal: comNotaFiscal,
                 dataPedido: dataPedido.value,
                 observacao: observacao,
-                itens: itens
+                // produtoNome existe somente para apresentação; o backend continua
+                // recebendo o código no campo codigoOuNome, como antes.
+                itens: itens.map(({ produtoNome, ...item }) => item)
             };
 
             console.log("Payload enviado:", payload);
@@ -1648,6 +1654,7 @@
             itensBackend.forEach(i => {
                 itens.push({
                     codigoOuNome: i.produtoCodigo,
+                    produtoNome: i.produtoNome,
                     quantidade: i.quantidade,
                     valorPorCaixa: i.valorPorCaixa,
                     tipoMovimentacao: i.tipoMovimentacao,

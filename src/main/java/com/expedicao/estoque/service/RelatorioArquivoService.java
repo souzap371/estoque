@@ -165,10 +165,10 @@ public class RelatorioArquivoService {
             for (int i = 5; i < 7; i++) vazio(total, i, estilos.total());
             configurarPlanilha(resumo, 6, linha, new int[]{30, 12, 20, 20, 20, 16, 16});
 
-            criarCabecalhoExcel(detalhes, "DETALHAMENTO DE PEDIDOS E BAIXAS", filtros, 10, estilos);
+            criarCabecalhoExcel(detalhes, "DETALHAMENTO DE PEDIDOS E BAIXAS", filtros, 11, estilos);
             criarLinhaCabecalho(detalhes, 6,
                     new String[]{"Cliente", "Data Pedido", "Valor Original", "Pago no Pedido", "Saldo",
-                            "Status", "Valor Baixa", "Data Pagamento", "Forma", "Anexo"},
+                            "Status", "Valor Baixa", "Data Pagamento", "Forma", "Observações", "Anexo"},
                     estilos);
             linha = 7;
             for (ContaReceberDTO conta : contas) {
@@ -182,7 +182,7 @@ public class RelatorioArquivoService {
                 }
             }
             configurarPlanilha(detalhes, 6, linha,
-                    new int[]{30, 16, 20, 20, 20, 16, 18, 18, 18, 12});
+                    new int[]{30, 16, 20, 20, 20, 16, 18, 18, 18, 38, 12});
             workbook.write(output);
             return output.toByteArray();
         }
@@ -227,8 +227,8 @@ public class RelatorioArquivoService {
             adicionarResumoFinanceiroPdf(documento, clientes);
             documento.newPage();
             adicionarSubtituloPdf(documento, "Detalhamento de pedidos e baixas");
-            PdfPTable tabela = tabelaPdf(new float[]{1.5f, .9f, 1.15f, 1.15f, 1.15f, .9f, 1.05f, 1f, 1f},
-                    "Cliente", "Pedido", "Original", "Pago", "Saldo", "Status", "Baixa", "Pagamento", "Forma");
+            PdfPTable tabela = tabelaPdf(new float[]{1.4f, .8f, 1.05f, 1.05f, 1.05f, .8f, .95f, .9f, .9f, 1.5f},
+                    "Cliente", "Pedido", "Original", "Pago", "Saldo", "Status", "Baixa", "Pagamento", "Forma", "Observações");
             for (ContaReceberDTO conta : contas) {
                 List<PagamentoDTO> pagamentos = conta.getPagamentos() == null ? List.of() : conta.getPagamentos();
                 if (pagamentos.isEmpty()) {
@@ -388,7 +388,8 @@ public class RelatorioArquivoService {
         data(row, 7, pagamento == null ? null : pagamento.getDataPagamento(), estilos.data());
         texto(row, 8, pagamento == null || pagamento.getFormaPagamento() == null
                 ? "-" : pagamento.getFormaPagamento().name().replace('_', ' '), estilos.centro());
-        texto(row, 9, pagamento != null && pagamento.getAnexoPath() != null ? "Sim" : "Não", estilos.centro());
+        texto(row, 9, pagamento == null ? "-" : pagamento.getObservacao(), estilos.texto());
+        texto(row, 10, pagamento != null && pagamento.getAnexoPath() != null ? "Sim" : "Não", estilos.centro());
     }
 
     private void texto(Row row, int coluna, String valor, CellStyle estilo) {
@@ -529,6 +530,7 @@ public class RelatorioArquivoService {
         celula(tabela, pagamento == null ? "-" : formatar(pagamento.getDataPagamento()), Element.ALIGN_CENTER);
         celula(tabela, pagamento == null || pagamento.getFormaPagamento() == null
                 ? "-" : pagamento.getFormaPagamento().name().replace('_', ' '), Element.ALIGN_CENTER);
+        celula(tabela, pagamento == null ? "-" : pagamento.getObservacao(), Element.ALIGN_LEFT);
     }
 
     private List<FinanceiroResumo> agruparFinanceiro(List<ContaReceberDTO> contas) {

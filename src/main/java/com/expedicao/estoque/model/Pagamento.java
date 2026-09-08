@@ -39,7 +39,7 @@ public class Pagamento {
     @Column(nullable = false)
     private FormaPagamento formaPagamento;
 
-    @Column(length = 255)
+    @Column(length = 200)
     private String observacao;
 
     // =====================

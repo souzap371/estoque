@@ -3,6 +3,8 @@ package com.expedicao.estoque.model;
 public enum FormaPagamento {
     PIX,
     PIX_VIT,
+    PIX_PAGAMENTO_FORNECEDOR_VIT,
+    BOLETO_PAGAMENTO_FORNECEDOR_VIT,
     CHEQUE,
     CHEQUE_PRE,
     CC,

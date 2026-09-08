@@ -1077,6 +1077,8 @@
             <select id="forma" class="form-select">
               <option value="PIX">PIX</option>
               <option value="PIX_VIT">PIX_VIT</option>
+              <option value="PIX_PAGAMENTO_FORNECEDOR_VIT">PIX PAGAMENTO FORNECEDOR VIT</option>
+              <option value="BOLETO_PAGAMENTO_FORNECEDOR_VIT">BOLETO PAGAMENTO FORNECEDOR VIT</option>
               <option value="CHEQUE">Cheque</option>
               <option value="CHEQUE_PRE">Cheque Pré</option>
               <option value="CC">Cartão Crédito</option>
@@ -1091,6 +1093,16 @@
               <option value="FRETE">Frete</option>
               <option value="OUTROS">Outros</option>
             </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="observacao">Observações da Baixa</label>
+            <textarea id="observacao" class="form-input" rows="4" maxlength="200"
+              placeholder="Inclua informações adicionais sobre esta baixa (opcional)"
+              oninput="atualizarContadorObservacao()"></textarea>
+            <small id="contadorObservacao" style="display:block; margin-top:6px; color:var(--neutral-500); text-align:right;">
+              0/200 caracteres
+            </small>
           </div>
 
           <div class="form-group">
@@ -1178,6 +1190,7 @@
       formData.append("valor", document.getElementById("valor").value);
       formData.append("data", document.getElementById("data").value);
       formData.append("formaPagamento", document.getElementById("forma").value);
+      formData.append("observacao", document.getElementById("observacao").value);
 
       const anexo = document.getElementById("anexo").files[0];
       if (anexo) {
@@ -1204,6 +1217,11 @@
           console.error(e);
           alert("Erro ao realizar baixa");
         });
+    }
+
+    function atualizarContadorObservacao() {
+      const campo = document.getElementById("observacao");
+      document.getElementById("contadorObservacao").textContent = `${campo.value.length}/200 caracteres`;
     }
 
     function moeda(valor) {

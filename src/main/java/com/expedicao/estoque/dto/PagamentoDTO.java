@@ -13,6 +13,7 @@ public class PagamentoDTO {
     private LocalDate dataPagamento;
     private FormaPagamento formaPagamento;
     private String anexoPath;
+    private String observacao;
 
     public PagamentoDTO(Pagamento pagamento) {
         this.id = pagamento.getId();
@@ -20,6 +21,7 @@ public class PagamentoDTO {
         this.dataPagamento = pagamento.getDataPagamento();
         this.formaPagamento = pagamento.getFormaPagamento();
         this.anexoPath = pagamento.getAnexoPath();
+        this.observacao = pagamento.getObservacao();
     }
 
     public Long getId() {
@@ -40,5 +42,9 @@ public class PagamentoDTO {
 
     public String getAnexoPath() {
         return anexoPath;
+    }
+
+    public String getObservacao() {
+        return observacao;
     }
 }

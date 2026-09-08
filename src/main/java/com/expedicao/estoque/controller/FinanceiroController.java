@@ -115,16 +115,13 @@ public class FinanceiroController {
     public ResponseEntity<BigDecimal> darBaixa(
             @PathVariable Long id,
             @RequestParam BigDecimal valor,
-            // @RequestParam String data,
             @RequestParam LocalDate data,
             @RequestParam FormaPagamento formaPagamento,
+            @RequestParam(required = false) String observacao,
             @RequestParam(required = false) MultipartFile anexo) {
 
-        // financeiroService.darBaixa(id, valor, data, formaPagamento, anexo);
         BigDecimal restante = financeiroService.darBaixa(
-                id, valor, data, formaPagamento, anexo);
-
-        // return ResponseEntity.ok().build();
+                id, valor, data, formaPagamento, observacao, anexo);
 
         return ResponseEntity.ok(restante);
     }

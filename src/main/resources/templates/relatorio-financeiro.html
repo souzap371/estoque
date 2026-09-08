@@ -1477,6 +1477,7 @@
               <td>-</td>
               <td>-</td>
               <td>-</td>
+              <td>-</td>
             </tr>
           `];
         }
@@ -1495,6 +1496,7 @@
             <td class="cell-value">${formatarMoeda(pagamento.valorPago)}</td>
             <td class="cell-date">${formatarDataBR(pagamento.dataPagamento)}</td>
             <td class="cell-forma">${pagamento.formaPagamento ? escaparHtml(formatarForma(pagamento.formaPagamento)) : '-'}</td>
+            <td>${pagamento.observacao ? escaparHtml(pagamento.observacao) : '-'}</td>
             <td>
               ${pagamento.anexoPath
                 ? `<a href="/financeiro/api/pagamento/anexo/${pagamento.id}" target="_blank" class="anexo-link">
@@ -1536,6 +1538,7 @@
                     <th>Valor Baixa</th>
                     <th>Data Pagamento</th>
                     <th>Forma</th>
+                    <th>Observações</th>
                     <th>Anexo</th>
                     <th>Ações</th>
                   </tr>

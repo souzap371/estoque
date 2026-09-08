@@ -142,6 +142,20 @@ public class FinanceiroService {
             FormaPagamento formaPagamento,
             MultipartFile anexo) {
 
+        return darBaixa(id, valor, data, formaPagamento, null, anexo);
+    }
+
+    @Transactional
+    public BigDecimal darBaixa(
+            Long id,
+            BigDecimal valor,
+            LocalDate data,
+            FormaPagamento formaPagamento,
+            String observacao,
+            MultipartFile anexo) {
+
+        String observacaoNormalizada = normalizarObservacao(observacao);
+
         ContaReceber conta = contaReceberRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Conta não encontrada"));
 
@@ -171,6 +185,7 @@ public class FinanceiroService {
         pagamento.setValorPago(valorAplicado);
         pagamento.setDataPagamento(data);
         pagamento.setFormaPagamento(formaPagamento);
+        pagamento.setObservacao(observacaoNormalizada);
 
         if (anexo != null && !anexo.isEmpty()) {
             processarAnexo(anexo, pagamento);
@@ -198,6 +213,18 @@ public class FinanceiroService {
 
         // ✅ RETORNA VALOR QUE SOBROU
         return restante;
+    }
+
+    private String normalizarObservacao(String observacao) {
+        if (observacao == null || observacao.isBlank()) {
+            return null;
+        }
+
+        String valor = observacao.trim();
+        if (valor.length() > 200) {
+            throw new IllegalArgumentException("A observação da baixa deve ter no máximo 200 caracteres");
+        }
+        return valor;
     }
 
     @Transactional

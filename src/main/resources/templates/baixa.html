@@ -1275,15 +1275,30 @@
     function aplicarBaixa(contaId, saldoPedido) {
       let valorAplicar = Math.min(valorRestanteGlobal, saldoPedido);
 
+      const formData = new FormData();
+      formData.append("contaId", contaId);
+      formData.append("valor", valorAplicar);
+      formData.append("data", document.getElementById("data").value);
+      formData.append("formaPagamento", document.getElementById("forma").value);
+      formData.append("observacao", document.getElementById("observacao").value);
+
+      const anexo = document.getElementById("anexo").files[0];
+      if (anexo) {
+        formData.append("anexo", anexo);
+      }
+
       fetch(`/financeiro/api/baixar-restante`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `contaId=${contaId}&valor=${valorAplicar}`
+        body: formData
       })
-        .then(() => {
-          valorRestanteGlobal -= valorAplicar;
+        .then(async response => {
+          if (!response.ok) {
+            throw new Error(await response.text());
+          }
+          return response.json();
+        })
+        .then(restante => {
+          valorRestanteGlobal = Number(restante);
 
           if (valorRestanteGlobal > 0) {
             buscarPedidosAbertos(document.getElementById("cliente").value);
@@ -1292,6 +1307,10 @@
             fecharModal();
             location.reload();
           }
+        })
+        .catch(e => {
+          console.error(e);
+          alert("Erro ao aplicar o valor restante em outro pedido");
         });
     }
   </script>

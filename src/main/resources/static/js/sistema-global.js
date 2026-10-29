@@ -15,6 +15,7 @@
     { nome: 'Relatório de produtos', url: '/relatorios/produtos', termos: 'relatorio produtos' },
     { nome: 'Relatório de estoque', url: '/relatorios/estoque', termos: 'relatorio estoque' }
   ];
+  let destinosPermitidos = destinos;
 
   const normalizar = texto => String(texto || '')
     .normalize('NFD')
@@ -27,6 +28,16 @@
       const resposta = await fetch('/api/sessao', { headers: { Accept: 'application/json' } });
       if (!resposta.ok) return;
       const usuario = await resposta.json();
+
+      const perfis = Array.isArray(usuario.perfis) ? usuario.perfis : [];
+      const somenteRelatorios = perfis.length === 1 && perfis.includes('ROLE_RELATORIOS');
+      if (somenteRelatorios) {
+        destinosPermitidos = destinos.filter(item =>
+          item.url === '/relatorios'
+          || item.url.startsWith('/relatorios/')
+          || item.url === '/financeiro/relatorio'
+          || item.url === '/clientes/relatorio');
+      }
 
       document.querySelectorAll('.user-name').forEach(el => { el.textContent = usuario.nome; });
       document.querySelectorAll('.user-email').forEach(el => { el.textContent = usuario.identificador; });
@@ -73,7 +84,7 @@
         fechar();
         return;
       }
-      const encontrados = destinos.filter(item =>
+      const encontrados = destinosPermitidos.filter(item =>
         normalizar(`${item.nome} ${item.termos}`).includes(termo)).slice(0, 7);
       resultados.replaceChildren();
 
@@ -161,10 +172,10 @@
     document.head.appendChild(style);
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', async () => {
     adicionarEstilos();
     removerSinos();
-    carregarUsuario();
+    await carregarUsuario();
     document.querySelectorAll('.search-input').forEach(configurarBusca);
 
     document.addEventListener('keydown', event => {

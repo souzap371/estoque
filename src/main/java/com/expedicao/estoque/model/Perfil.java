@@ -10,7 +10,7 @@ public class Perfil {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String nome; // ROLE_MASTER, ROLE_ESTOQUE, ROLE_VENDAS, ROLE_FINANCEIRO
+    private String nome; // ROLE_MASTER, ROLE_ESTOQUE, ROLE_VENDAS, ROLE_FINANCEIRO, ROLE_RELATORIOS
 
     public Perfil() {}
 

@@ -1041,6 +1041,10 @@
                 </div>
 
                 <!-- Table -->
+                <div th:if="${param.sucesso}"
+                    style="margin-bottom:16px;padding:12px 16px;border:1px solid #a7f3d0;border-radius:10px;background:#ecfdf5;color:#047857;font-weight:600;">
+                    Usuário salvo com sucesso.
+                </div>
                 <div class="table-container">
                     <div class="table-wrapper">
                         <table class="data-table">
@@ -1049,6 +1053,7 @@
                                     <th>Usuário</th>
                                     <th>Perfis</th>
                                     <th>Status</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1056,15 +1061,20 @@
                                     <td th:text="${u.username}">admin</td>
                                     <td>
                                         <span class="profile-tag" th:each="p : ${u.perfis}"
-                                            th:text="${p.nome}">MASTER</span>
+                                            th:text="${p.nome == 'ROLE_RELATORIOS' ? 'RELATÓRIOS' : #strings.replace(p.nome, 'ROLE_', '')}">MASTER</span>
                                     </td>
                                     <td>
                                         <span th:class="${u.ativo} ? 'badge badge-success' : 'badge badge-danger'"
                                             th:text="${u.ativo ? 'Ativo' : 'Inativo'}">Ativo</span>
                                     </td>
+                                    <td>
+                                        <a th:href="@{/usuarios/editar/{id}(id=${u.id})}" class="btn btn-secondary">
+                                            Editar perfis
+                                        </a>
+                                    </td>
                                 </tr>
                                 <tr th:if="${#lists.isEmpty(usuarios)}">
-                                    <td colspan="3">
+                                    <td colspan="4">
                                         <div class="empty-state">
                                             <div class="empty-icon">
                                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"

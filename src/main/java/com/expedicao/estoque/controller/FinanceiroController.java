@@ -128,13 +128,18 @@ public class FinanceiroController {
 
     @PostMapping("/api/baixar-restante")
     @ResponseBody
-    public ResponseEntity<Void> baixarRestante(
+    public ResponseEntity<BigDecimal> baixarRestante(
             @RequestParam Long contaId,
-            @RequestParam BigDecimal valor) {
+            @RequestParam BigDecimal valor,
+            @RequestParam LocalDate data,
+            @RequestParam FormaPagamento formaPagamento,
+            @RequestParam(required = false) String observacao,
+            @RequestParam(required = false) MultipartFile anexo) {
 
-        financeiroService.baixarConta(contaId, valor);
+        BigDecimal restante = financeiroService.baixarConta(
+                contaId, valor, data, formaPagamento, observacao, anexo);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(restante);
     }
 
     @GetMapping("/api/pedidos-abertos")

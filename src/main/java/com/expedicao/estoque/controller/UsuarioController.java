@@ -1,9 +1,12 @@
 package com.expedicao.estoque.controller;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +36,22 @@ public class UsuarioController {
     public String novo(Model model) {
         model.addAttribute("usuario", new Usuario());
         model.addAttribute("perfis", perfilRepository.findAll());
+        model.addAttribute("perfisSelecionados", Set.of());
+        return "usuarios/form";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable Long id, Model model) {
+        Usuario existente = usuarioService.buscarPorId(id);
+        Usuario formulario = new Usuario();
+        formulario.setId(existente.getId());
+        formulario.setUsername(existente.getUsername());
+        formulario.setAtivo(existente.isAtivo());
+        model.addAttribute("usuario", formulario);
+        model.addAttribute("perfis", perfilRepository.findAll());
+        model.addAttribute("perfisSelecionados", existente.getPerfis().stream()
+                .map(perfil -> perfil.getId())
+                .collect(Collectors.toSet()));
         return "usuarios/form";
     }
 
@@ -40,9 +59,19 @@ public class UsuarioController {
     @PreAuthorize("hasRole('MASTER')")
     public String salvar(
             @ModelAttribute Usuario usuario,
-            @RequestParam List<Long> perfis) {
+            @RequestParam(required = false) List<Long> perfis,
+            Authentication authentication,
+            Model model) {
 
-        usuarioService.salvarComPerfis(usuario, perfis);
-        return "redirect:/usuarios";
+        try {
+            usuarioService.salvarComPerfis(usuario, perfis, authentication.getName());
+            return "redirect:/usuarios?sucesso";
+        } catch (IllegalArgumentException ex) {
+            usuario.setPassword(null);
+            model.addAttribute("erro", ex.getMessage());
+            model.addAttribute("perfis", perfilRepository.findAll());
+            model.addAttribute("perfisSelecionados", perfis == null ? Set.of() : Set.copyOf(perfis));
+            return "usuarios/form";
+        }
     }
 }

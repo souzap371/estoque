@@ -1001,7 +1001,8 @@
             </div>
             <nav class="sidebar-nav">
                 <div class="nav-section">
-                    <a href="/dashboard" class="nav-item">
+                    <a href="/dashboard" class="nav-item"
+                        sec:authorize="hasAnyRole('MASTER','CLIENTES','PRODUTO','ESTOQUE','VENDAS','FINANCEIRO')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -1093,7 +1094,7 @@
                             </div>
                         </div>
                     </th:block>
-                    <a href="/relatorios" class="nav-item" sec:authorize="hasAnyRole('FINANCEIRO','MASTER')">
+                    <a href="/relatorios" class="nav-item" sec:authorize="hasAnyRole('RELATORIOS','FINANCEIRO','MASTER')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -1327,7 +1328,7 @@
 
                 <!-- Voltar -->
                 <div style="margin-top: var(--space-6); text-align: center;">
-                    <a href="/dashboard" class="btn btn-secondary">
+                    <a href="/relatorios" class="btn btn-secondary">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>

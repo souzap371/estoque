@@ -228,25 +228,18 @@ public class FinanceiroService {
     }
 
     @Transactional
-    public void baixarConta(Long contaId, BigDecimal valor) {
+    public BigDecimal baixarConta(
+            Long contaId,
+            BigDecimal valor,
+            LocalDate data,
+            FormaPagamento formaPagamento,
+            String observacao,
+            MultipartFile anexo) {
 
-        ContaReceber conta = contaReceberRepository
-                .findById(contaId)
-                .orElseThrow();
-
-        conta.setValorPago(
-                conta.getValorPago().add(valor));
-
-        conta.setSaldoDevedor(
-                conta.getValorOriginal()
-                        .subtract(conta.getValorPago()));
-
-        if (conta.getSaldoDevedor()
-                .compareTo(BigDecimal.ZERO) < 0) {
-            conta.setSaldoDevedor(BigDecimal.ZERO);
-        }
-
-        contaReceberRepository.save(conta);
+        // O valor restante aplicado a outro pedido tambem precisa gerar um
+        // Pagamento. Atualizar somente o acumulado da conta deixa o relatorio
+        // diferente do historico auditavel de baixas.
+        return darBaixa(contaId, valor, data, formaPagamento, observacao, anexo);
     }
 
     @Transactional

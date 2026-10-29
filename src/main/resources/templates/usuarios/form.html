@@ -995,8 +995,10 @@
                                 </svg>
                             </div>
                             <div>
-                                <h1 class="page-title">Cadastro de Usuários</h1>
-                                <p class="page-description">Gerencie os usuários e permissões do sistema</p>
+                                <h1 class="page-title"
+                                    th:text="${usuario.id == null ? 'Cadastro de Usuário' : 'Editar Usuário'}">
+                                    Cadastro de Usuário</h1>
+                                <p class="page-description">Gerencie o usuário e seus perfis de acesso</p>
                             </div>
                         </div>
                     </div>
@@ -1004,7 +1006,12 @@
 
                 <!-- Form Card -->
                 <div class="form-card">
+                    <div th:if="${erro}" th:text="${erro}"
+                        style="margin-bottom:16px;padding:12px 16px;border:1px solid #fecaca;border-radius:10px;background:#fef2f2;color:#b91c1c;font-weight:600;">
+                        Não foi possível salvar o usuário.
+                    </div>
                     <form method="post" th:action="@{/usuarios/salvar}" th:object="${usuario}">
+                        <input type="hidden" th:field="*{id}">
                         <div class="form-grid">
 
 
@@ -1029,7 +1036,7 @@
                             <div class="form-group">
                                 <label class="form-label" for="password">
                                     Senha
-                                    <span class="required-badge">*</span>
+                                    <span class="required-badge" th:if="${usuario.id == null}">*</span>
                                 </label>
                                 <div class="input-wrapper">
                                     <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -1038,7 +1045,8 @@
                                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                     </svg>
                                     <input type="password" id="password" th:field="*{password}" class="form-input"
-                                        placeholder="Digite a senha" required>
+                                        th:placeholder="${usuario.id == null ? 'Digite a senha' : 'Deixe em branco para manter a senha atual'}"
+                                        th:required="${usuario.id == null}">
                                 </div>
                             </div>
 
@@ -1046,8 +1054,9 @@
                             <div class="form-group">
                                 <label class="perfis-label">Perfis de Acesso</label>
                                 <div class="perfil-item" th:each="p : ${perfis}">
-                                    <input type="checkbox" th:value="${p.id}" name="perfis">
-                                    <span th:text="${p.nome}">Perfil</span>
+                                    <input type="checkbox" th:value="${p.id}" name="perfis"
+                                        th:checked="${perfisSelecionados.contains(p.id)}">
+                                    <span th:text="${p.nome == 'ROLE_RELATORIOS' ? 'RELATÓRIOS (somente consulta)' : #strings.replace(p.nome, 'ROLE_', '')}">Perfil</span>
                                 </div>
                             </div>
 
@@ -1062,7 +1071,7 @@
                                     <polyline points="17 21 17 13 7 13 7 21"></polyline>
                                     <polyline points="7 3 7 8 15 8"></polyline>
                                 </svg>
-                                Salvar Usuário
+                                <span th:text="${usuario.id == null ? 'Salvar Usuário' : 'Atualizar Usuário'}">Salvar Usuário</span>
                             </button>
                             <a href="/usuarios" class="btn btn-secondary">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"

@@ -27,6 +27,9 @@ public class InicializadorUsuarios {
         perfilRepo.findByNome("ROLE_PRODUTO")
                 .orElseGet(() -> perfilRepo.save(new Perfil("ROLE_PRODUTO")));
 
+        perfilRepo.findByNome("ROLE_CLIENTES")
+                .orElseGet(() -> perfilRepo.save(new Perfil("ROLE_CLIENTES")));
+
         perfilRepo.findByNome("ROLE_ESTOQUE")
                 .orElseGet(() -> perfilRepo.save(new Perfil("ROLE_ESTOQUE")));
 
@@ -35,6 +38,9 @@ public class InicializadorUsuarios {
 
         perfilRepo.findByNome("ROLE_FINANCEIRO")
                 .orElseGet(() -> perfilRepo.save(new Perfil("ROLE_FINANCEIRO")));
+
+        perfilRepo.findByNome("ROLE_RELATORIOS")
+                .orElseGet(() -> perfilRepo.save(new Perfil("ROLE_RELATORIOS")));
 
         if (usuarioRepo.findByUsername("master").isEmpty()) {
             Usuario u = new Usuario();
